@@ -74,7 +74,6 @@
             margin-bottom: 2px;
         }
 
-        /* ФЕРМА */
         .farm-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -124,7 +123,6 @@
         .btn-purple { background: #8e44ad; box-shadow: 0 4px 12px rgba(142, 68, 173, 0.3); }
         .btn-red { background: #c0392b; box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3); }
 
-        /* ПРОГРЕСС-БАР ТАЙМЕРА 4 ЧАСОВ */
         .progress-container {
             width: 100%;
             background: #eee;
@@ -141,7 +139,6 @@
             transition: width 0.3s;
         }
 
-        /* ВКЛАДКИ */
         .tab-content {
             display: none;
             flex: 1;
@@ -203,6 +200,25 @@
             align-items: center;
         }
 
+        .daily-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .daily-box {
+            background: #faf8f5;
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 8px 4px;
+            text-align: center;
+            font-size: 11px;
+        }
+        .daily-box.claimed {
+            background: rgba(129, 178, 154, 0.2);
+            border-color: var(--green);
+        }
+
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -222,9 +238,10 @@
             box-sizing: border-box;
             text-align: center;
             border: 1px solid var(--card-border);
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
-        /* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ */
         .nav {
             position: fixed;
             bottom: 0;
@@ -301,7 +318,7 @@
             </div>
         </div>
 
-        <!-- 2. РЫНОК (5 Уровней коров) -->
+        <!-- 2. РЫНОК -->
         <div id="tab-shop" class="tab-content">
             <div class="section-card">
                 <h3>🛍 Рынок бурёнок (5 уровней)</h3>
@@ -356,13 +373,16 @@
         <!-- 3. БОНУСЫ И РЕКЛАМА -->
         <div id="tab-daily" class="tab-content">
             <div class="section-card">
-                <h3>🗓 Ежедневный бонус</h3>
-                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()">Забрать бонус (+50 🥛)</button>
+                <h3>🗓 Бонус 7 дней (Серия)</h3>
+                <div class="daily-grid" id="daily-grid-container">
+                    <!-- Заполняется JS -->
+                </div>
+                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()">Забрать бонус дня</button>
 
                 <h3>📺 Заработок (Реклама)</h3>
                 <div class="shop-item" style="display: block; margin-bottom: 14px;">
                     <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">Смотреть рекламу</div>
-                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +10 🥛 за просмотр</div>
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +5 🥛 за просмотр</div>
                     <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px;" onclick="watchAd()">🎬 Смотреть ролик</button>
                 </div>
 
@@ -400,7 +420,7 @@
             </div>
         </div>
 
-        <!-- 6. ДРУЗЬЯ (РЕФЕРАЛЫ) -->
+        <!-- 6. ДРУЗЬЯ -->
         <div id="tab-ref" class="tab-content">
             <div class="section-card">
                 <h3>👥 Партнерская программа</h3>
@@ -422,16 +442,17 @@
                     ID: <span id="profile-id" style="color: var(--text-main); font-weight: 600;">—</span><br>
                     Кошелек: <span id="wallet-status" style="color: var(--accent);">Не подключен</span>
                 </div>
-                <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="toggleWallet()">👛 Привязать ТГ-кошелек</button>
+                <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="connectWallet()">👛 Подключить кошелек</button>
                 
                 <hr style="margin: 14px 0; border:0; border-top:1px solid var(--card-border);">
                 
-                <h3>💱 Финансы и Курсы</h3>
-                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px;">100 🥛 = 1 Telegram Star ⭐</p>
-                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">50 🥛 = 1 GRAM 💎</p>
+                <h3>💱 Пополнение и Курс</h3>
+                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.4;">
+                    <b>Stars ⭐:</b> 100m=50зв | 200m=100зв | 500m=200зв | 1000m=400зв | 2000m=750зв | 5000m=1500зв<br>
+                    <b>TON 💎:</b> 100m=0.7T | 200m=1.2T | 500m=2.5T | 1000m=5T | 2000m=9.5T | 5000m=19T
+                </div>
                 
-                <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="topUpStars()">⭐ Пополнить за Stars</button>
-                <button class="btn btn-red" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="withdrawFunds()">💎 Вывод на кошелек</button>
+                <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openTopUpModal()">⭐ Пополнить баланс</button>
                 <button class="btn" style="width: 100%; font-size: 12px; padding: 9px; background: var(--text-secondary);" onclick="openWelcomeModal()">📖 Инструкция к игре</button>
             </div>
         </div>
@@ -448,6 +469,30 @@
         </div>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
+    <div class="modal-overlay" id="topup-modal">
+        <div class="modal-card">
+            <h3 style="margin-top: 0; color: var(--accent);">Выберите пакет пополнения</h3>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; text-align: left;">
+                <b>За Stars ⭐:</b><br>
+                - 100 молока = 50 звезд<br>
+                - 200 молока = 100 звезд<br>
+                - 500 молока = 200 звезд<br>
+                - 1000 молока = 400 звезд<br>
+                - 2000 молока = 750 звезд<br>
+                - 5000 молока = 1500 звезд<br><br>
+                <b>За TON 💎:</b><br>
+                - 100 молока = 0.7 TON<br>
+                - 200 молока = 1.2 TON<br>
+                - 500 молока = 2.5 TON<br>
+                - 1000 молока = 5 TON<br>
+                - 2000 молока = 9.5 TON<br>
+                - 5000 молока = 19 TON
+            </div>
+            <button class="btn" style="width: 100%; margin-top: 8px; background: var(--text-secondary);" onclick="closeTopUpModal()">Закрыть</button>
+        </div>
+    </div>
+
     <!-- МОДАЛЬНОЕ ОКНО ПРИВЕТСТВИЯ -->
     <div class="modal-overlay" id="welcome-modal">
         <div class="modal-card">
@@ -455,10 +500,10 @@
             <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--accent);">Уютная Ферма</h3>
             <div style="font-size: 13px; color: var(--text-secondary); text-align: left; line-height: 1.5; margin-bottom: 16px;">
                 <b>Правила игры:</b><br>
-                1. 📢 Получите бонус в разделе <b>«Бонусы»</b>.<br>
+                1. 📢 Получите бонус в разделе <b>«Бонусы»</b> (серия 7 дней).<br>
                 2. 🛍 Купите коров на рынке (до 5 уровней).<br>
                 3. ⏰ Коровы приносят молоко каждые <b>4 часа</b>.<br>
-                4. ⚠️ Через 4 часа фарм останавливается — не забывайте вовремя собирать прибыль!
+                4. ⚠️ Через 4 часа фарм останавливается — вовремя забирайте прибыль!
             </div>
             <button class="btn" style="width: 100%; font-size: 14px;" onclick="closeWelcomeModal()">Начать игру! 🚀</button>
         </div>
@@ -472,6 +517,11 @@
         let isSubscribedClaimed = false;
         let refCount = 0;
         let walletAddress = "";
+        
+        // Данные для 7-дневного бонуса
+        let dailyDay = 1;
+        let lastDailyClaimDate = 0;
+        const dailyRewards = [10, 20, 35, 50, 80, 120, 200];
 
         const cowDetails = {
             1: { name: "Бурёнка", icon: "🐄", income: 20 },
@@ -484,38 +534,51 @@
         const MAX_TIME_MS = 4 * 3600 * 1000;
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v15_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v15_milk'));
-            if (localStorage.getItem('milk_farm_v15_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v15_last_time'));
-            if (localStorage.getItem('milk_farm_v15_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v15_cows'));
-            if (localStorage.getItem('milk_farm_v15_clan')) clanName = localStorage.getItem('milk_farm_v15_clan');
-            if (localStorage.getItem('milk_farm_v15_sub')) isSubscribedClaimed = JSON.parse(localStorage.getItem('milk_farm_v15_sub'));
-            if (localStorage.getItem('milk_farm_v15_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v15_ref'));
-            if (localStorage.getItem('milk_farm_v15_wallet')) walletAddress = localStorage.getItem('milk_farm_v15_wallet');
+            if (localStorage.getItem('milk_farm_v16_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v16_milk'));
+            if (localStorage.getItem('milk_farm_v16_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v16_last_time'));
+            if (localStorage.getItem('milk_farm_v16_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v16_cows'));
+            if (localStorage.getItem('milk_farm_v16_clan')) clanName = localStorage.getItem('milk_farm_v16_clan');
+            if (localStorage.getItem('milk_farm_v16_sub')) isSubscribedClaimed = JSON.parse(localStorage.getItem('milk_farm_v16_sub'));
+            if (localStorage.getItem('milk_farm_v16_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v16_ref'));
+            if (localStorage.getItem('milk_farm_v16_wallet')) walletAddress = localStorage.getItem('milk_farm_v16_wallet');
+            if (localStorage.getItem('milk_farm_v16_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v16_dailyDay'));
+            if (localStorage.getItem('milk_farm_v16_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v16_lastDaily'));
             
+            checkDailyStreakReset();
             updateUI();
 
-            if (!localStorage.getItem('milk_farm_v15_visited')) {
+            if (!localStorage.getItem('milk_farm_v16_visited')) {
                 document.getElementById('welcome-modal').style.display = 'flex';
             }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v15_milk', milk);
-            localStorage.setItem('milk_farm_v15_last_time', lastClaimTime);
-            localStorage.setItem('milk_farm_v15_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v15_clan', clanName);
-            localStorage.setItem('milk_farm_v15_sub', isSubscribedClaimed);
-            localStorage.setItem('milk_farm_v15_ref', refCount);
-            localStorage.setItem('milk_farm_v15_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v16_milk', milk);
+            localStorage.setItem('milk_farm_v16_last_time', lastClaimTime);
+            localStorage.setItem('milk_farm_v16_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v16_clan', clanName);
+            localStorage.setItem('milk_farm_v16_sub', isSubscribedClaimed);
+            localStorage.setItem('milk_farm_v16_ref', refCount);
+            localStorage.setItem('milk_farm_v16_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v16_dailyDay', dailyDay);
+            localStorage.setItem('milk_farm_v16_lastDaily', lastDailyClaimDate);
         }
 
         function closeWelcomeModal() {
-            localStorage.setItem('milk_farm_v15_visited', 'true');
+            localStorage.setItem('milk_farm_v16_visited', 'true');
             document.getElementById('welcome-modal').style.display = 'none';
         }
 
         function openWelcomeModal() {
             document.getElementById('welcome-modal').style.display = 'flex';
+        }
+
+        function openTopUpModal() {
+            document.getElementById('topup-modal').style.display = 'flex';
+        }
+
+        function closeTopUpModal() {
+            document.getElementById('topup-modal').style.display = 'none';
         }
 
         function getBatchIncome() {
@@ -564,19 +627,48 @@
             }
         }
 
+        // Логика проверки и сброса серии пропущенного дня (> 48 часов с последнего сбора)
+        function checkDailyStreakReset() {
+            if (lastDailyClaimDate > 0) {
+                let now = Date.now();
+                let diff = now - lastDailyClaimDate;
+                // Если прошло больше 48 часов с последнего получения бонуса — сбрасываем серию на 1 день
+                if (diff > 48 * 3600 * 1000) {
+                    dailyDay = 1;
+                }
+            }
+        }
+
         function claimDailyReward() {
-            milk += 50;
+            let now = Date.now();
+            let oneDayMs = 24 * 3600 * 1000;
+
+            if (lastDailyClaimDate > 0 && (now - lastDailyClaimDate < oneDayMs)) {
+                alert("Вы уже забирали бонус сегодня! Приходите завтра.");
+                return;
+            }
+
+            let reward = dailyRewards[dailyDay - 1];
+            milk += reward;
+            lastDailyClaimDate = now;
+
+            alert(`Бонус дня ${dailyDay} получен: +${reward} 🥛!`);
+
+            dailyDay++;
+            if (dailyDay > 7) {
+                dailyDay = 1; // Цикл по кругу после 7 дней
+            }
+
             saveGame();
             updateUI();
-            alert("Бонус получен: +50 🥛!");
         }
 
         function watchAd() {
             setTimeout(() => {
-                milk += 10;
+                milk += 5; // Награда 5 молока за рекламу
                 saveGame();
                 updateUI();
-                alert("Реклама просмотрена: +10 🥛");
+                alert("Реклама просмотрена: +5 🥛");
             }, 500);
         }
 
@@ -606,32 +698,17 @@
             }
         }
 
-        function toggleWallet() {
-            if (!walletAddress) {
-                walletAddress = "TON: EQD...Connected";
-                alert("Telegram кошелек успешно привязан!");
-            } else {
-                walletAddress = "";
-                alert("Кошелек отключен.");
+        // Подключение кошелька с запросом и выводом адреса
+        function connectWallet() {
+            let tg = window.Telegram.WebApp;
+            // Имитируем стандартный диалог подключения кошелька (или реальный через WebApp)
+            if (confirm("Подключить TON Кошелек к Mini App?")) {
+                // Генерируем тестовый адрес для примера или подтягиваем реальный
+                walletAddress = "EQD4..._" + Math.floor(Math.random() * 8999 + 1000);
+                saveGame();
+                updateUI();
+                alert("Кошелек успешно подключен: " + walletAddress);
             }
-            saveGame();
-            updateUI();
-        }
-
-        function topUpStars() {
-            alert("Интеграция с Telegram Stars открыта. Пополнение обрабатывается.");
-        }
-
-        function withdrawFunds() {
-            if (!walletAddress) {
-                alert("Сначала подключите кошелек в профиле!");
-                return;
-            }
-            if (milk < 500) {
-                alert("Минимум для вывода: 500 🥛");
-                return;
-            }
-            alert("Запрос на вывод отправлен на обработку!");
         }
 
         function updateUI() {
@@ -678,6 +755,17 @@
             for (let i = 1; i <= 5; i++) {
                 document.getElementById(`count-${i}`).innerText = cows[i];
             }
+
+            // Отрисовка сетки 7-дневного бонуса
+            let dailyGridHtml = "";
+            for (let d = 1; d <= 7; d++) {
+                let isPassed = d < dailyDay;
+                let isCurrent = d === dailyDay;
+                let cls = isPassed ? "daily-box claimed" : "daily-box";
+                let statusText = isPassed ? "✅ Забрано" : `День ${d}<br><b>+${dailyRewards[d-1]}🥛</b>`;
+                dailyGridHtml += `<div class="${cls}">${statusText}</div>`;
+            }
+            document.getElementById('daily-grid-container').innerHTML = dailyGridHtml;
 
             let listContainer = document.getElementById('my-cows-list');
             let totalCows = Object.values(cows).reduce((a, b) => a + b, 0);
