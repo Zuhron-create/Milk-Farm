@@ -125,6 +125,10 @@
             background: #4a90e2;
             box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
         }
+        .btn-purple {
+            background: #8e44ad;
+            box-shadow: 0 4px 12px rgba(142, 68, 173, 0.3);
+        }
 
         /* ВКЛАДКИ */
         .tab-content {
@@ -176,21 +180,6 @@
             font-size: 13px;
         }
 
-        /* МИНИ-ИГРА ОБЛАСТЬ */
-        .minigame-area {
-            background: #faf8f5;
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            height: 180px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
-
         /* ТАБЛИЦА ЛИДЕРОВ */
         .leaderboard-item {
             display: flex;
@@ -204,7 +193,7 @@
             align-items: center;
         }
 
-        /* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (8 элементов) */
+        /* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (7 элементов) */
         .nav {
             position: fixed;
             bottom: 0;
@@ -214,7 +203,7 @@
             backdrop-filter: blur(10px);
             border-top: 1px solid var(--card-border);
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
+            grid-template-columns: repeat(7, 1fr);
             gap: 1px;
             padding: 6px 2px;
             box-sizing: border-box;
@@ -226,9 +215,9 @@
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 8px;
-            padding: 5px 1px;
+            padding: 6px 1px;
             color: var(--text-secondary);
-            font-size: 8px;
+            font-size: 9px;
             font-weight: 500;
             cursor: pointer;
             display: flex;
@@ -239,7 +228,7 @@
         }
 
         .nav-item span.icon {
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .nav-item.active {
@@ -304,11 +293,18 @@
             </div>
         </div>
 
-        <!-- 3. БОНУСЫ И ПОДПИСКА -->
+        <!-- 3. БОНУСЫ И РЕКЛАМА -->
         <div id="tab-daily" class="tab-content">
             <div class="section-card">
                 <h3>🗓 Ежедневный бонус</h3>
                 <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()">Забрать бонус (+500 🥛)</button>
+
+                <h3>📺 Заработок (Реклама)</h3>
+                <div class="shop-item" style="display: block; margin-bottom: 14px;">
+                    <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">Смотреть рекламу</div>
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +5 🥛 за просмотр</div>
+                    <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px;" onclick="watchAd()">🎬 Смотреть ролик</button>
+                </div>
 
                 <h3>📢 Задания проекта</h3>
                 <div class="shop-item" style="display: block; margin-bottom: 8px;">
@@ -320,22 +316,7 @@
             </div>
         </div>
 
-        <!-- 4. МИНИ-ИГРА (NEW) -->
-            <div id="tab-play" class="tab-content">
-            <div class="section-card" style="text-align: center;">
-                <h3>🎮 Сбор молока</h3>
-                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Ловите падающие бутылки молока, кликая по ним!</p>
-                <div class="minigame-area" id="game-field" onclick="catchMilkDrop(event)">
-                    <div id="falling-drop" style="position: absolute; font-size: 28px; cursor: pointer; display: none;" onclick="clickDrop(event)">🍼</div>
-                    <div id="game-start-screen" style="position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.8);">
-                        <button class="btn" style="padding: 10px 16px; font-size: 13px;" onclick="startMiniGame()">Начать игру</button>
-                    </div>
-                </div>
-                <div style="font-size: 14px; font-weight: 600;">Поймано: <span id="game-score" style="color: var(--accent);">0</span> 🥛</div>
-            </div>
-        </div>
-
-        <!-- 5. ТАБЛИЦА ЛИДЕРОВ (NEW) -->
+        <!-- 4. ТАБЛИЦА ЛИДЕРОВ -->
         <div id="tab-top" class="tab-content">
             <div class="section-card">
                 <h3>🏆 Топ Фермеров</h3>
@@ -347,7 +328,7 @@
             </div>
         </div>
 
-        <!-- 6. КЛАНЫ -->
+        <!-- 5. КЛАНЫ -->
         <div id="tab-clan" class="tab-content">
             <div class="section-card">
                 <h3>🛡 Кооперативы (Кланы)</h3>
@@ -359,7 +340,7 @@
             </div>
         </div>
 
-        <!-- 7. СОСЕДИ (ДРУЗЬЯ) -->
+        <!-- 6. СОСЕДИ (ДРУЗЬЯ) -->
         <div id="tab-ref" class="tab-content">
             <div class="section-card">
                 <h3>👥 Соседи-фермеры</h3>
@@ -368,7 +349,7 @@
             </div>
         </div>
 
-        <!-- 8. ПРОФИЛЬ И ПЛАНЫ -->
+        <!-- 7. ПРОФИЛЬ И ПЛАНЫ -->
         <div id="tab-profile" class="tab-content">
             <div class="section-card">
                 <h3>👤 Профиль фермера</h3>
@@ -381,12 +362,11 @@
             </div>
         </div>
 
-        <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (8 элементов) -->
+        <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (7 элементов) -->
         <div class="nav">
             <div class="nav-item active" id="nav-game" onclick="switchTab('game')"><span class="icon">🏡</span><span>Ферма</span></div>
             <div class="nav-item" id="nav-shop" onclick="switchTab('shop')"><span class="icon">🛍</span><span>Рынок</span></div>
             <div class="nav-item" id="nav-daily" onclick="switchTab('daily')"><span class="icon">🗓</span><span>Бонусы</span></div>
-            <div class="nav-item" id="nav-play" onclick="switchTab('play')"><span class="icon">🎮</span><span>Игра</span></div>
             <div class="nav-item" id="nav-top" onclick="switchTab('top')"><span class="icon">🏆</span><span>Топ</span></div>
             <div class="nav-item" id="nav-clan" onclick="switchTab('clan')"><span class="icon">🛡</span><span>Клан</span></div>
             <div class="nav-item" id="nav-ref" onclick="switchTab('ref')"><span class="icon">👥</span><span>Друзья</span></div>
@@ -405,13 +385,10 @@
     <script>
         let milk = 5000;
         let totalEarned = 5000;
-        let invitedCount = 0;
         let isWalletConnected = false;
         let cows = { 1: 0, 2: 0, 3: 0 };
         let clanName = "";
         let isSubscribedClaimed = false;
-        let gameScore = 0;
-        let dropInterval = null;
 
         const cowDetails = {
             1: { name: "Бурёнка", icon: "🐄" },
@@ -463,6 +440,19 @@
             alert("Бонус получен: +500 🥛!");
         }
 
+        /* Функция просмотра рекламы */
+        function watchAd() {
+            // Здесь в будущем можно подключить реальный SDK рекламы (например, Adsgram)
+            // Пока имитируем просмотр для теста:
+            setTimeout(() => {
+                milk += 5; 
+                totalEarned += 5;
+                saveGame(); 
+                updateUI();
+                alert("Спасибо за просмотр! Начислено +5 🥛");
+            }, 1000);
+        }
+
         function openChannel() { window.open('https://t.me/MilkFarmbott', '_blank'); }
 
         function checkChannelSubscription() {
@@ -471,35 +461,6 @@
             milk += 3000; totalEarned += 3000;
             saveGame(); updateUI();
             alert("Подписка подтверждена! Начислено +3,000 🥛");
-        }
-
-        /* Логика мини-игры */
-        function startMiniGame() {
-            document.getElementById('game-start-screen').style.display = 'none';
-            gameScore = 0;
-            document.getElementById('game-score').innerText = gameScore;
-            moveDrop();
-        }
-
-        function moveDrop() {
-            const drop = document.getElementById('falling-drop');
-            const field = document.getElementById('game-field');
-            drop.style.display = 'block';
-            let maxX = field.clientWidth - 40;
-            let maxY = field.clientHeight - 40;
-            drop.style.left = Math.floor(Math.random() * maxX) + 'px';
-            drop.style.top = Math.floor(Math.random() * maxY) + 'px';
-        }
-
-        function clickDrop(e) {
-            e.stopPropagation();
-            gameScore += 100;
-            milk += 100;
-            totalEarned += 100;
-            document.getElementById('game-score').innerText = gameScore;
-            saveGame();
-            updateUI();
-            moveDrop();
         }
 
         function createClan() {
