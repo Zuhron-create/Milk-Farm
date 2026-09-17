@@ -20,7 +20,7 @@
         }
         .cow-img {
             font-size: 100px;
-            margin: 20px 0;
+            margin: 15px 0;
             cursor: pointer;
             user-select: none;
             transition: transform 0.1s;
@@ -32,7 +32,7 @@
             background: #2a2a35;
             padding: 15px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .btn {
             background-color: #ff9800;
@@ -48,21 +48,88 @@
         .btn:active {
             background-color: #e68900;
         }
+        .btn-secondary {
+            background-color: #3f51b5;
+        }
+        .section {
+            display: none;
+            background: #2a2a35;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: left;
+        }
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .nav button {
+            flex: 1;
+            padding: 8px;
+            background: #333340;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .nav button.active {
+            background: #ff9800;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            background: #1e1e24;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🐄 Ферма Молока</h1>
-        <div class="stats">
-            <h2>Молоко: <span id="milk-count">0</span> 🥛</h2>
-            <p>Уровень коровы: <span id="cow-level">1</span></p>
-            <p>Доход в сек: <span id="milk-per-sec">1</span></p>
+
+        <div class="nav">
+            <button id="tab-game-btn" class="active" onclick="switchTab('game')">Игра</button>
+            <button id="tab-ref-btn" onclick="switchTab('ref')">Рефералы</button>
+            <button id="tab-top-btn" onclick="switchTab('top')">Лидеры</button>
         </div>
 
-        <div class="cow-img" onclick="collectMilk()">🐄</div>
-        <p>Тапай на корову!</p>
+        <!-- ВКЛАДКА ИГРЫ -->
+        <div id="tab-game" class="tab-content">
+            <div class="stats">
+                <h2>Молоко: <span id="milk-count">0</span> 🥛</h2>
+                <p>Уровень коровы: <span id="cow-level">1</span></p>
+                <p>Доход в сек: <span id="milk-per-sec">1</span></p>
+            </div>
 
-        <button class="btn" onclick="upgradeCow()">Улучшить корову (Цена: <span id="upgrade-cost">50</span> 🥛)</button>
+            <div class="cow-img" onclick="collectMilk()">🐄</div>
+            <p>Тапай на корову!</p>
+
+            <button class="btn" onclick="upgradeCow()">Улучшить корову (Цена: <span id="upgrade-cost">50</span> 🥛)</button>
+        </div>
+
+        <!-- ВКЛАДКА РЕФЕРАЛОВ -->
+        <div id="tab-ref" class="section tab-content" style="display: none;">
+            <h3>👥 Пригласи друга</h3>
+            <p>Получи 100 молока за каждого друга!</p>
+            <input type="text" id="ref-link" readonly onclick="this.select()">
+            <button class="btn btn-secondary" onclick="copyRefLink()">Скопировать ссылку</button>
+        </div>
+
+        <!-- ВКЛАДКА ЛИДЕРОВ -->
+        <div id="tab-top" class="section tab-content" style="display: none;">
+            <h3>🏆 Топ фермеров</h3>
+            <ol id="leaderboard-list">
+                <li><span>Ты</span> — <span id="top-my-score">0</span> 🥛</li>
+                <li><span>КоровкаБосс</span> — 15,400 🥛</li>
+                <li><span>МолочныйКороль</span> — 12,100 🥛</li>
+                <li><span>ФермерЖук</span> — 8,300 🥛</li>
+            </ol>
+        </div>
     </div>
 
     <script>
@@ -71,9 +138,33 @@
         let mps = 1;
         let upgradeCost = 50;
 
+        // Загрузка данных из памяти телефона при старте
+        function loadGame() {
+            const savedMilk = localStorage.getItem('milk_farm_milk');
+            const savedLevel = localStorage.getItem('milk_farm_level');
+            const savedCost = localStorage.getItem('milk_farm_cost');
+
+            if (savedMilk !== null) milk = parseInt(savedMilk);
+            if (savedLevel !== null) {
+                level = parseInt(savedLevel);
+                mps = level;
+            }
+            if (savedCost !== null) upgradeCost = parseInt(savedCost);
+            
+            updateUI();
+        }
+
+        // Сохранение данных в память телефона
+        function saveGame() {
+            localStorage.setItem('milk_farm_milk', milk);
+            localStorage.setItem('milk_farm_level', level);
+            localStorage.setItem('milk_farm_cost', upgradeCost);
+        }
+
         function collectMilk() {
             milk += level;
             updateUI();
+            saveGame();
         }
 
         function upgradeCow() {
@@ -83,6 +174,7 @@
                 mps = level;
                 upgradeCost = Math.floor(upgradeCost * 1.5);
                 updateUI();
+                saveGame();
             } else {
                 alert("Не хватает молока для улучшения!");
             }
@@ -93,17 +185,54 @@
             document.getElementById('cow-level').innerText = level;
             document.getElementById('milk-per-sec').innerText = mps;
             document.getElementById('upgrade-cost').innerText = upgradeCost;
+            document.getElementById('top-my-score').innerText = milk;
         }
 
-        // Автофарм (Idle каждые 2 секунды)
+        // Автофарм (Idle раз в секунду)
         setInterval(() => {
             milk += mps;
             updateUI();
+            saveGame();
         }, 1000);
 
-        // Инициализация Telegram WebApp
+        // Переключение вкладок
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.nav button').forEach(el => el.classList.remove('active'));
+
+            if (tabName === 'game') {
+                document.getElementById('tab-game').style.display = 'block';
+                document.getElementById('tab-game-btn').classList.add('active');
+            } else if (tabName === 'ref') {
+                document.getElementById('tab-ref').style.display = 'block';
+                document.getElementById('tab-ref-btn').classList.add('active');
+            } else if (tabName === 'top') {
+                document.getElementById('tab-top').style.display = 'block';
+                document.getElementById('tab-top-btn').classList.add('active');
+            }
+        }
+
+        // Генерация реферальной ссылки под твоего бота
         let tg = window.Telegram.WebApp;
         tg.expand();
+        
+        let botUsername = "milkfarmcash_bot"; // Твой юзернейм бота
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            let userId = tg.initDataUnsafe.user.id;
+            document.getElementById('ref-link').value = `https://t.me/${botUsername}?start=ref_${userId}`;
+        } else {
+            document.getElementById('ref-link').value = `https://t.me/${botUsername}?start=ref_test`;
+        }
+
+        function copyRefLink() {
+            const copyText = document.getElementById('ref-link');
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert("Реферальная ссылка скопирована!");
+        }
+
+        // Запуск при загрузке
+        loadGame();
     </script>
 </body>
 </html>
