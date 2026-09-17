@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milk Farm</title>
+    <title>Milk Farm - Loot Style</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #0f0f13;
-            --card-bg: #1a1a24;
+            --bg-color: #0b0e14;
+            --card-bg: #151a23;
+            --card-border: rgba(255, 255, 255, 0.07);
             --accent: #f59e0b;
-            --accent-hover: #d97706;
+            --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             --text-main: #ffffff;
             --text-secondary: #9ca3af;
         }
@@ -34,113 +35,103 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            padding-bottom: 70px;
         }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            font-weight: 700;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
 
-        .stats {
+        .user-badge {
             background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .stats-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
             padding: 20px;
             border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
         }
 
-        .milk-display {
-            font-size: 32px;
+        .milk-counter {
+            font-size: 36px;
             font-weight: 800;
             color: var(--accent);
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
-        .cow-card {
+        /* ЦЕНТРАЛЬНАЯ КАРТОЧКА ФЕРМЫ */
+        .farm-card {
             background: var(--card-bg);
+            border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            border: 1px solid rgba(255,255,255,0.05);
+            padding: 24px 16px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
+            text-align: center;
         }
 
-        .cow-img {
-            font-size: 90px;
-            margin: 10px 0;
-            user-select: none;
-            transition: transform 0.1s ease;
+        .cow-avatar {
+            font-size: 85px;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .cow-img:active {
-            transform: scale(0.92);
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .timer-display {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 16px;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 6px 14px;
+            border-radius: 12px;
         }
 
         .btn {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            background: var(--accent-gradient);
             color: white;
             border: none;
             padding: 14px 20px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             border-radius: 14px;
             cursor: pointer;
             width: 100%;
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-            transition: opacity 0.2s;
+            transition: transform 0.1s, opacity 0.2s;
         }
 
         .btn:active {
-            opacity: 0.8;
+            transform: scale(0.97);
+            opacity: 0.9;
         }
 
         .btn:disabled {
-            background: #374151;
-            color: #6b7280;
+            background: #252a34;
+            color: #4b5563;
             box-shadow: none;
             cursor: not-allowed;
-        }
-
-        /* НИЖНЕЕ МЕНЮ В ВИДЕ КВАДРАТИКОВ СО СМАЙЛИКАМИ */
-        .nav {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: auto;
-            padding-top: 10px;
-        }
-
-        .nav-item {
-            background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 12px 6px;
-            color: var(--text-secondary);
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s;
-        }
-
-        .nav-item span.icon {
-            font-size: 22px;
-        }
-
-        .nav-item.active {
-            background: rgba(245, 158, 11, 0.15);
-            border-color: var(--accent);
-            color: var(--accent);
         }
 
         /* ВКЛАДКИ */
@@ -156,16 +147,28 @@
 
         .section-card {
             background: var(--card-bg);
-            padding: 20px;
+            border: 1px solid var(--card-border);
+            padding: 18px;
             border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
             text-align: left;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .section-card h3 {
             margin-top: 0;
-            font-size: 18px;
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+
+        .shop-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--card-border);
+            padding: 12px;
+            border-radius: 14px;
+            margin-bottom: 10px;
         }
 
         input {
@@ -173,89 +176,172 @@
             padding: 12px;
             box-sizing: border-box;
             background: var(--bg-color);
-            border: 1px solid #374151;
+            border: 1px solid var(--card-border);
             color: white;
             border-radius: 10px;
             margin-top: 8px;
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        ol {
+        ol, ul {
             margin: 0;
-            padding-left: 20px;
+            padding-left: 18px;
         }
 
         li {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--text-secondary);
         }
-        
+
         li span {
             color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (КВАДРАТИКИ СО СМАЙЛИКАМИ) */
+        .nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 14, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--card-border);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            padding: 10px 12px;
+            box-sizing: border-box;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 8px 4px;
+            color: var(--text-secondary);
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            transition: all 0.2s;
+        }
+
+        .nav-item span.icon {
+            font-size: 20px;
+        }
+
+        .nav-item.active {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: var(--accent);
+            color: var(--accent);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🐄 Milk Farm</h1>
+        <div class="header">
+            <h1>🐄 Milk Farm</h1>
+            <div class="user-badge" id="username-display">Фермер</div>
+        </div>
 
-        <!-- ВКЛАДКА ИГРЫ -->
+        <!-- 1. ВКЛАДКА ИГРЫ (ФЕРМА) -->
         <div id="tab-game" class="tab-content active">
-            <div class="stats">
-                <div class="milk-display"><span id="milk-count">0</span> 🥛</div>
-                <div style="color: var(--text-secondary); font-size: 14px;">Уровень фермы: <span id="cow-level">1</span></div>
+            <div class="stats-card">
+                <div class="milk-counter"><span id="milk-count">0</span> 🥛</div>
+                <div style="color: var(--text-secondary); font-size: 13px;">Уровень фермы: <span id="cow-level">1</span></div>
             </div>
 
-            <div class="cow-card">
-                <div class="cow-img">🐄</div>
-                <div id="timer-text" style="font-size: 15px; color: var(--accent); margin-bottom: 15px; font-weight: 600;">Корова дает молоко...</div>
+            <div class="farm-card">
+                <div class="cow-avatar">🐄</div>
+                <div class="timer-text" id="timer-text">Коровка наполняет вёдра...</div>
                 <button id="collect-btn" class="btn" onclick="collectMilk()">Собрать молоко</button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА МАГАЗИНА -->
+        <!-- 2. ВКЛАДКА МАГАЗИНА -->
         <div id="tab-shop" class="tab-content">
             <div class="section-card">
-                <h3>🛍 Магазин улучшений</h3>
-                <p style="color: var(--text-secondary); font-size: 14px;">Повышайте уровень фермы, чтобы коровка приносила больше молока за сбор.</p>
-                <div style="margin-top: 15px; font-weight: 600;">Текущий уровень: <span id="shop-level">1</span></div>
-                <div style="margin-bottom: 15px; color: var(--text-secondary); font-size: 14px;">Награда за сбор: +<span id="shop-reward">1</span> 🥛</div>
-                <button class="btn" onclick="upgradeCow()">Улучшить ферму (<span id="upgrade-cost">50</span> 🥛)</button>
+                <h3>🛍 Улучшения фермы</h3>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 15px;">Прокачивайте уровень, чтобы получать больше молока за один сбор.</p>
+                
+                <div class="shop-item">
+                    <div>
+                        <div style="font-weight: 600;">Уровень фермы</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Текущий: <span id="shop-level">1</span> (+<span id="shop-reward">1</span> 🥛)</div>
+                    </div>
+                    <button class="btn" style="width: auto; padding: 10px 16px; font-size: 14px;" onclick="upgradeCow()">
+                        <span id="upgrade-cost">50</span> 🥛
+                    </button>
+                </div>
             </div>
         </div>
 
-        <!-- ВКЛАДКА РЕФЕРАЛОВ -->
+        <!-- 3. ВКЛАДКА ЗАДАНИЙ (НОВОЕ В СТИЛЕ ЛУТОКОТА) -->
+        <div id="tab-tasks" class="tab-content">
+            <div class="section-card">
+                <h3>⚡ Активности и квесты</h3>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 15px;">Выполняйте задания, чтобы получить стартовый капитал.</p>
+                
+                <div class="shop-item">
+                    <div>
+                        <div style="font-weight: 600;">Подписаться на канал</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Награда: +200 🥛</div>
+                    </div>
+                    <button class="btn" style="width: auto; padding: 8px 14px; font-size: 13px;" onclick="completeTask(200, this)">Проверить</button>
+                </div>
+
+                <div class="shop-item">
+                    <div>
+                        <div style="font-weight: 600;">Ежедневный бонус</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Награда: +50 🥛</div>
+                    </div>
+                    <button class="btn" style="width: auto; padding: 8px 14px; font-size: 13px;" onclick="completeTask(50, this)">Забрать</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. ВКЛАДКА РЕФЕРАЛОВ -->
         <div id="tab-ref" class="tab-content">
             <div class="section-card">
-                <h3>👥 Рефералы</h3>
-                <p style="color: var(--text-secondary); font-size: 14px;">Приглашайте друзей и получайте бонусы!</p>
+                <h3>👥 Друзья (Рефералы)</h3>
+                <p style="color: var(--text-secondary); font-size: 13px;">Приглашайте друзей и получайте % от их сбора молока!</p>
                 <input type="text" id="ref-link" readonly onclick="this.select()">
                 <button class="btn" style="margin-top: 12px;" onclick="copyRefLink()">Скопировать ссылку</button>
             </div>
         </div>
 
-        <!-- ВКЛАДКА ЛИДЕРОВ -->
+        <!-- 5. ВКЛАДКА ЛИДЕРОВ -->
         <div id="tab-top" class="tab-content">
             <div class="section-card">
-                <h3>🏆 Топ фермеров</h3>
-                <ol id="leaderboard-list">
-                    <li><span>Ты</span> — <span id="top-my-score">0</span> 🥛</li>
-                    <li><span>КоровкаБосс</span> — 15,400 🥛</li>
-                    <li><span>МолочныйКороль</span> — 12,100 🥛</li>
-                    <li><span>ФермерЖук</span> — 8,300 🥛</li>
+                <h3>🏆 Таблица лидеров</h3>
+                <ol id="leaderboard-list" style="padding-left: 20px;">
+                    <li style="margin-bottom: 10px;"><span>Ты</span> — <span id="top-my-score">0</span> 🥛</li>
+                    <li style="margin-bottom: 10px;"><span>MilkKing_99</span> — 18,450 🥛</li>
+                    <li style="margin-bottom: 10px;"><span>BOSSMilk</span> — 14,100 🥛</li>
+                    <li style="margin-bottom: 10px;"><span>FarmerJoe</span> — 9,800 🥛</li>
                 </ol>
             </div>
         </div>
 
-        <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+        <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (КВАДРАТИКИ СО СМАЙЛИКАМИ) -->
         <div class="nav">
             <div class="nav-item active" id="nav-game" onclick="switchTab('game')">
                 <span class="icon">🐄</span>
-                <span>Игра</span>
+                <span>Ферма</span>
             </div>
             <div class="nav-item" id="nav-shop" onclick="switchTab('shop')">
                 <span class="icon">🛍</span>
                 <span>Магазин</span>
+            </div>
+            <div class="nav-item" id="nav-tasks" onclick="switchTab('tasks')">
+                <span class="icon">⚡</span>
+                <span>Квесты</span>
             </div>
             <div class="nav-item" id="nav-ref" onclick="switchTab('ref')">
                 <span class="icon">👥</span>
@@ -273,7 +359,7 @@
         let level = 1;
         let upgradeCost = 50;
         let lastCollectionTime = 0;
-        const COLLECTION_COOLDOWN = 3 * 60 * 60 * 1000; // 3 часа в миллисекундах
+        const COLLECTION_COOLDOWN = 3 * 60 * 60 * 1000; // 3 часа таймер сбора
 
         function loadGame() {
             const savedMilk = localStorage.getItem('milk_farm_milk');
@@ -324,6 +410,15 @@
             }
         }
 
+        function completeTask(reward, btnElement) {
+            milk += reward;
+            saveGame();
+            updateUI();
+            btnElement.disabled = true;
+            btnElement.innerText = "Выполнено";
+            alert(`Награда получена: +${reward} 🥛!`);
+        }
+
         function updateUI() {
             document.getElementById('milk-count').innerText = milk;
             document.getElementById('cow-level').innerText = level;
@@ -332,7 +427,7 @@
             document.getElementById('upgrade-cost').innerText = upgradeCost;
             document.getElementById('top-my-score').innerText = milk;
 
-            // Проверка таймера для кнопки сбора
+            // Таймер для кнопки сбора
             const now = Date.now();
             const elapsed = now - lastCollectionTime;
             const btn = document.getElementById('collect-btn');
@@ -346,11 +441,10 @@
                 const timeLeft = COLLECTION_COOLDOWN - elapsed;
                 const hours = Math.floor(timeLeft / (1000 * 60 * 60));
                 const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                timerText.innerText = `Следующий сбор через: ${hours}ч ${minutes}м`;
+                timerText.innerText = `Сбор через: ${hours}ч ${minutes}м`;
             }
         }
 
-        // Обновление таймера каждую секунду
         setInterval(updateUI, 1000);
 
         function switchTab(tabName) {
@@ -361,16 +455,17 @@
             document.getElementById('nav-' + tabName).classList.add('active');
         }
 
-        // Telegram WebApp инициализация реферальной ссылки
+        // Telegram интеграция
         let tg = window.Telegram.WebApp;
         tg.expand();
         
-        let botUsername = "milkfarmcash_bot";
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            let userId = tg.initDataUnsafe.user.id;
-            document.getElementById('ref-link').value = `https://t.me/${botUsername}?start=ref_${userId}`;
+            let user = tg.initDataUnsafe.user;
+            document.getElementById('username-display').innerText = user.first_name || "Фермер";
+            let userId = user.id;
+            document.getElementById('ref-link').value = `https://t.me/milkfarmcash_bot?start=ref_${userId}`;
         } else {
-            document.getElementById('ref-link').value = `https://t.me/${botUsername}?start=ref_test`;
+            document.getElementById('ref-link').value = `https://t.me/milkfarmcash_bot?start=ref_test`;
         }
 
         function copyRefLink() {
