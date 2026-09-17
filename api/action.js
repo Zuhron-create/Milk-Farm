@@ -3,7 +3,8 @@ let tonConnectUI = null;
 // Инициализация при загрузке страницы
 window.addEventListener('DOMContentLoaded', () => {
     tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: 'https://raw.githubusercontent.com/your-username/your-repo/main/tonconnect-manifest.json', // Твой манифест
+        manifestUrl: 'https://tonconnect.org/manifest.json',
+
         buttonRootId: null
     });
 
