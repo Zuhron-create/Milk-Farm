@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head> 
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milk Farm - Уютная ферма</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Подключаем официальную библиотеку TON Connect UI -->
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
         :root {
             --bg-color: #f7f4ef;
@@ -122,7 +123,6 @@
         .btn-green { background: var(--green); box-shadow: 0 4px 12px rgba(129, 178, 154, 0.3); }
         .btn-blue { background: #4a90e2; box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3); }
         .btn-purple { background: #8e44ad; box-shadow: 0 4px 12px rgba(142, 68, 173, 0.3); }
-        .btn-red { background: #c0392b; box-shadow: 0 4px 12px rgba(192, 57, 43, 0.3); }
 
         .progress-container {
             width: 100%;
@@ -375,9 +375,8 @@
         <div id="tab-daily" class="tab-content">
             <div class="section-card">
                 <h3>🗓 Бонус 7 дней (Серия)</h3>
-                <div class="daily-grid" id="daily-grid-container">
-                    <!-- Заполняется JS -->
-                </div>
+                <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">⚠️ Пропустите 1 день — серия сбросится заново!</p>
+                <div class="daily-grid" id="daily-grid-container"></div>
                 <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()">Забрать бонус дня</button>
 
                 <h3>📺 Заработок (Реклама)</h3>
@@ -447,10 +446,14 @@
                 
                 <hr style="margin: 14px 0; border:0; border-top:1px solid var(--card-border);">
                 
-                <h3>💱 Пополнение и Курс</h3>
+                <h3>💱 Курс пополнения</h3>
                 <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.4;">
-                    <b>Stars ⭐:</b> 100m=50зв | 200m=100зв | 500m=200зв | 1000m=400зв | 2000m=750зв | 5000m=1500зв<br>
-                    <b>TON 💎:</b> 100m=0.7T | 200m=1.2T | 500m=2.5T | 1000m=5T | 2000m=9.5T | 5000m=19T
+                    <b>Stars ⭐:</b><br>
+                    100м = 50 ⭐ | 200м = 100 ⭐ | 500м = 200 ⭐<br>
+                    1000м = 400 ⭐ | 2000м = 750 ⭐ | 5000м = 1500 ⭐<br><br>
+                    <b>TON 💎:</b><br>
+                    100м = 0.7 TON | 200м = 1.2 TON | 500м = 2.5 TON<br>
+                    1000м = 5 TON | 2000м = 9.5 TON | 5000м = 19 TON
                 </div>
                 
                 <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openTopUpModal()">⭐ Пополнить баланс</button>
@@ -473,22 +476,22 @@
     <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div class="modal-overlay" id="topup-modal">
         <div class="modal-card">
-            <h3 style="margin-top: 0; color: var(--accent);">Выберите пакет пополнения</h3>
-            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; text-align: left;">
+            <h3 style="margin-top: 0; color: var(--accent);">Курс пополнения</h3>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; text-align: left; line-height: 1.5;">
                 <b>За Stars ⭐:</b><br>
-                - 100 молока = 50 звезд<br>
-                - 200 молока = 100 звезд<br>
-                - 500 молока = 200 звезд<br>
-                - 1000 молока = 400 звезд<br>
-                - 2000 молока = 750 звезд<br>
-                - 5000 молока = 1500 звезд<br><br>
+                • 100 молоко = 50 звезд<br>
+                • 200 молоко = 100 звезд<br>
+                • 500 молоко = 200 звезд<br>
+                • 1000 молоко = 400 звезд<br>
+                • 2000 молоко = 750 звезд<br>
+                • 5000 молоко = 1500 звезд<br><br>
                 <b>За TON 💎:</b><br>
-                - 100 молока = 0.7 TON<br>
-                - 200 молока = 1.2 TON<br>
-                - 500 молока = 2.5 TON<br>
-                - 1000 молока = 5 TON<br>
-                - 2000 молока = 9.5 TON<br>
-                - 5000 молока = 19 TON
+                • 100 молоко = 0.7 TON<br>
+                • 200 молоко = 1.2 TON<br>
+                • 500 молоко = 2.5 TON<br>
+                • 1000 молоко = 5 TON<br>
+                • 2000 молоко = 9.5 TON<br>
+                • 5000 молоко = 19 TON
             </div>
             <button class="btn" style="width: 100%; margin-top: 8px; background: var(--text-secondary);" onclick="closeTopUpModal()">Закрыть</button>
         </div>
@@ -501,7 +504,7 @@
             <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--accent);">Уютная Ферма</h3>
             <div style="font-size: 13px; color: var(--text-secondary); text-align: left; line-height: 1.5; margin-bottom: 16px;">
                 <b>Правила игры:</b><br>
-                1. 📢 Получите бонус в разделе <b>«Бонусы»</b> (серия 7 дней).<br>
+                1. 📢 Получите бонус в разделе <b>«Бонусы»</b> (серия 7 дней, пропуск сбрасывает прогресс).<br>
                 2. 🛍 Купите коров на рынке (до 5 уровней).<br>
                 3. ⏰ Коровы приносят молоко каждые <b>4 часа</b>.<br>
                 4. ⚠️ Через 4 часа фарм останавливается — вовремя забирайте прибыль!
@@ -519,10 +522,38 @@
         let refCount = 0;
         let walletAddress = "";
         
-        // Данные для 7-дневного бонуса
+        // 7-дневный бонус
         let dailyDay = 1;
         let lastDailyClaimDate = 0;
         const dailyRewards = [10, 20, 35, 50, 80, 120, 200];
+
+        // TON Connect UI инстанс
+        let tonConnectUI = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Инициализация TON Connect (не забудь заменить манифест под свой проект при публикации)
+            try {
+                tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+                    manifestUrl: 'https://raw.githubusercontent.com/zuxa/milkfarm/main/tonconnect-manifest.json',
+                    buttonRootId: null
+                });
+
+                tonConnectUI.onStatusChange(walletInfo => {
+                    if (walletInfo) {
+                        let rawAddress = walletInfo.account.address;
+                        walletAddress = rawAddress.slice(0, 4) + '...' + rawAddress.slice(-4);
+                        saveGame();
+                        updateUI();
+                    } else {
+                        walletAddress = "";
+                        saveGame();
+                        updateUI();
+                    }
+                });
+            } catch (e) {
+                console.log("TON Connect init error:", e);
+            }
+        });
 
         const cowDetails = {
             1: { name: "Бурёнка", icon: "🐄", income: 20 },
@@ -535,38 +566,38 @@
         const MAX_TIME_MS = 4 * 3600 * 1000;
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v16_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v16_milk'));
-            if (localStorage.getItem('milk_farm_v16_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v16_last_time'));
-            if (localStorage.getItem('milk_farm_v16_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v16_cows'));
-            if (localStorage.getItem('milk_farm_v16_clan')) clanName = localStorage.getItem('milk_farm_v16_clan');
-            if (localStorage.getItem('milk_farm_v16_sub')) isSubscribedClaimed = JSON.parse(localStorage.getItem('milk_farm_v16_sub'));
-            if (localStorage.getItem('milk_farm_v16_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v16_ref'));
-            if (localStorage.getItem('milk_farm_v16_wallet')) walletAddress = localStorage.getItem('milk_farm_v16_wallet');
-            if (localStorage.getItem('milk_farm_v16_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v16_dailyDay'));
-            if (localStorage.getItem('milk_farm_v16_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v16_lastDaily'));
+            if (localStorage.getItem('milk_farm_v17_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v17_milk'));
+            if (localStorage.getItem('milk_farm_v17_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v17_last_time'));
+            if (localStorage.getItem('milk_farm_v17_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v17_cows'));
+            if (localStorage.getItem('milk_farm_v17_clan')) clanName = localStorage.getItem('milk_farm_v17_clan');
+            if (localStorage.getItem('milk_farm_v17_sub')) isSubscribedClaimed = JSON.parse(localStorage.getItem('milk_farm_v17_sub'));
+            if (localStorage.getItem('milk_farm_v17_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v17_ref'));
+            if (localStorage.getItem('milk_farm_v17_wallet')) walletAddress = localStorage.getItem('milk_farm_v17_wallet');
+            if (localStorage.getItem('milk_farm_v17_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v17_dailyDay'));
+            if (localStorage.getItem('milk_farm_v17_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v17_lastDaily'));
             
             checkDailyStreakReset();
             updateUI();
 
-            if (!localStorage.getItem('milk_farm_v16_visited')) {
+            if (!localStorage.getItem('milk_farm_v17_visited')) {
                 document.getElementById('welcome-modal').style.display = 'flex';
             }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v16_milk', milk);
-            localStorage.setItem('milk_farm_v16_last_time', lastClaimTime);
-            localStorage.setItem('milk_farm_v16_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v16_clan', clanName);
-            localStorage.setItem('milk_farm_v16_sub', isSubscribedClaimed);
-            localStorage.setItem('milk_farm_v16_ref', refCount);
-            localStorage.setItem('milk_farm_v16_wallet', walletAddress);
-            localStorage.setItem('milk_farm_v16_dailyDay', dailyDay);
-            localStorage.setItem('milk_farm_v16_lastDaily', lastDailyClaimDate);
+            localStorage.setItem('milk_farm_v17_milk', milk);
+            localStorage.setItem('milk_farm_v17_last_time', lastClaimTime);
+            localStorage.setItem('milk_farm_v17_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v17_clan', clanName);
+            localStorage.setItem('milk_farm_v17_sub', isSubscribedClaimed);
+            localStorage.setItem('milk_farm_v17_ref', refCount);
+            localStorage.setItem('milk_farm_v17_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v17_dailyDay', dailyDay);
+            localStorage.setItem('milk_farm_v17_lastDaily', lastDailyClaimDate);
         }
 
         function closeWelcomeModal() {
-            localStorage.setItem('milk_farm_v16_visited', 'true');
+            localStorage.setItem('milk_farm_v17_visited', 'true');
             document.getElementById('welcome-modal').style.display = 'none';
         }
 
@@ -628,12 +659,11 @@
             }
         }
 
-        // Логика проверки и сброса серии пропущенного дня (> 48 часов с последнего сбора)
+        // Проверка сброса серии бонуса (если прошло больше 48 часов с последнего сбора)
         function checkDailyStreakReset() {
             if (lastDailyClaimDate > 0) {
                 let now = Date.now();
                 let diff = now - lastDailyClaimDate;
-                // Если прошло больше 48 часов с последнего получения бонуса — сбрасываем серию на 1 день
                 if (diff > 48 * 3600 * 1000) {
                     dailyDay = 1;
                 }
@@ -643,6 +673,13 @@
         function claimDailyReward() {
             let now = Date.now();
             let oneDayMs = 24 * 3600 * 1000;
+            let twoDaysMs = 48 * 3600 * 1000;
+
+            // Если пропустили больше 48 часов — сброс
+            if (lastDailyClaimDate > 0 && (now - lastDailyClaimDate > twoDaysMs)) {
+                dailyDay = 1;
+                alert("Вы пропустили день! Серия бонусов сброшена к началу.");
+            }
 
             if (lastDailyClaimDate > 0 && (now - lastDailyClaimDate < oneDayMs)) {
                 alert("Вы уже забирали бонус сегодня! Приходите завтра.");
@@ -657,7 +694,7 @@
 
             dailyDay++;
             if (dailyDay > 7) {
-                dailyDay = 1; // Цикл по кругу после 7 дней
+                dailyDay = 1; // Круг обновляется
             }
 
             saveGame();
@@ -699,16 +736,27 @@
             }
         }
 
-        // Подключение кошелька с запросом и выводом адреса
-        function connectWallet() {
-            let tg = window.Telegram.WebApp;
-            // Имитируем стандартный диалог подключения кошелька (или реальный через WebApp)
-            if (confirm("Подключить TON Кошелек к Mini App?")) {
-                // Генерируем тестовый адрес для примера или подтягиваем реальный
-                walletAddress = "EQD4..._" + Math.floor(Math.random() * 8999 + 1000);
-                saveGame();
-                updateUI();
-                alert("Кошелек успешно подключен: " + walletAddress);
+        // Вызов нативного TON Connect окна выбора кошелька
+        async function connectWallet() {
+            try {
+                if (tonConnectUI) {
+                    if (tonConnectUI.connected) {
+                        await tonConnectUI.disconnect();
+                    } else {
+                        await tonConnectUI.openModal();
+                    }
+                } else {
+                    // Запасной вариант, если библиотека не загрузилась
+                    if (confirm("Подключить TON Кошелек?")) {
+                        walletAddress = "UQDI...tJZa";
+                        saveGame();
+                        updateUI();
+                        alert("Кошелек успешно подключен: " + walletAddress);
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Ошибка при подключении кошелька");
             }
         }
 
@@ -761,7 +809,6 @@
             let dailyGridHtml = "";
             for (let d = 1; d <= 7; d++) {
                 let isPassed = d < dailyDay;
-                let isCurrent = d === dailyDay;
                 let cls = isPassed ? "daily-box claimed" : "daily-box";
                 let statusText = isPassed ? "✅ Забрано" : `День ${d}<br><b>+${dailyRewards[d-1]}🥛</b>`;
                 dailyGridHtml += `<div class="${cls}">${statusText}</div>`;
