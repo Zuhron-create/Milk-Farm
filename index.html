@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milk Farm - Idle Game</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background-color: #1e1e24;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .cow-img {
+            font-size: 100px;
+            margin: 20px 0;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+        }
+        .cow-img:active {
+            transform: scale(0.9);
+        }
+        .stats {
+            background: #2a2a35;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn:active {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐄 Ферма Молока</h1>
+        <div class="stats">
+            <h2>Молоко: <span id="milk-count">0</span> 🥛</h2>
+            <p>Уровень коровы: <span id="cow-level">1</span></p>
+            <p>Доход в сек: <span id="milk-per-sec">1</span></p>
+        </div>
+
+        <div class="cow-img" onclick="collectMilk()">🐄</div>
+        <p>Тапай на корову!</p>
+
+        <button class="btn" onclick="upgradeCow()">Улучшить корову (Цена: <span id="upgrade-cost">50</span> 🥛)</button>
+    </div>
+
+    <script>
+        let milk = 0;
+        let level = 1;
+        let mps = 1;
+        let upgradeCost = 50;
+
+        function collectMilk() {
+            milk += level;
+            updateUI();
+        }
+
+        function upgradeCow() {
+            if (milk >= upgradeCost) {
+                milk -= upgradeCost;
+                level++;
+                mps = level;
+                upgradeCost = Math.floor(upgradeCost * 1.5);
+                updateUI();
+            } else {
+                alert("Не хватает молока для улучшения!");
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('milk-count').innerText = milk;
+            document.getElementById('cow-level').innerText = level;
+            document.getElementById('milk-per-sec').innerText = mps;
+            document.getElementById('upgrade-cost').innerText = upgradeCost;
+        }
+
+        // Автофарм (Idle каждые 2 секунды)
+        setInterval(() => {
+            milk += mps;
+            updateUI();
+        }, 1000);
+
+        // Инициализация Telegram WebApp
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+    </script>
+</body>
+</html>
