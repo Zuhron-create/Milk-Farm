@@ -193,6 +193,28 @@
             align-items: center;
         }
 
+        /* МОДАЛЬНЫЕ ОКНА */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 16px;
+        }
+        .modal-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 24px;
+            width: 100%;
+            max-width: 340px;
+            box-sizing: border-box;
+            text-align: center;
+            border: 1px solid var(--card-border);
+        }
+
         /* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (7 элементов) */
         .nav {
             position: fixed;
@@ -249,7 +271,7 @@
         <!-- 1. ФЕРМА -->
         <div id="tab-game" class="tab-content active">
             <div class="stats-card">
-                <div class="milk-counter"><span id="milk-count">5000</span> 🥛</div>
+                <div class="milk-counter"><span id="milk-count">0</span> 🥛</div>
                 <div style="color: var(--text-secondary); font-size: 13px;">Доход в сек: +<span id="mps-display">0.00</span> 🥛</div>
             </div>
 
@@ -257,7 +279,7 @@
                 <div class="cow-avatar" id="main-cow-icon">🐄</div>
                 <div style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Ваше стадо коров:</div>
                 <div id="my-cows-list" style="width: 100%; text-align: left; max-height: 120px; overflow-y: auto; background: #faf8f5; padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
-                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас пока нет коров. Купите в магазине!</div>
+                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Подпишитесь на канал в бонусах, чтобы получить стартовый капитал!</div>
                 </div>
             </div>
         </div>
@@ -306,12 +328,12 @@
                     <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px;" onclick="watchAd()">🎬 Смотреть ролик</button>
                 </div>
 
-                <h3>📢 Задания проекта</h3>
+                <h3>📢 Старт в игре</h3>
                 <div class="shop-item" style="display: block; margin-bottom: 8px;">
                     <div style="font-weight: 600; font-size: 13px; margin-bottom: 6px;">Подпишись на канал</div>
-                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +3,000 🥛</div>
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +5,000 🥛 (на первую корову!)</div>
                     <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 8px; margin-bottom: 6px;" onclick="openChannel()">📢 Подписаться</button>
-                    <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 8px;" onclick="checkChannelSubscription()">✅ Проверить</button>
+                    <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 8px;" onclick="checkChannelSubscription()">✅ Проверить подписку</button>
                 </div>
             </div>
         </div>
@@ -324,7 +346,7 @@
                 <div class="leaderboard-item"><span>1. 🥇 Алексей</span><b>1,450,000 🥛</b></div>
                 <div class="leaderboard-item"><span>2. 🥈 Максим</span><b>980,000 🥛</b></div>
                 <div class="leaderboard-item"><span>3. 🥉 Елена</span><b>750,000 🥛</b></div>
-                <div class="leaderboard-item" style="border-color: var(--accent); background: rgba(224,122,95,0.05);"><span>Вы (<span id="top-my-name">Фермер</span>)</span><b id="top-my-score">5000 🥛</b></div>
+                <div class="leaderboard-item" style="border-color: var(--accent); background: rgba(224,122,95,0.05);"><span>Вы (<span id="top-my-name">Фермер</span>)</span><b id="top-my-score">0 🥛</b></div>
             </div>
         </div>
 
@@ -340,12 +362,17 @@
             </div>
         </div>
 
-        <!-- 6. СОСЕДИ (ДРУЗЬЯ) -->
+        <!-- 6. СОСЕДИ (РЕФЕРАЛЫ) -->
         <div id="tab-ref" class="tab-content">
             <div class="section-card">
-                <h3>👥 Соседи-фермеры</h3>
+                <h3>👥 Партнерская программа</h3>
+                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Получайте <b>10% от пополнений</b> и <b>10% от пассивного дохода</b> ваших рефералов!</p>
                 <input type="text" id="ref-link" readonly onclick="this.select()">
                 <button class="btn" style="width: 100%; margin-top: 10px;" onclick="copyRefLink()">Скопировать ссылку</button>
+                <div style="margin-top: 12px; font-size: 12px; color: var(--text-secondary);">
+                    Приглашено друзей: <span id="ref-count" style="font-weight: 600; color: var(--text-main);">0</span><br>
+                    Заработано с рефералов: <span id="ref-earned" style="font-weight: 600; color: var(--accent);">0 🥛</span>
+                </div>
             </div>
         </div>
 
@@ -358,7 +385,8 @@
                     ID: <span id="profile-id" style="color: var(--text-main); font-weight: 600;">—</span>
                 </div>
                 <button class="btn btn-green" id="wallet-btn" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="toggleWallet()">Подключить кошелек</button>
-                <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 9px;" onclick="openExchangeModal()">♻️ Обменять на Stars</button>
+                <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openExchangeModal()">♻️ Обменять на Stars</button>
+                <button class="btn" style="width: 100%; font-size: 12px; padding: 9px; background: var(--text-secondary);" onclick="openWelcomeModal()">📖 Инструкция к игре</button>
             </div>
         </div>
 
@@ -374,21 +402,39 @@
         </div>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО ПРИВЕТСТВИЯ И ИНСТРУКЦИИ (Только при первом входе) -->
+    <div class="modal-overlay" id="welcome-modal">
+        <div class="modal-card">
+            <div style="font-size: 45px; margin-bottom: 8px;">🐄🏡</div>
+            <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--accent);">Добро пожаловать в Уютную Ферму!</h3>
+            <div style="font-size: 13px; color: var(--text-secondary); text-align: left; line-height: 1.5; margin-bottom: 16px;">
+                <b>Как играть и зарабатывать:</b><br>
+                1. 📢 Зайдите во вкладку <b>«Бонусы»</b> и подпишитесь на канал, чтобы получить стартовые <b>5,000 молока</b>.<br>
+                2. 🛍 На рынке купите свою первую <b>Бурёнку</b>.<br>
+                3. 📈 Корова начнет приносить пассивный доход в реальном времени!<br>
+                4. 👥 Приглашайте друзей и получайте <b>10%</b> от их дохода и пополнений!
+            </div>
+            <button class="btn" style="width: 100%; font-size: 14px;" onclick="closeWelcomeModal()">Понятно, на ферму! 🚀</button>
+        </div>
+    </div>
+
     <!-- МОДАЛЬНОЕ ОКНО ОБМЕНА -->
-    <div class="modal-overlay" id="exchange-modal" style="position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); display:none; justify-content:center; align-items:center; z-index:100; padding:16px;">
-        <div class="modal-card" style="background:var(--card-bg); border-radius:20px; padding:20px; width:100%; max-width:320px;">
+    <div class="modal-overlay" id="exchange-modal">
+        <div class="modal-card">
             <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><h3 style="margin:0;">♻️ Обмен</h3><button onclick="closeExchangeModal()" style="background:none;border:none;font-size:16px;cursor:pointer;">✕</button></div>
             <div class="shop-item"><div>10 Stars (10k 🥛)</div><button class="btn btn-blue" style="padding: 6px 10px; font-size: 12px;" onclick="exchangeMilk(10000, 10)">Обменять</button></div>
         </div>
     </div>
 
     <script>
-        let milk = 5000;
-        let totalEarned = 5000;
+        let milk = 0;
+        let totalEarned = 0;
         let isWalletConnected = false;
         let cows = { 1: 0, 2: 0, 3: 0 };
         let clanName = "";
         let isSubscribedClaimed = false;
+        let refCount = 0;
+        let refEarned = 0;
 
         const cowDetails = {
             1: { name: "Бурёнка", icon: "🐄" },
@@ -403,25 +449,48 @@
         };
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v10_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v10_milk'));
-            if (localStorage.getItem('milk_farm_v10_total')) totalEarned = parseFloat(localStorage.getItem('milk_farm_v10_total'));
-            if (localStorage.getItem('milk_farm_v10_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v10_cows'));
-            if (localStorage.getItem('milk_farm_v10_clan')) clanName = localStorage.getItem('milk_farm_v10_clan');
+            if (localStorage.getItem('milk_farm_v12_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v12_milk'));
+            if (localStorage.getItem('milk_farm_v12_total')) totalEarned = parseFloat(localStorage.getItem('milk_farm_v12_total'));
+            if (localStorage.getItem('milk_farm_v12_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v12_cows'));
+            if (localStorage.getItem('milk_farm_v12_clan')) clanName = localStorage.getItem('milk_farm_v12_clan');
+            if (localStorage.getItem('milk_farm_v12_sub')) isSubscribedClaimed = JSON.parse(localStorage.getItem('milk_farm_v12_sub'));
+            if (localStorage.getItem('milk_farm_v12_refcount')) refCount = parseInt(localStorage.getItem('milk_farm_v12_refcount'));
+            if (localStorage.getItem('milk_farm_v12_refearned')) refEarned = parseFloat(localStorage.getItem('milk_farm_v12_refearned'));
+            
             updateUI();
+
+            // Проверка первого входа
+            let isFirstVisit = localStorage.getItem('milk_farm_v12_visited');
+            if (!isFirstVisit) {
+                document.getElementById('welcome-modal').style.display = 'flex';
+            }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v10_milk', milk);
-            localStorage.setItem('milk_farm_v10_total', totalEarned);
-            localStorage.setItem('milk_farm_v10_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v10_clan', clanName);
+            localStorage.setItem('milk_farm_v12_milk', milk);
+            localStorage.setItem('milk_farm_v12_total', totalEarned);
+            localStorage.setItem('milk_farm_v12_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v12_clan', clanName);
+            localStorage.setItem('milk_farm_v12_sub', isSubscribedClaimed);
+            localStorage.setItem('milk_farm_v12_refcount', refCount);
+            localStorage.setItem('milk_farm_v12_refearned', refEarned);
+        }
+
+        function closeWelcomeModal() {
+            localStorage.setItem('milk_farm_v12_visited', 'true');
+            document.getElementById('welcome-modal').style.display = 'none';
+        }
+
+        function openWelcomeModal() {
+            document.getElementById('welcome-modal').style.display = 'flex';
         }
 
         function getTotalMPS() {
             let mps = 0;
             for (let id in cows) mps += cows[id] * cowIncomes[id];
             if (clanName) mps *= 1.1;
-            return mps;
+            let refBonusMps = mps * 0.1 * (refCount * 0.2);
+            return mps + refBonusMps;
         }
 
         function buyCow(level, price) {
@@ -431,7 +500,7 @@
                 saveGame();
                 updateUI();
                 alert(`Куплена корова: «${cowDetails[level].name}»!`);
-            } else { alert("Недостаточно молока!"); }
+            } else { alert("Недостаточно молока! Подпишитесь на канал во вкладке «Бонусы», чтобы получить стартовые 5,000 молока."); }
         }
 
         function claimDailyReward() {
@@ -440,10 +509,7 @@
             alert("Бонус получен: +500 🥛!");
         }
 
-        /* Функция просмотра рекламы */
         function watchAd() {
-            // Здесь в будущем можно подключить реальный SDK рекламы (например, Adsgram)
-            // Пока имитируем просмотр для теста:
             setTimeout(() => {
                 milk += 5; 
                 totalEarned += 5;
@@ -456,11 +522,13 @@
         function openChannel() { window.open('https://t.me/MilkFarmbott', '_blank'); }
 
         function checkChannelSubscription() {
-            if (isSubscribedClaimed) { alert("Уже получено!"); return; }
+            if (isSubscribedClaimed) { alert("Вы уже получили бонус за подписку!"); return; }
             isSubscribedClaimed = true;
-            milk += 3000; totalEarned += 3000;
-            saveGame(); updateUI();
-            alert("Подписка подтверждена! Начислено +3,000 🥛");
+            milk += 5000; 
+            totalEarned += 5000;
+            saveGame(); 
+            updateUI();
+            alert("Подписка подтверждена! Начислено +5,000 🥛 на покупку первой коровы!");
         }
 
         function createClan() {
@@ -479,7 +547,13 @@
 
         function exchangeMilk(cost, stars) {
             if (milk >= cost) {
-                milk -= cost; saveGame(); updateUI(); closeExchangeModal();
+                milk -= cost; 
+                saveGame(); 
+                updateUI(); 
+                closeExchangeModal();
+                let refCut = cost * 0.1;
+                refEarned += refCut;
+                saveGame();
                 alert(`Обменено на ${stars} Stars!`);
             } else { alert("Недостаточно молока!"); }
         }
@@ -488,6 +562,8 @@
             document.getElementById('milk-count').innerText = Math.floor(milk);
             document.getElementById('mps-display').innerText = getTotalMPS().toFixed(4);
             document.getElementById('top-my-score').innerText = Math.floor(milk) + " 🥛";
+            document.getElementById('ref-count').innerText = refCount;
+            document.getElementById('ref-earned').innerText = Math.floor(refEarned) + " 🥛";
             
             if (clanName) {
                 document.getElementById('clan-name-disp').innerText = clanName;
@@ -501,7 +577,7 @@
             let listContainer = document.getElementById('my-cows-list');
             let totalCows = Object.values(cows).reduce((a, b) => a + b, 0);
             if (totalCows === 0) {
-                listContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Купите в магазине!</div>`;
+                listContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Подпишитесь на канал в бонусах, чтобы получить стартовый капитал!</div>`;
             } else {
                 let html = "";
                 for (let i = 1; i <= 3; i++) {
