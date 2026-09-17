@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="URL-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milk Farm - Уютная ферма</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -78,7 +78,7 @@
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 24px 16px;
+            padding: 20px 16px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.04);
             flex: 1;
             display: flex;
@@ -89,8 +89,8 @@
         }
 
         .cow-avatar {
-            font-size: 75px;
-            margin-bottom: 10px;
+            font-size: 65px;
+            margin-bottom: 8px;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -117,13 +117,6 @@
             background: var(--accent-hover);
         }
 
-        .btn:disabled {
-            background: #e0e0e0;
-            color: #9e9e9e;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
-
         .btn-green {
             background: var(--green);
             box-shadow: 0 4px 12px rgba(129, 178, 154, 0.3);
@@ -135,9 +128,6 @@
         .btn-blue {
             background: #4a90e2;
             box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-        }
-        .btn-blue:active {
-            background: #357abd;
         }
 
         /* ВКЛАДКИ */
@@ -206,6 +196,22 @@
             font-weight: 600;
         }
 
+        /* СЕТКА НАГРАД */
+        .daily-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .daily-box {
+            background: #faf8f5;
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 10px 6px;
+            text-align: center;
+            font-size: 12px;
+        }
+
         /* МОДАЛЬНЫЕ ОКНА */
         .modal-overlay {
             position: fixed;
@@ -231,26 +237,9 @@
             width: 100%;
             max-width: 360px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            animation: scaleUp 0.2s ease-out;
         }
 
-        @keyframes scaleUp {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .donate-option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #faf8f5;
-            border: 1px solid var(--card-border);
-            padding: 12px 14px;
-            border-radius: 14px;
-            margin-bottom: 10px;
-        }
-
-        /* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ */
+        /* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (7 элементов) */
         .nav {
             position: fixed;
             bottom: 0;
@@ -260,9 +249,9 @@
             backdrop-filter: blur(10px);
             border-top: 1px solid var(--card-border);
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 4px;
-            padding: 8px 6px;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            padding: 8px 4px;
             box-sizing: border-box;
             max-width: 450px;
             margin: 0 auto;
@@ -271,10 +260,10 @@
         .nav-item {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 6px 2px;
+            border-radius: 10px;
+            padding: 6px 1px;
             color: var(--text-secondary);
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 500;
             cursor: pointer;
             display: flex;
@@ -285,7 +274,7 @@
         }
 
         .nav-item span.icon {
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .nav-item.active {
@@ -299,11 +288,11 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="font-size: 20px; margin: 0;">🏡 Уютная Ферма</h1>
+            <h1 style="font-size: 19px; margin: 0;">🏡 Уютная Ферма</h1>
             <div class="user-badge" id="username-display">Фермер</div>
         </div>
 
-        <!-- 1. ВКЛАДКА ФЕРМЫ -->
+        <!-- 1. ФЕРМА -->
         <div id="tab-game" class="tab-content active">
             <div class="stats-card">
                 <div class="milk-counter"><span id="milk-count">5000</span> 🥛</div>
@@ -313,58 +302,52 @@
             <div class="farm-card">
                 <div class="cow-avatar" id="main-cow-icon">🐄</div>
                 <div style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">Ваше стадо коров:</div>
-                <div id="my-cows-list" style="width: 100%; text-align: left; max-height: 140px; overflow-y: auto; background: #faf8f5; padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
+                <div id="my-cows-list" style="width: 100%; text-align: left; max-height: 120px; overflow-y: auto; background: #faf8f5; padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
                     <div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас пока нет коров. Купите в магазине!</div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. ВКЛАДКА МАГАЗИНА -->
+        <!-- 2. РЫНОК -->
         <div id="tab-shop" class="tab-content">
             <div class="section-card">
                 <h3>🛍 Рынок бурёнок</h3>
-                <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 12px;">Каждая порода уникальна и приносит молоко ежедневно.</p>
-                
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐄 1 ур. «Бурёнка»</div>
-                        <div style="font-size: 11px; color: var(--green);">Прибыль: +50 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--green);">+50 🥛 / день</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-1">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(1, 5000)">5,000 🥛</button>
                 </div>
-
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐂 2 ур. «Пятнистая»</div>
-                        <div style="font-size: 11px; color: var(--green);">Прибыль: +117.6 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--green);">+117.6 🥛 / день</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-2">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(2, 10000)">10,000 🥛</button>
                 </div>
-
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐐 3 ур. «Горная буйволица»</div>
-                        <div style="font-size: 11px; color: var(--green);">Прибыль: +307.7 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--green);">+307.7 🥛 / день</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-3">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(3, 20000)">20,000 🥛</button>
                 </div>
-
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐃 4 ур. «Кибер-Бурёнка»</div>
-                        <div style="font-size: 11px; color: var(--green);">Прибыль: +833.3 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--green);">+833.3 🥛 / день</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-4">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(4, 50000)">50,000 🥛</button>
                 </div>
-
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🌟 5 ур. «Золотая корова»</div>
-                        <div style="font-size: 11px; color: var(--green);">Прибыль: +1,666.6 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--green);">+1,666.6 🥛 / день</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-5">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(5, 100000)">100,000 🥛</button>
@@ -372,22 +355,40 @@
             </div>
         </div>
 
-        <!-- 3. ВКЛАДКА КВЕСТОВ -->
-        <div id="tab-tasks" class="tab-content">
+        <!-- 3. БОНУСЫ И ЗАДАНИЯ С ПОДПИСКОЙ -->
+        <div id="tab-daily" class="tab-content">
             <div class="section-card">
-                <h3>⚡ Помощь по хозяйству</h3>
-                <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 12px;">Выполняйте задания для получения молока.</p>
-                <div class="shop-item">
-                    <div>
-                        <div style="font-weight: 600; font-size: 14px;">Ежедневная забота</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Награда: +500 🥛</div>
-                    </div>
-                    <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="completeTask(500, this)">Забрать</button>
+                <h3>🗓 Ежедневный бонус</h3>
+                <div class="daily-grid">
+                    <div class="daily-box">День 1<br><b>+500 🥛</b></div>
+                    <div class="daily-box">День 2<br><b>+1000 🥛</b></div>
+                    <div class="daily-box">День 3<br><b>+2000 🥛</b></div>
+                </div>
+                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()">Забрать бонус дня</button>
+
+                <h3>📢 Задания проекта</h3>
+                <div class="shop-item" style="display: block; margin-bottom: 8px;">
+                    <div style="font-weight: 600; font-size: 13px; margin-bottom: 6px;">Подпишись на официальный канал</div>
+                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +3,000 🥛</div>
+                    <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 8px; margin-bottom: 6px;" onclick="openChannel()">📢 Подписаться</button>
+                    <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 8px;" onclick="checkChannelSubscription()">✅ Проверить подписку</button>
                 </div>
             </div>
         </div>
 
-        <!-- 4. ВКЛАДКА ДРУЗЕЙ -->
+        <!-- 4. КЛАНЫ -->
+        <div id="tab-clan" class="tab-content">
+            <div class="section-card">
+                <h3>🛡 Кооперативы (Кланы)</h3>
+                <div class="shop-item" style="display: block;">
+                    <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Ваш клан: <span id="clan-name-disp" style="color: var(--accent);">Не создан</span></div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Бонус: <span id="clan-bonus">0%</span> к доходу молока</div>
+                    <button class="btn" style="width: 100%; font-size: 12px; padding: 8px;" onclick="createClan()">Создать / Вступить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. СОСЕДИ (ДРУЗЬЯ) -->
         <div id="tab-ref" class="tab-content">
             <div class="section-card">
                 <h3>👥 Соседи-фермеры</h3>
@@ -397,151 +398,76 @@
             </div>
         </div>
 
-        <!-- 5. ВКЛАДКА ПРОФИЛЯ -->
+        <!-- 6. ПРОФИЛЬ -->
         <div id="tab-profile" class="tab-content">
             <div class="section-card">
                 <h3>👤 Профиль фермера</h3>
-                <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 14px;">
+                <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
                     Имя: <span id="profile-name" style="color: var(--text-main); font-weight: 600;">Фермер</span><br>
                     ID: <span id="profile-id" style="color: var(--text-main); font-weight: 600;">—</span>
                 </div>
-
-                <div style="background: #faf8f5; border: 1px solid var(--card-border); padding: 12px; border-radius: 12px; margin-bottom: 12px; font-size: 13px;">
-                    <div style="margin-bottom: 6px;">👥 Приглашено друзей: <span id="stat-refs" style="font-weight: 600; color: var(--accent);">0</span></div>
-                    <div>🥛 Всего заработано молока: <span id="stat-total-earned" style="font-weight: 600; color: var(--green);">5000</span></div>
+                <div style="background: #faf8f5; border: 1px solid var(--card-border); padding: 10px; border-radius: 12px; margin-bottom: 10px; font-size: 13px;">
+                    <div style="margin-bottom: 4px;">👥 Приглашено: <span id="stat-refs" style="font-weight: 600; color: var(--accent);">0</span></div>
+                    <div>🥛 Всего заработано: <span id="stat-total-earned" style="font-weight: 600; color: var(--green);">5000</span></div>
                 </div>
-
-                <!-- Подключение кошелька Telegram -->
-                <div style="margin-bottom: 10px;">
-                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">Кошелек Telegram:</div>
-                    <button class="btn btn-green" id="wallet-btn" style="width: 100%; font-size: 13px; padding: 10px;" onclick="toggleWallet()">Подключить кошелек</button>
-                </div>
-
-                <!-- Кнопка пополнения баланса -->
-                <div style="margin-bottom: 10px;">
-                    <button class="btn" style="width: 100%; font-size: 13px; padding: 10px;" onclick="openTopUpModal()">💳 Пополнить баланс</button>
-                </div>
-
-                <!-- НОВОЕ: Кнопка обмена молока на Stars -->
-                <div style="margin-bottom: 10px;">
-                    <button class="btn btn-blue" style="width: 100%; font-size: 13px; padding: 10px;" onclick="openExchangeModal()">♻️ Обменять молоко на Stars</button>
-                </div>
-
-                <!-- НОВОЕ: Кнопка вывода средств -->
-                <div>
-                    <button class="btn" style="width: 100%; font-size: 13px; padding: 10px; background: #8d99ae;" onclick="openWithdrawModal()">💸 Вывести средства</button>
-                </div>
+                <div style="margin-bottom: 8px;"><button class="btn btn-green" id="wallet-btn" style="width: 100%; font-size: 12px; padding: 9px;" onclick="toggleWallet()">Подключить кошелек</button></div>
+                <div style="margin-bottom: 8px;"><button class="btn" style="width: 100%; font-size: 12px; padding: 9px;" onclick="openTopUpModal()">💳 Пополнить баланс</button></div>
+                <div style="margin-bottom: 8px;"><button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 9px;" onclick="openExchangeModal()">♻️ Обменять на Stars</button></div>
+                <div><button class="btn" style="width: 100%; font-size: 12px; padding: 9px; background: #8d99ae;" onclick="openWithdrawModal()">💸 Вывести средства</button></div>
             </div>
         </div>
 
-        <!-- 6. ВКЛАДКА ТОПА -->
-        <div id="tab-top" class="tab-content">
+        <!-- 7. ПЛАНЫ (ROADMAP) -->
+        <div id="tab-roadmap" class="tab-content">
             <div class="section-card">
-                <h3>🏆 Доска почета</h3>
-                <ol id="leaderboard-list" style="padding-left: 20px;">
-                    <li style="margin-bottom: 8px;"><span>Ты</span> — <span id="top-my-score">5000</span> 🥛</li>
-                    <li style="margin-bottom: 8px;"><span>Бабушка Эмма</span> — 240,500 🥛</li>
-                    <li style="margin-bottom: 8px;"><span>Фермер Джон</span> — 185,200 🥛</li>
-                </ol>
+                <h3>🚀 Планы развития (Roadmap)</h3>
+                <ul style="font-size: 13px;">
+                    <li><span>Q3 2026:</span> Запуск клановых войн и сезонов.</li>
+                    <li><span>Q4 2026:</span> Интеграция NFT-земель и уникальных питомцев.</li>
+                    <li><span>Q1 2027:</span> Глобальный листинг и турниры фермеров.</li>
+                </ul>
             </div>
         </div>
 
-        <!-- НИЖНЯЯ ПАНЕЛЬ (6 элементов) -->
+        <!-- НИЖНЯЯ ПАНЕЛЬ -->
         <div class="nav">
-            <div class="nav-item active" id="nav-game" onclick="switchTab('game')">
-                <span class="icon">🏡</span>
-                <span>Ферма</span>
-            </div>
-            <div class="nav-item" id="nav-shop" onclick="switchTab('shop')">
-                <span class="icon">🛍</span>
-                <span>Рынок</span>
-            </div>
-            <div class="nav-item" id="nav-tasks" onclick="switchTab('tasks')">
-                <span class="icon">⚡</span>
-                <span>Задания</span>
-            </div>
-            <div class="nav-item" id="nav-ref" onclick="switchTab('ref')">
-                <span class="icon">👥</span>
-                <span>Соседи</span>
-            </div>
-            <div class="nav-item" id="nav-profile" onclick="switchTab('profile')">
-                <span class="icon">👤</span>
-                <span>Профиль</span>
-            </div>
-            <div class="nav-item" id="nav-top" onclick="switchTab('top')">
-                <span class="icon">🏆</span>
-                <span>Топ</span>
-            </div>
+            <div class="nav-item active" id="nav-game" onclick="switchTab('game')"><span class="icon">🏡</span><span>Ферма</span></div>
+            <div class="nav-item" id="nav-shop" onclick="switchTab('shop')"><span class="icon">🛍</span><span>Рынок</span></div>
+            <div class="nav-item" id="nav-daily" onclick="switchTab('daily')"><span class="icon">🗓</span><span>Бонусы</span></div>
+            <div class="nav-item" id="nav-clan" onclick="switchTab('clan')"><span class="icon">🛡</span><span>Клан</span></div>
+            <div class="nav-item" id="nav-ref" onclick="switchTab('ref')"><span class="icon">👥</span><span>Соседи</span></div>
+            <div class="nav-item" id="nav-profile" onclick="switchTab('profile')"><span class="icon">👤</span><span>Профиль</span></div>
+            <div class="nav-item" id="nav-roadmap" onclick="switchTab('roadmap')"><span class="icon">🚀</span><span>Планы</span></div>
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ДОНАТА (ПОПОЛНЕНИЯ) -->
+    <!-- МОДАЛЬНЫЕ ОКНА -->
     <div class="modal-overlay" id="topup-modal">
         <div class="modal-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h3 style="margin: 0; font-size: 16px;">⭐ Пополнение баланса</h3>
-                <button onclick="closeTopUpModal()" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-secondary);">✕</button>
+                <h3 style="margin: 0; font-size: 16px;">⭐ Пополнение</h3>
+                <button onclick="closeTopUpModal()" style="background: none; border: none; font-size: 18px; cursor: pointer;">✕</button>
             </div>
-            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;">Выберите пакет молока. Оплата звездами Telegram ⭐️.</p>
-
-            <div class="donate-option">
-                <div>
-                    <div style="font-weight: 600; font-size: 14px;">🥛 10,000 молока</div>
-                </div>
-                <button class="btn" style="padding: 6px 12px; font-size: 12px;" onclick="buyDonatePackage(10000, 10)">10 ⭐</button>
-            </div>
-            <div class="donate-option">
-                <div>
-                    <div style="font-weight: 600; font-size: 14px;">🥛 50,000 молока</div>
-                </div>
-                <button class="btn" style="padding: 6px 12px; font-size: 12px;" onclick="buyDonatePackage(50000, 40)">40 ⭐</button>
-            </div>
-            <div class="donate-option">
-                <div>
-                    <div style="font-weight: 600; font-size: 14px;">🥛 150,000 молока</div>
-                </div>
-                <button class="btn" style="padding: 6px 12px; font-size: 12px;" onclick="buyDonatePackage(150000, 100)">100 ⭐</button>
-            </div>
+            <div class="shop-item"><div>10,000 🥛</div><button class="btn" style="padding: 6px 10px; font-size: 12px;" onclick="buyDonatePackage(10000, 10)">10 ⭐</button></div>
         </div>
     </div>
-
-    <!-- МОДАЛЬНОЕ ОКНО ОБМЕНА МОЛОКА НА STARS -->
     <div class="modal-overlay" id="exchange-modal">
         <div class="modal-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h3 style="margin: 0; font-size: 16px;">♻️ Обмен молока на Stars</h3>
-                <button onclick="closeExchangeModal()" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-secondary);">✕</button>
+                <h3 style="margin: 0; font-size: 16px;">♻️ Обмен</h3>
+                <button onclick="closeExchangeModal()" style="background: none; border: none; font-size: 18px; cursor: pointer;">✕</button>
             </div>
-            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;">Курс: 10,000 🥛 = 10 Stars (⭐)</p>
-            
-            <div class="donate-option">
-                <div>
-                    <div style="font-weight: 600; font-size: 14px;">10 Stars (⭐)</div>
-                    <div style="font-size: 11px; color: var(--text-secondary);">Цена: 10,000 🥛</div>
-                </div>
-                <button class="btn btn-blue" style="padding: 6px 12px; font-size: 12px;" onclick="exchangeMilk(10000, 10)">Обменять</button>
-            </div>
-            <div class="donate-option">
-                <div>
-                    <div style="font-weight: 600; font-size: 14px;">50 Stars (⭐)</div>
-                    <div style="font-size: 11px; color: var(--text-secondary);">Цена: 50,000 🥛</div>
-                </div>
-                <button class="btn btn-blue" style="padding: 6px 12px; font-size: 12px;" onclick="exchangeMilk(50000, 50)">Обменять</button>
-            </div>
+            <div class="shop-item"><div>10 Stars (10k 🥛)</div><button class="btn btn-blue" style="padding: 6px 10px; font-size: 12px;" onclick="exchangeMilk(10000, 10)">Обменять</button></div>
         </div>
     </div>
-
-    <!-- МОДАЛЬНОЕ ОКНО ВЫВОДА СРЕДСТВ -->
     <div class="modal-overlay" id="withdraw-modal">
         <div class="modal-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h3 style="margin: 0; font-size: 16px;">💸 Вывод средств</h3>
-                <button onclick="closeWithdrawModal()" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-secondary);">✕</button>
+                <h3 style="margin: 0; font-size: 16px;">💸 Вывод</h3>
+                <button onclick="closeWithdrawModal()" style="background: none; border: none; font-size: 18px; cursor: pointer;">✕</button>
             </div>
-            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Вывод доступен на подключенный Telegram-кошелек.</p>
-            
-            <input type="number" id="withdraw-amount" placeholder="Количество Stars для вывода" style="margin-bottom: 12px;">
-            <button class="btn" style="width: 100%; font-size: 13px; padding: 10px;" onclick="requestWithdraw()">Создать заявку на вывод</button>
+            <input type="number" id="withdraw-amount" placeholder="Сумма в Stars" style="margin-bottom: 10px;">
+            <button class="btn" style="width: 100%; font-size: 12px; padding: 10px;" onclick="requestWithdraw()">Создать заявку</button>
         </div>
     </div>
 
@@ -551,6 +477,9 @@
         let invitedCount = 0;
         let isWalletConnected = false;
         let cows = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+        let clanName = "";
+        let claimStreak = 0;
+        let isSubscribedClaimed = false;
 
         const cowDetails = {
             1: { name: "Бурёнка", icon: "🐄" },
@@ -569,27 +498,24 @@
         };
 
         function loadGame() {
-            const savedMilk = localStorage.getItem('milk_farm_milk_v7');
-            const savedTotal = localStorage.getItem('milk_farm_total_v7');
-            const savedRefs = localStorage.getItem('milk_farm_refs_v7');
-            const savedWallet = localStorage.getItem('milk_farm_wallet_v7');
-            const savedCows = localStorage.getItem('milk_farm_cows_v7');
-
-            if (savedMilk !== null) milk = parseFloat(savedMilk);
-            if (savedTotal !== null) totalEarned = parseFloat(savedTotal);
-            if (savedRefs !== null) invitedCount = parseInt(savedRefs);
-            if (savedWallet !== null) isWalletConnected = JSON.parse(savedWallet);
-            if (savedCows !== null) cows = JSON.parse(savedCows);
-
+            if (localStorage.getItem('milk_farm_v9_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v9_milk'));
+            if (localStorage.getItem('milk_farm_v9_total')) totalEarned = parseFloat(localStorage.getItem('milk_farm_v9_total'));
+            if (localStorage.getItem('milk_farm_v9_refs')) invitedCount = parseInt(localStorage.getItem('milk_farm_v9_refs'));
+            if (localStorage.getItem('milk_farm_v9_wallet')) isWalletConnected = JSON.parse(localStorage.getItem('milk_farm_v9_wallet'));
+            if (localStorage.getItem('milk_farm_v9_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v9_cows'));
+            if (localStorage.getItem('milk_farm_v9_clan')) clanName = localStorage.getItem('milk_farm_v9_clan');
+            if (localStorage.getItem('milk_farm_v9_sub')) isSubscribedClaimed = JSON.parse(localStorage.getItem('milk_farm_v9_sub'));
             updateUI();
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_milk_v7', milk);
-            localStorage.setItem('milk_farm_total_v7', totalEarned);
-            localStorage.setItem('milk_farm_refs_v7', invitedCount);
-            localStorage.setItem('milk_farm_wallet_v7', isWalletConnected);
-            localStorage.setItem('milk_farm_cows_v7', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v9_milk', milk);
+            localStorage.setItem('milk_farm_v9_total', totalEarned);
+            localStorage.setItem('milk_farm_v9_refs', invitedCount);
+            localStorage.setItem('milk_farm_v9_wallet', isWalletConnected);
+            localStorage.setItem('milk_farm_v9_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v9_clan', clanName);
+            localStorage.setItem('milk_farm_v9_sub', isSubscribedClaimed);
         }
 
         function getTotalMPS() {
@@ -597,6 +523,7 @@
             for (let id in cows) {
                 mps += cows[id] * cowIncomes[id];
             }
+            if (clanName) mps *= 1.1;
             return mps;
         }
 
@@ -606,130 +533,117 @@
                 cows[level]++;
                 saveGame();
                 updateUI();
-                alert(`Вы успешно приобрели корову «${cowDetails[level].name}»!`);
+                alert(`Куплена корова: «${cowDetails[level].name}»!`);
             } else {
-                alert("Недостаточно молока для покупки!");
+                alert("Недостаточно молока!");
             }
         }
 
-        function completeTask(reward, btnElement) {
+        function claimDailyReward() {
+            let reward = 500;
             milk += reward;
             totalEarned += reward;
             saveGame();
             updateUI();
-            btnElement.disabled = true;
-            btnElement.innerText = "Готово";
-            alert(`Награда получена: +${reward} 🥛`);
+            alert(`Бонус получен: +${reward} 🥛!`);
+        }
+
+        function openChannel() {
+            window.open('https://t.me/MilkFarmbott', '_blank');
+        }
+
+        function checkChannelSubscription() {
+            if (isSubscribedClaimed) {
+                alert("Вы уже забрали награду за подписку!");
+                return;
+            }
+            // Симуляция проверки подписки (в полноценном приложении можно верифицировать через бэкенд бота)
+            isSubscribedClaimed = true;
+            let reward = 3000;
+            milk += reward;
+            totalEarned += reward;
+            saveGame();
+            updateUI();
+            alert(`Подписка подтверждена! Начислено +${reward} 🥛`);
+        }
+
+        function createClan() {
+            let name = prompt("Введите название вашего клана:", "Молочные Братья");
+            if (name) {
+                clanName = name;
+                saveGame();
+                updateUI();
+                alert(`Клан «${clanName}» создан! Бонус +10% активирован.`);
+            }
         }
 
         function toggleWallet() {
             isWalletConnected = !isWalletConnected;
             saveGame();
             updateUI();
-            if (isWalletConnected) {
-                alert("Telegram кошелек успешно подключен! 👛");
-            } else {
-                alert("Кошелек отключен.");
-            }
+            alert(isWalletConnected ? "Кошелек подключен! 👛" : "Кошелек отключен.");
         }
 
-        // Управление модальными окнами
         function openTopUpModal() { document.getElementById('topup-modal').classList.add('open'); }
         function closeTopUpModal() { document.getElementById('topup-modal').classList.remove('open'); }
-
         function openExchangeModal() { document.getElementById('exchange-modal').classList.add('open'); }
         function closeExchangeModal() { document.getElementById('exchange-modal').classList.remove('open'); }
-
         function openWithdrawModal() {
-            if (!isWalletConnected) {
-                alert("Сначала подключите Telegram-кошелек в профиле!");
-                return;
-            }
+            if (!isWalletConnected) { alert("Сначала подключите кошелек!"); return; }
             document.getElementById('withdraw-modal').classList.add('open');
         }
         function closeWithdrawModal() { document.getElementById('withdraw-modal').classList.remove('open'); }
 
-        function buyDonatePackage(milkAmount, starsPrice) {
+        function buyDonatePackage(amt, stars) {
             closeTopUpModal();
-            milk += milkAmount;
-            totalEarned += milkAmount;
-            saveGame();
-            updateUI();
-            alert(`Успешно! Баланс пополнен на +${milkAmount} 🥛 (Оплата: ${starsPrice} ⭐).`);
+            milk += amt; totalEarned += amt;
+            saveGame(); updateUI();
+            alert(`Баланс пополнен на +${amt} 🥛`);
         }
 
-        function exchangeMilk(milkCost, starsAmount) {
-            if (milk >= milkCost) {
-                milk -= milkCost;
-                saveGame();
-                updateUI();
+        function exchangeMilk(cost, stars) {
+            if (milk >= cost) {
+                milk -= cost;
+                saveGame(); updateUI();
                 closeExchangeModal();
-                alert(`Успешно! Обменено ${milkCost} 🥛 на ${starsAmount} Stars (⭐). Зачислено на ваш кошелек.`);
-            } else {
-                alert("Недостаточно молока для обмена!");
-            }
+                alert(`Обменено на ${stars} Stars!`);
+            } else { alert("Недостаточно молока!"); }
         }
 
         function requestWithdraw() {
-            let amount = document.getElementById('withdraw-amount').value;
-            if (!amount || isNaN(amount) || Number(amount) <= 0) {
-                alert("Введите корректную сумму для вывода!");
-                return;
-            }
+            let amt = document.getElementById('withdraw-amount').value;
+            if (!amt || amt <= 0) { alert("Введите корректную сумму!"); return; }
             closeWithdrawModal();
-            alert(`Заявка на вывод ${amount} Stars (⭐) успешно отправлена! Средства поступят на ваш подключенный кошелек в течение 24 часов.`);
-            document.getElementById('withdraw-amount').value = "";
+            alert(`Заявка на вывод ${amt} Stars принята!`);
         }
 
         function updateUI() {
             document.getElementById('milk-count').innerText = Math.floor(milk);
-            document.getElementById('top-my-score').innerText = Math.floor(milk);
             document.getElementById('stat-total-earned').innerText = Math.floor(totalEarned);
             document.getElementById('stat-refs').innerText = invitedCount;
-
-            let walletBtn = document.getElementById('wallet-btn');
-            if (isWalletConnected) {
-                walletBtn.innerText = "✅ Кошелек подключен";
-            } else {
-                walletBtn.innerText = "Подключить кошелек";
-                walletBtn.style.background = "var(--green)";
-            }
+            document.getElementById('mps-display').innerText = getTotalMPS().toFixed(4);
             
-            let mps = getTotalMPS();
-            document.getElementById('mps-display').innerText = mps.toFixed(4);
+            let walletBtn = document.getElementById('wallet-btn');
+            walletBtn.innerText = isWalletConnected ? "✅ Кошелек подключен" : "Подключить кошелек";
+
+            if (clanName) {
+                document.getElementById('clan-name-disp').innerText = clanName;
+                document.getElementById('clan-bonus').innerText = "10%";
+            }
 
             for (let i = 1; i <= 5; i++) {
                 document.getElementById(`count-${i}`).innerText = cows[i];
             }
 
-            let highestLevelCow = 0;
-            for (let i = 5; i >= 1; i--) {
-                if (cows[i] > 0) {
-                    highestLevelCow = i;
-                    break;
-                }
-            }
-
-            const mainCowIcon = document.getElementById('main-cow-icon');
-            if (highestLevelCow > 0) {
-                mainCowIcon.innerText = cowDetails[highestLevelCow].icon;
-            } else {
-                mainCowIcon.innerText = "🐄";
-            }
-
             let listContainer = document.getElementById('my-cows-list');
-            let totalCowsCount = Object.values(cows).reduce((a, b) => a + b, 0);
-
-            if (totalCowsCount === 0) {
-                listContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас пока нет коров. Купите в магазине!</div>`;
+            let totalCows = Object.values(cows).reduce((a, b) => a + b, 0);
+            if (totalCows === 0) {
+                listContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Купите в магазине!</div>`;
             } else {
                 let html = "";
                 for (let i = 1; i <= 5; i++) {
                     if (cows[i] > 0) {
-                        html += `<div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 6px; background: white; padding: 6px 10px; border-radius: 8px;">
-                            <span>${cowDetails[i].icon} ${cowDetails[i].name}</span>
-                            <span style="font-weight: 600;">× ${cows[i]}</span>
-                        </div>`;
+                        html += `<div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; background: white; padding: 4px 8px; border-radius: 6px;"><span>${cowDetails[i].icon} ${cowDetails[i].name}</span><b>× ${cows[i]}</b></div>`;
                     }
                 }
                 listContainer.innerHTML = html;
@@ -746,40 +660,34 @@
             }
         }, 1000);
 
-        function switchTab(tabName) {
+        function switchTab(name) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-
-            document.getElementById('tab-' + tabName).classList.add('active');
-            document.getElementById('nav-' + tabName).classList.add('active');
+            document.getElementById('tab-' + name).classList.add('active');
+            document.getElementById('nav-' + name).classList.add('active');
         }
 
         let tg = window.Telegram.WebApp;
         tg.expand();
-        
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             let user = tg.initDataUnsafe.user;
-            let firstName = user.first_name || "Фермер";
-            let userId = user.id;
-
-            document.getElementById('username-display').innerText = firstName;
-            document.getElementById('profile-name').innerText = firstName;
-            document.getElementById('profile-id').innerText = userId;
-            document.getElementById('ref-link').value = `https://t.me/milkfarmcash_bot?start=ref_${userId}`;
+            document.getElementById('username-display').innerText = user.first_name || "Фермер";
+            document.getElementById('profile-name').innerText = user.first_name || "Фермер";
+            document.getElementById('profile-id').innerText = user.id;
+            document.getElementById('ref-link').value = `https://t.me/milkfarmcash_bot?start=ref_${user.id}`;
         } else {
             document.getElementById('ref-link').value = `https://t.me/milkfarmcash_bot?start=ref_test`;
             document.getElementById('profile-id').innerText = "12345678 (Test)";
         }
 
         function copyRefLink() {
-            const copyText = document.getElementById('ref-link');
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value);
-            alert("Ссылка на ферму скопирована!");
+            const txt = document.getElementById('ref-link');
+            txt.select();
+            navigator.clipboard.writeText(txt.value);
+            alert("Ссылка скопирована!");
         }
 
         loadGame();
     </script>
 </body>
 </html>
-
