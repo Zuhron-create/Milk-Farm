@@ -263,14 +263,14 @@
         <div id="tab-shop" class="tab-content">
             <div class="section-card">
                 <h3>🛍 Рынок бурёнок</h3>
-                <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 12px;">Каждая порода уникальна и приносит разный пассивный доход.</p>
+                <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 12px;">Каждая порода уникальна и приносит молоко ежедневно.</p>
                 
                 <!-- Корова 1 -->
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐄 1 ур. «Бурёнка»</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Окупаемость: 100 дней</div>
-                        <div style="font-size: 11px; color: var(--green);">У вас: <span id="count-1">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--green);">Прибыль: +50 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-1">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(1, 5000)">5,000 🥛</button>
                 </div>
@@ -279,8 +279,8 @@
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐂 2 ур. «Пятнистая»</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Окупаемость: 85 дней</div>
-                        <div style="font-size: 11px; color: var(--green);">У вас: <span id="count-2">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--green);">Прибыль: +117.6 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-2">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(2, 10000)">10,000 🥛</button>
                 </div>
@@ -289,8 +289,8 @@
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐐 3 ур. «Горная буйволица»</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Окупаемость: 65 дней</div>
-                        <div style="font-size: 11px; color: var(--green);">У вас: <span id="count-3">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--green);">Прибыль: +307.7 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-3">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(3, 20000)">20,000 🥛</button>
                 </div>
@@ -299,8 +299,8 @@
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐃 4 ур. «Кибер-Бурёнка»</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Окупаемость: 60 дней</div>
-                        <div style="font-size: 11px; color: var(--green);">У вас: <span id="count-4">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--green);">Прибыль: +833.3 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-4">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(4, 50000)">50,000 🥛</button>
                 </div>
@@ -309,8 +309,8 @@
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🌟 5 ур. «Золотая корова»</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">Окупаемость: 60 дней</div>
-                        <div style="font-size: 11px; color: var(--green);">У вас: <span id="count-5">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--green);">Прибыль: +1,666.6 🥛 / день</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-5">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(5, 100000)">100,000 🥛</button>
                 </div>
@@ -383,7 +383,6 @@
         let milk = 5000;
         let cows = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
-        // Описания и иконки для каждого уровня коров
         const cowDetails = {
             1: { name: "Бурёнка", icon: "🐄" },
             2: { name: "Пятнистая", icon: "🐂" },
@@ -401,8 +400,8 @@
         };
 
         function loadGame() {
-            const savedMilk = localStorage.getItem('milk_farm_milk_v3');
-            const savedCows = localStorage.getItem('milk_farm_cows_v3');
+            const savedMilk = localStorage.getItem('milk_farm_milk_v4');
+            const savedCows = localStorage.getItem('milk_farm_cows_v4');
 
             if (savedMilk !== null) milk = parseFloat(savedMilk);
             if (savedCows !== null) cows = JSON.parse(savedCows);
@@ -410,8 +409,8 @@
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_milk_v3', milk);
-            localStorage.setItem('milk_farm_cows_v3', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_milk_v4', milk);
+            localStorage.setItem('milk_farm_cows_v4', JSON.stringify(cows));
         }
 
         function getTotalMPS() {
@@ -454,7 +453,6 @@
                 document.getElementById(`count-${i}`).innerText = cows[i];
             }
 
-            // Динамическое обновление главной иконки (показывает самую старшую купленную корову)
             let highestLevelCow = 0;
             for (let i = 5; i >= 1; i--) {
                 if (cows[i] > 0) {
@@ -470,7 +468,6 @@
                 mainCowIcon.innerText = "🐄";
             }
 
-            // Отрисовка списка купленных коров с их уникальными иконками и именами
             let listContainer = document.getElementById('my-cows-list');
             let totalCowsCount = Object.values(cows).reduce((a, b) => a + b, 0);
 
