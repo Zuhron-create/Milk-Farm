@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Milk Mini App</title>
+    <title>Milk Farm Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding-bottom: 70px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding-bottom: 70px; }
         .header { background: #fff; padding: 15px; text-align: center; font-size: 18px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .container { padding: 15px; }
         .tab-content { display: none; }
@@ -17,21 +17,32 @@
         .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #eee; }
         .nav-item { cursor: pointer; text-align: center; font-size: 12px; color: #666; }
         .nav-item.active { color: #4a90e2; font-weight: bold; }
-        .streak-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 10px 0; }
-        .streak-day { background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 8px; text-align: center; font-size: 12px; }
+        .streak-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0; }
+        .streak-day { background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; padding: 6px; text-align: center; font-size: 11px; }
         .streak-day.current { background: #e3f2fd; border-color: #4a90e2; font-weight: bold; }
+        .cow-box { background: #fafafa; border: 1px solid #e1e8ed; border-radius: 8px; padding: 10px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
 
-<div class="header">🥛 Молочная Ферма Telegram</div>
+<div class="header">🥛 Milk Farm & $</div>
 
 <div class="container">
-    <!-- Главная -->
+    <!-- Главная: Ферма, Коровники и Награды -->
     <div id="tab-home" class="tab-content active">
         <div class="card">
             <h3>Баланс: <span id="balance">0</span> 🥛</h3>
-            <p>Уютная ежедневная награда (7 дней):</p>
+            
+            <p><b>🐄 Система коров (цикл 4ч):</b></p>
+            <div class="cow-box"><span>🐮 Буренка 1 ур.</span><span><b>20 🥛 / 4ч</b></span></div>
+            <div class="cow-box"><span>🐮 Пятнистая 2 ур.</span><span><b>45 🥛 / 4ч</b></span></div>
+            <div class="cow-box"><span>🐮 Звездочка 3 ур.</span><span><b>100 🥛 / 4ч</b></span></div>
+            <div class="cow-box"><span>🐮 Премиум 4 ур.</span><span><b>220 🥛 / 4ч</b></span></div>
+            <div class="cow-box"><span>🐮 Элитная 5 ур.</span><span><b>480 🥛 / 4ч</b></span></div>
+            
+            <hr style="margin: 15px 0; border:0; border-top:1px solid #eee;">
+
+            <p><b>🎁 Уютная ежедневная награда (7 дней):</b></p>
             <div class="streak-grid" id="streakContainer"></div>
             <button class="btn" onclick="sendAction('daily_reward')">Забрать награду дня</button>
             <button class="btn" style="background: #e67e22;" onclick="sendAction('watch_ad')">📺 Смотреть рекламу (+5 🥛)</button>
@@ -42,6 +53,7 @@
     <div id="tab-market" class="tab-content">
         <div class="card">
             <h3>🛒 Рынок и Бусты</h3>
+            <p>Ускоряйте производство молока:</p>
             <button class="btn" onclick="buyBoost('x2_milk')">⚡ Буст: x2 молока на час (50 🥛)</button>
             <button class="btn" style="background: #27ae60;" onclick="buyBoost('auto_milker')">🤖 Авто-дойка (150 🥛)</button>
         </div>
@@ -53,10 +65,13 @@
             <h3>👤 Профиль</h3>
             <p>Кошелек: <span id="walletStatus">Не подключен</span></p>
             <button class="btn" style="background: #9b59b6;" onclick="connectWallet()">👛 Подключить ТГ-кошелек</button>
+            
             <hr style="margin: 15px 0; border:0; border-top:1px solid #eee;">
+            
             <h3>💱 Финансы и Курсы</h3>
             <p style="font-size: 14px;">100 🥛 = 1 Telegram Star ⭐</p>
             <p style="font-size: 14px;">50 🥛 = 1 GRAM 💎</p>
+            
             <button class="btn" style="background: #27ae60;" onclick="topUp()">Пополнить (Stars / TON)</button>
             <button class="btn" style="background: #c0392b;" onclick="withdraw()">Вывод на ТГ-кошелек</button>
         </div>
