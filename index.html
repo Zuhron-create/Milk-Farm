@@ -605,9 +605,7 @@
             document.getElementById('topup-modal').style.display = 'none';
         }
 
-        // Функция перехода в бота для запуска пошагового вывода (адрес + сумма)
         function requestWithdrawal() {
-            // Перенаправляем пользователя в чат бота с командой или текстом для запуска FSM вывода
             window.open('https://t.me/MilkFarmbott?start=withdraw', '_blank');
         }
 
@@ -697,13 +695,21 @@
             updateUI();
         }
 
+        // Интеграция AdsGram с UnitID: 48608
+        const adController = Adsgram.init({ blockId: "48608" });
+
         function watchAd() {
-            setTimeout(() => {
+            adController.show().then((result) => {
+                // Реклама успешно просмотрена до конца
                 milk += 5;
                 saveGame();
                 updateUI();
-                alert("Реклама просмотрена: +5 🥛");
-            }, 500);
+                alert("Реклама успешно просмотрена: +5 🥛");
+            }).catch((result) => {
+                // Ошибка или пользователь закрыл раньше времени
+                console.log("Ad error", result);
+                alert("Реклама не была досмотрена до конца, бонус не начислен.");
+            });
         }
 
         function openChannel() {
