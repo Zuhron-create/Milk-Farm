@@ -531,10 +531,9 @@
         let tonConnectUI = null;
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Инициализация TON Connect (не забудь заменить манифест под свой проект при публикации)
             try {
                 tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-                    manifestUrl: 'https://raw.githubusercontent.com/zuxa/milkfarm/main/tonconnect-manifest.json',
+                    manifestUrl: 'https://zuxa.github.io/Milk-Farm/tonconnect-manifest.json',
                     buttonRootId: null
                 });
 
@@ -659,7 +658,6 @@
             }
         }
 
-        // Проверка сброса серии бонуса (если прошло больше 48 часов с последнего сбора)
         function checkDailyStreakReset() {
             if (lastDailyClaimDate > 0) {
                 let now = Date.now();
@@ -675,7 +673,6 @@
             let oneDayMs = 24 * 3600 * 1000;
             let twoDaysMs = 48 * 3600 * 1000;
 
-            // Если пропустили больше 48 часов — сброс
             if (lastDailyClaimDate > 0 && (now - lastDailyClaimDate > twoDaysMs)) {
                 dailyDay = 1;
                 alert("Вы пропустили день! Серия бонусов сброшена к началу.");
@@ -694,7 +691,7 @@
 
             dailyDay++;
             if (dailyDay > 7) {
-                dailyDay = 1; // Круг обновляется
+                dailyDay = 1;
             }
 
             saveGame();
@@ -703,7 +700,7 @@
 
         function watchAd() {
             setTimeout(() => {
-                milk += 5; // Награда 5 молока за рекламу
+                milk += 5;
                 saveGame();
                 updateUI();
                 alert("Реклама просмотрена: +5 🥛");
@@ -736,7 +733,6 @@
             }
         }
 
-        // Вызов нативного TON Connect окна выбора кошелька
         async function connectWallet() {
             try {
                 if (tonConnectUI) {
@@ -746,7 +742,6 @@
                         await tonConnectUI.openModal();
                     }
                 } else {
-                    // Запасной вариант, если библиотека не загрузилась
                     if (confirm("Подключить TON Кошелек?")) {
                         walletAddress = "UQDI...tJZa";
                         saveGame();
@@ -805,7 +800,6 @@
                 document.getElementById(`count-${i}`).innerText = cows[i];
             }
 
-            // Отрисовка сетки 7-дневного бонуса
             let dailyGridHtml = "";
             for (let d = 1; d <= 7; d++) {
                 let isPassed = d < dailyDay;
