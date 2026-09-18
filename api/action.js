@@ -39,20 +39,4 @@ async function connectWallet() {
         alert("Ошибка подключения кошелька");
     }
 }
-// Инициализация рекламного блока с твоим UnitID
-const adController = Adsgram.init({ blockId: "48608" });
-
-function watchAdForMilk() {
-    adController.show().then((result) => {
-        // Реклама успешно просмотрена до конца
-        if (result.done) {
-            // Добавляем +5 молока игроку
-            addMilk(5); 
-            alert("Бонус получен! +5 молока добавлено на ферму.");
-        }
-    }).catch((result) => {
-        // Ошибка или пользователь закрыл рекламу досрочно
-        console.log("Ad error", result);
-        alert("Реклама не была досмотрена, бонус не начислен.");
-    });
-}
+/в/ 
