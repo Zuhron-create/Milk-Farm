@@ -444,7 +444,6 @@
                     Кошелек: <span id="wallet-status" style="color: var(--accent);">Не подключен</span>
                 </div>
                 
-                <!-- НОВАЯ КНОПКА ВЫВОДА ЧЕРЕЗ БОТ (РУЧНОЙ ВВОД АДРЕСА) -->
                 <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 8px;" onclick="requestWithdrawal()">📤 Вывести токены (через бота)</button>
                 <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="connectWallet()">👛 Подключить кошелек</button>
                 
@@ -477,7 +476,7 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ (С вашим TON кошельком для перевода) -->
+    <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div class="modal-overlay" id="topup-modal">
         <div class="modal-card">
             <h3 style="margin-top: 0; color: var(--accent);">Пополнение баланса</h3>
@@ -695,10 +694,22 @@
             updateUI();
         }
 
-        // Интеграция AdsGram с UnitID: 48608
-        const adController = Adsgram.init({ blockId: "48608" });
+        // Инициализация AdsGram с UnitID: 48608 с защитой от ошибок
+        let adController = null;
+        try {
+            if (typeof Adsgram !== 'undefined') {
+                adController = Adsgram.init({ blockId: "48608" });
+            }
+        } catch (e) {
+            console.log("Adsgram init error:", e);
+        }
 
         function watchAd() {
+            if (!adController) {
+                alert("Рекламный модуль не загрузился. Убедитесь, что нет блокировщика рекламы.");
+                return;
+            }
+
             adController.show().then((result) => {
                 // Реклама успешно просмотрена до конца
                 milk += 5;
@@ -706,9 +717,9 @@
                 updateUI();
                 alert("Реклама успешно просмотрена: +5 🥛");
             }).catch((result) => {
-                // Ошибка или пользователь закрыл раньше времени
+                // Ошибка показа или нет доступной рекламы
                 console.log("Ad error", result);
-                alert("Реклама не была досмотрена до конца, бонус не начислен.");
+                alert("Не удалось показать рекламу. Возможно, она еще на модерации или закончились показы.");
             });
         }
 
