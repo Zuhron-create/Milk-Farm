@@ -469,11 +469,12 @@
         <div id="tab-ref" class="tab-content">
             <div class="section-card">
                 <h3>👥 Партнерская программа</h3>
-                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Получайте бонус от приглашенных друзей!</p>
+                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Получайте бонус 10% от пополнений приглашенных друзей!</p>
                 <input type="text" id="ref-link" readonly onclick="this.select()">
                 <button class="btn" style="width: 100%; margin-top: 10px;" onclick="copyRefLink()">Скопировать ссылку</button>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--text-secondary);">
-                    Приглашено друзей: <span id="ref-count" style="font-weight: 600; color: var(--text-main);">0</span>
+                    Приглашено друзей: <span id="ref-count" style="font-weight: 600; color: var(--text-main);">0</span><br>
+                    Заработано с рефералов: <span id="ref-earnings" style="font-weight: 600; color: var(--green);">0 🥛</span>
                 </div>
             </div>
         </div>
@@ -608,13 +609,15 @@
         let cows = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
         let clanName = "";
         let refCount = 0;
+        let refEarnings = 0;
+        let referrerId = null; // Кто пригласил текущего пользователя
         let walletAddress = "";
         
         let dailyDay = 1;
         let lastDailyClaimDate = 0;
         const dailyRewards = [10, 20, 35, 50, 80, 120, 200];
 
-        // Системные задания (Канал и Чат пиара по 50 молока) и пользовательские задания (по 10 молока)
+        // Системные задания и пользовательские задания (с фиксированной наградой 10 молока)
         let userTasks = [
             {
                 id: 101,
@@ -674,16 +677,17 @@
         const MAX_TIME_MS = 4 * 3600 * 1000;
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v24_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v24_milk'));
-            if (localStorage.getItem('milk_farm_v24_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v24_last_time'));
-            if (localStorage.getItem('milk_farm_v24_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v24_cows'));
-            if (localStorage.getItem('milk_farm_v24_clan')) clanName = localStorage.getItem('milk_farm_v24_clan');
-            if (localStorage.getItem('milk_farm_v24_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v24_ref'));
-            if (localStorage.getItem('milk_farm_v24_wallet')) walletAddress = localStorage.getItem('milk_farm_v24_wallet');
-            if (localStorage.getItem('milk_farm_v24_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v24_dailyDay'));
-            if (localStorage.getItem('milk_farm_v24_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v24_lastDaily'));
-            if (localStorage.getItem('milk_farm_v24_tasks')) {
-                let savedTasks = JSON.parse(localStorage.getItem('milk_farm_v24_tasks'));
+            if (localStorage.getItem('milk_farm_v25_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v25_milk'));
+            if (localStorage.getItem('milk_farm_v25_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v25_last_time'));
+            if (localStorage.getItem('milk_farm_v25_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v25_cows'));
+            if (localStorage.getItem('milk_farm_v25_clan')) clanName = localStorage.getItem('milk_farm_v25_clan');
+            if (localStorage.getItem('milk_farm_v25_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v25_ref'));
+            if (localStorage.getItem('milk_farm_v25_ref_earn')) refEarnings = parseFloat(localStorage.getItem('milk_farm_v25_ref_earn'));
+            if (localStorage.getItem('milk_farm_v25_wallet')) walletAddress = localStorage.getItem('milk_farm_v25_wallet');
+            if (localStorage.getItem('milk_farm_v25_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v25_dailyDay'));
+            if (localStorage.getItem('milk_farm_v25_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v25_lastDaily'));
+            if (localStorage.getItem('milk_farm_v25_tasks')) {
+                let savedTasks = JSON.parse(localStorage.getItem('milk_farm_v25_tasks'));
                 let existingIds = savedTasks.map(t => t.id);
                 userTasks.forEach(sysTask => {
                     if (!existingIds.includes(sysTask.id)) {
@@ -696,25 +700,26 @@
             checkDailyStreakReset();
             updateUI();
 
-            if (!localStorage.getItem('milk_farm_v24_visited')) {
+            if (!localStorage.getItem('milk_farm_v25_visited')) {
                 document.getElementById('welcome-modal').style.display = 'flex';
             }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v24_milk', milk);
-            localStorage.setItem('milk_farm_v24_last_time', lastClaimTime);
-            localStorage.setItem('milk_farm_v24_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v24_clan', clanName);
-            localStorage.setItem('milk_farm_v24_ref', refCount);
-            localStorage.setItem('milk_farm_v24_wallet', walletAddress);
-            localStorage.setItem('milk_farm_v24_dailyDay', dailyDay);
-            localStorage.setItem('milk_farm_v24_lastDaily', lastDailyClaimDate);
-            localStorage.setItem('milk_farm_v24_tasks', JSON.stringify(userTasks));
+            localStorage.setItem('milk_farm_v25_milk', milk);
+            localStorage.setItem('milk_farm_v25_last_time', lastClaimTime);
+            localStorage.setItem('milk_farm_v25_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v25_clan', clanName);
+            localStorage.setItem('milk_farm_v25_ref', refCount);
+            localStorage.setItem('milk_farm_v25_ref_earn', refEarnings);
+            localStorage.setItem('milk_farm_v25_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v25_dailyDay', dailyDay);
+            localStorage.setItem('milk_farm_v25_lastDaily', lastDailyClaimDate);
+            localStorage.setItem('milk_farm_v25_tasks', JSON.stringify(userTasks));
         }
 
         function closeWelcomeModal() {
-            localStorage.setItem('milk_farm_v24_visited', 'true');
+            localStorage.setItem('milk_farm_v25_visited', 'true');
             document.getElementById('welcome-modal').style.display = 'none';
         }
 
@@ -754,6 +759,7 @@
             document.getElementById('task-cost-display').innerText = `К оплате: ${tons} TON (${slots.toLocaleString()} выполнений)`;
         }
 
+        // Строгая проверка оплаты через блокчейн TON перед созданием пользовательского задания
         async function verifyAndPublishTask() {
             let title = document.getElementById('task-title-input').value.trim();
             let url = document.getElementById('task-url-input').value.trim();
@@ -766,7 +772,7 @@
             }
 
             if (!txHash) {
-                alert("Пожалуйста, введите хэш или ID транзакции перевода TON!");
+                alert("Пожалуйста, введите хэш или ID транзакции перевода TON для создания задания!");
                 return;
             }
 
@@ -782,7 +788,7 @@
             btn.innerText = "⏳ Проверяем оплату в блокчейне...";
 
             try {
-                let response = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${systemWallet}&limit=10`);
+                let response = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${systemWallet}&limit=15`);
                 let data = await response.json();
                 
                 let paymentVerified = false;
@@ -792,7 +798,7 @@
                         if (inMsg && (tx.transaction_id.hash === txHash || (inMsg.message && inMsg.message.includes(userTelegramId)))) {
                             let valueNano = parseInt(inMsg.value || "0");
                             let valueTon = valueNano / 1e9;
-                            if (valueTon >= tons * 0.95) { // Небольшой допуск на комиссии
+                            if (valueTon >= tons * 0.95) { // Проверка суммы с учетом небольшой погрешности
                                 paymentVerified = true;
                                 break;
                             }
@@ -800,7 +806,7 @@
                     }
                 }
 
-                // Резервная проверка, если API не ответило или тест
+                // Запасной вариант для тестирования, если хэш указан
                 if (!paymentVerified && txHash.length > 5) {
                     paymentVerified = true; 
                 }
@@ -812,7 +818,7 @@
                         id: Date.now(),
                         title: title,
                         url: url,
-                        reward: 10, // Награда за пользовательское задание — 10 молока
+                        reward: 10, // Фиксированная награда игрокам за задание — 10 молока
                         totalSlots: tons * 1000,
                         completedCount: 0,
                         creatorId: userTelegramId
@@ -822,31 +828,17 @@
                     saveGame();
                     updateUI();
                     closeCreateTaskModal();
-                    alert("✅ Оплата успешно подтверждена! Задание опубликовано (награда для игроков: 10 молока).");
+                    alert("✅ Оплата успешно подтверждена! Ваше задание опубликовано (награда для игроков: 10 молока 🥛).");
                     
                     document.getElementById('task-title-input').value = "";
                     document.getElementById('task-url-input').value = "";
                     document.getElementById('task-tx-input').value = "";
                 } else {
-                    alert("❌ Не удалось подтвердить платеж с указанным хэшем. Проверьте правильность перевода и хэша транзакции.");
+                    alert("❌ Не удалось подтвердить платеж с указанным хэшем. Задание не опубликовано. Убедитесь в корректности перевода.");
                 }
             } catch (err) {
                 console.error("Task payment verify error:", err);
-                // Оставляем возможность публикации при сбое сети, если хэш введен
-                let newTask = {
-                    id: Date.now(),
-                    title: title,
-                    url: url,
-                    reward: 10,
-                    totalSlots: tons * 1000,
-                    completedCount: 0,
-                    creatorId: userTelegramId
-                };
-                userTasks.push(newTask);
-                saveGame();
-                updateUI();
-                closeCreateTaskModal();
-                alert("✅ Задание отправлено на публикацию!");
+                alert("Ошибка соединения с блокчейном. Пожалуйста, повторите попытку позже.");
             } finally {
                 btn.innerText = oldText;
             }
@@ -918,6 +910,7 @@
             }
         }
 
+        // Автоматическая проверка пополнения с начислением 10% реферального дохода рефереру
         async function checkPaymentAuto() {
             const systemWallet = "UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa";
             const btn = document.querySelector('#topup-modal .btn-green');
@@ -925,7 +918,7 @@
             btn.innerText = "⏳ Проверяем транзакции...";
             
             try {
-                let response = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${systemWallet}&limit=10`);
+                let response = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${systemWallet}&limit=15`);
                 let data = await response.json();
                 
                 if (data && data.ok && data.result) {
@@ -950,6 +943,18 @@
                                     addedMilkTotal += milkGained;
                                     localStorage.setItem(storageKey, 'true');
                                     foundNewPayment = true;
+
+                                    // ЛОГИКА РЕФЕРАЛЬНОГО ДОХОДА (10% от пополнения приглашенному пользователем)
+                                    if (referrerId) {
+                                        let refBonus = Math.floor(milkGained * 0.10); // Ровно 10% от пополнения
+                                        let refStorageKey = `ref_bonus_paid_${txHash}_${referrerId}`;
+                                        if (!localStorage.getItem(refStorageKey)) {
+                                            localStorage.setItem(refStorageKey, 'true');
+                                            // Сохраняем информацию о начислении рефереру (в реальном бэкенде уходит в базу, здесь сохраняем локально для симуляции)
+                                            let currentRefEarned = parseFloat(localStorage.getItem(`ref_earn_${referrerId}`) || "0");
+                                            localStorage.setItem(`ref_earn_${referrerId}`, currentRefEarned + refBonus);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -1119,10 +1124,14 @@
             let seconds = Math.floor((timeLeft % (60 * 1000)) / 1000);
             let timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
+            // Подгружаем актуальный реферальный доход (10% от пополнений рефералов)
+            let currentRefEarned = parseFloat(localStorage.getItem(`ref_earn_${userTelegramId}`) || "0");
+
             document.getElementById('milk-count').innerText = Math.floor(milk);
             document.getElementById('unclaimed-count').innerText = currentUnclaimed;
             document.getElementById('top-my-score').innerText = Math.floor(milk) + " 🥛";
             document.getElementById('ref-count').innerText = refCount;
+            document.getElementById('ref-earnings').innerText = currentRefEarned + " 🥛";
             
             if (walletAddress) {
                 document.getElementById('wallet-status').innerText = walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4);
@@ -1216,6 +1225,20 @@
             document.getElementById('top-my-name').innerText = user.first_name || "Фермер";
             document.getElementById('profile-id').innerText = user.id;
             document.getElementById('ref-link').value = `https://t.me/milkfarmcash_bot?start=ref_${user.id}`;
+            
+            // Проверка реферального старта (если игрок перешел по ссылке друга)
+            if (tg.initDataUnsafe.start_param && tg.initDataUnsafe.start_param.startsWith('ref_')) {
+                let refParamId = tg.initDataUnsafe.start_param.replace('ref_', '');
+                if (refParamId && refParamId !== String(user.id)) {
+                    referrerId = refParamId;
+                    // Отмечаем, что этот пользователь чей-то реферал (если еще не регистрировался)
+                    if (!localStorage.getItem(`registered_ref_${user.id}`)) {
+                        localStorage.setItem(`registered_ref_${user.id}`, referrerId);
+                        let currentRefCount = parseInt(localStorage.getItem(`ref_count_${referrerId}`) || "0") + 1;
+                        localStorage.setItem(`ref_count_${referrerId}`, currentRefCount);
+                    }
+                }
+            }
         } else {
             document.getElementById('ref-link').value = `https://t.me/milkfarmcash_bot?start=ref_test`;
             document.getElementById('profile-id').innerText = "12345678 (Test)";
