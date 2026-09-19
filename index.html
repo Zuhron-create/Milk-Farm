@@ -460,6 +460,7 @@
                 </div>
                 
                 <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openTopUpModal()">⭐ Пополнить баланс</button>
+                <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openFaqModal()">❓ FAQ и Контакты</button>
                 <button class="btn" style="width: 100%; font-size: 12px; padding: 9px; background: var(--text-secondary);" onclick="openWelcomeModal()">📖 Инструкция к игре</button>
             </div>
         </div>
@@ -471,7 +472,7 @@
             <div class="nav-item" id="nav-daily" onclick="switchTab('daily')"><span class="icon">🗓</span><span>Бонусы</span></div>
             <div class="nav-item" id="nav-top" onclick="switchTab('top')"><span class="icon">🏆</span><span>Топ</span></div>
             <div class="nav-item" id="nav-clan" onclick="switchTab('clan')"><span class="icon">🛡</span><span>Клан</span></div>
-            <div class="nav-item" id="nav-ref" onclick="switchTab('nav-ref" onclick="switchTab('ref')"><span class="icon">👥</span><span>Друзья</span></div>
+            <div class="nav-item" id="nav-ref" onclick="switchTab('ref')"><span class="icon">👥</span><span>Друзья</span></div>
             <div class="nav-item" id="nav-profile" onclick="switchTab('profile')"><span class="icon">👤</span><span>Профиль</span></div>
         </div>
     </div>
@@ -486,6 +487,24 @@
                 ⚠️ <b>Обязательно</b> укажите ваш Telegram ID в комментарии к переводу для автоматического зачисления!
             </div>
             <button class="btn" style="width: 100%; margin-top: 8px; background: var(--text-secondary);" onclick="closeTopUpModal()">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО FAQ И КОНТАКТОВ -->
+    <div class="modal-overlay" id="faq-modal">
+        <div class="modal-card">
+            <h3 style="margin-top: 0; color: var(--accent);">FAQ и Поддержка</h3>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; text-align: left; line-height: 1.6;">
+                <b>❓ Как начать играть?</b><br>
+                Заберите стартовый бонус в разделе «Бонусы» и купите свою первую корову на рынке.<br><br>
+                <b>❓ Как часто собирать молоко?</b><br>
+                Фарм идет до 4 часов. Не забывайте забирать прибыль вовремя!<br><br>
+                <b>❓ Как связаться с разработчиком?</b><br>
+                Хотите заказать создание собственного бота или мини-приложения? Обращайтесь напрямую:<br>
+                💬 Telegram: <a href="https://t.me/ZuxaAnime" target="_blank" style="color: var(--accent); font-weight: 600;">@ZuxaAnime</a><br>
+                📸 Instagram: <a href="https://instagram.com/ZuxaAnime" target="_blank" style="color: var(--accent); font-weight: 600;">ZuxaAnime</a>
+            </div>
+            <button class="btn" style="width: 100%; margin-top: 8px;" onclick="closeFaqModal()">Понятно</button>
         </div>
     </div>
 
@@ -604,6 +623,14 @@
             document.getElementById('topup-modal').style.display = 'none';
         }
 
+        function openFaqModal() {
+            document.getElementById('faq-modal').style.display = 'flex';
+        }
+
+        function closeFaqModal() {
+            document.getElementById('faq-modal').style.display = 'none';
+        }
+
         function requestWithdrawal() {
             window.open('https://t.me/MilkFarmbott?start=withdraw', '_blank');
         }
@@ -711,13 +738,11 @@
             }
 
             adController.show().then((result) => {
-                // Реклама успешно просмотрена до конца
                 milk += 5;
                 saveGame();
                 updateUI();
                 alert("Реклама успешно просмотрена: +5 🥛");
             }).catch((result) => {
-                // Ошибка показа или нет доступной рекламы
                 console.log("Ad error", result);
                 alert("Не удалось показать рекламу. Возможно, она еще на модерации или закончились показы.");
             });
