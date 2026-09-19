@@ -328,7 +328,7 @@
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐄 1 ур. «Бурёнка»</div>
-                        <div style="font-size: 11px; color: var(--green);">+20 🥛 / 4 часа</div>
+                        <div style="font-size: 11px; color: var(--green);">+10 🥛 / 4 часа</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-1">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(1, 100)">100 🥛</button>
@@ -337,7 +337,7 @@
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐂 2 ур. «Пятнистая»</div>
-                        <div style="font-size: 11px; color: var(--green);">+45 🥛 / 4 часа</div>
+                        <div style="font-size: 11px; color: var(--green);">+22 🥛 / 4 часа</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-2">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(2, 450)">450 🥛</button>
@@ -346,7 +346,7 @@
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐐 3 ур. «Горная буйволица»</div>
-                        <div style="font-size: 11px; color: var(--green);">+100 🥛 / 4 часа</div>
+                        <div style="font-size: 11px; color: var(--green);">+50 🥛 / 4 часа</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-3">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(3, 2000)">2,000 🥛</button>
@@ -355,7 +355,7 @@
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🌟 4 ур. «Королевская бурёнка»</div>
-                        <div style="font-size: 11px; color: var(--green);">+220 🥛 / 4 часа</div>
+                        <div style="font-size: 11px; color: var(--green);">+110 🥛 / 4 часа</div>
                         <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-4">0</span> шт.</div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(4, 9000)">9,000 🥛</button>
@@ -402,10 +402,10 @@
             <div class="section-card">
                 <h3>🏆 Топ Фермеров</h3>
                 <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Лучшие производители молока:</p>
-                <div class="leaderboard-item"><span>1. 🥇 Алексей</span><b>45,200 🥛</b></div>
-                <div class="leaderboard-item"><span>2. 🥈 Максим</span><b>32,100 🥛</b></div>
-                <div class="leaderboard-item"><span>3. 🥉 Елена</span><b>19,800 🥛</b></div>
-                <div class="leaderboard-item" style="border-color: var(--accent); background: rgba(224,122,95,0.05);"><span>Вы (<span id="top-my-name">Фермер</span>)</span><b id="top-my-score">0 🥛</b></div>
+                <div id="leaderboard-list">
+                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;">Пока нет других фермеров в топе. Приглашай друзей!</div>
+                </div>
+                <div class="leaderboard-item" style="margin-top: 15px; border-color: var(--accent); background: rgba(224,122,95,0.05);"><span>Вы (<span id="top-my-name">Фермер</span>)</span><b id="top-my-score">0 🥛</b></div>
             </div>
         </div>
 
@@ -471,7 +471,7 @@
             <div class="nav-item" id="nav-daily" onclick="switchTab('daily')"><span class="icon">🗓</span><span>Бонусы</span></div>
             <div class="nav-item" id="nav-top" onclick="switchTab('top')"><span class="icon">🏆</span><span>Топ</span></div>
             <div class="nav-item" id="nav-clan" onclick="switchTab('clan')"><span class="icon">🛡</span><span>Клан</span></div>
-            <div class="nav-item" id="nav-ref" onclick="switchTab('ref')"><span class="icon">👥</span><span>Друзья</span></div>
+            <div class="nav-item" id="nav-ref" onclick="switchTab('nav-ref" onclick="switchTab('ref')"><span class="icon">👥</span><span>Друзья</span></div>
             <div class="nav-item" id="nav-profile" onclick="switchTab('profile')"><span class="icon">👤</span><span>Профиль</span></div>
         </div>
     </div>
@@ -547,10 +547,10 @@
         });
 
         const cowDetails = {
-            1: { name: "Бурёнка", icon: "🐄", income: 20 },
-            2: { name: "Пятнистая", icon: "🐂", income: 45 },
-            3: { name: "Горная буйволица", icon: "🐐", income: 100 },
-            4: { name: "Королевская бурёнка", icon: "🌟", income: 220 },
+            1: { name: "Бурёнка", icon: "🐄", income: 10 },
+            2: { name: "Пятнистая", icon: "🐂", income: 22 },
+            3: { name: "Горная буйволица", icon: "🐐", income: 50 },
+            4: { name: "Королевская бурёнка", icon: "🌟", income: 110 },
             5: { name: "Божественная корова", icon: "👑", income: 480 }
         };
 
@@ -694,7 +694,7 @@
             updateUI();
         }
 
-        // Инициализация AdsGram с UnitID: 48608 с защитой от ошибок
+        // Инициализация AdsGram с UnitID: 48713 с защитой от ошибок
         let adController = null;
         try {
             if (typeof Adsgram !== 'undefined') {
