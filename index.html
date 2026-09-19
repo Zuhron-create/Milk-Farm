@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milk Farm - Уютная ферма</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Подключаем официальную библиотеку TON Connect UI -->
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
         :root {
@@ -409,7 +408,7 @@
                 <div class="sub-tab-btn" id="subtab-btn-tasks" onclick="switchSubTab('tasks')">📋 Задания</div>
             </div>
 
-            <!-- Подраздел: Награды (Ежедневные + Реклама + Стартовое задание) -->
+            <!-- Подраздел: Награды -->
             <div id="subtab-rewards" class="sub-content active">
                 <div class="section-card">
                     <h3>🗓 Бонус 7 дней (Серия)</h3>
@@ -444,7 +443,7 @@
                     <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">Подписывайтесь на каналы, боты автоматически проверяют подписку и выдают награду!</p>
                     
                     <div id="user-tasks-list">
-                        <!-- Динамический список заданий -->
+                        <!-- Список пустой при старте, заполняется реальными созданными заданиями -->
                     </div>
                 </div>
             </div>
@@ -624,10 +623,7 @@
         const dailyRewards = [10, 20, 35, 50, 80, 120, 200];
 
         let starterSubClaimed = false;
-
-        let userTasks = [
-            { id: 1, title: "Подпишись на канал партнера", url: "https://t.me/MilkFarmbott", reward: 50, totalSlots: 1000, completedCount: 0, creatorId: "admin" }
-        ];
+        let userTasks = []; // Боевой режим: список заданий пуст по умолчанию
 
         let tonConnectUI = null;
         let userTelegramId = "12345678";
@@ -667,40 +663,40 @@
         const MAX_TIME_MS = 4 * 3600 * 1000;
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v21_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v21_milk'));
-            if (localStorage.getItem('milk_farm_v21_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v21_last_time'));
-            if (localStorage.getItem('milk_farm_v21_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v21_cows'));
-            if (localStorage.getItem('milk_farm_v21_clan')) clanName = localStorage.getItem('milk_farm_v21_clan');
-            if (localStorage.getItem('milk_farm_v21_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v21_ref'));
-            if (localStorage.getItem('milk_farm_v21_wallet')) walletAddress = localStorage.getItem('milk_farm_v21_wallet');
-            if (localStorage.getItem('milk_farm_v21_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v21_dailyDay'));
-            if (localStorage.getItem('milk_farm_v21_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v21_lastDaily'));
-            if (localStorage.getItem('milk_farm_v21_tasks')) userTasks = JSON.parse(localStorage.getItem('milk_farm_v21_tasks'));
-            if (localStorage.getItem('milk_farm_v21_starterSub')) starterSubClaimed = JSON.parse(localStorage.getItem('milk_farm_v21_starterSub'));
+            if (localStorage.getItem('milk_farm_v22_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v22_milk'));
+            if (localStorage.getItem('milk_farm_v22_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v22_last_time'));
+            if (localStorage.getItem('milk_farm_v22_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v22_cows'));
+            if (localStorage.getItem('milk_farm_v22_clan')) clanName = localStorage.getItem('milk_farm_v22_clan');
+            if (localStorage.getItem('milk_farm_v22_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v22_ref'));
+            if (localStorage.getItem('milk_farm_v22_wallet')) walletAddress = localStorage.getItem('milk_farm_v22_wallet');
+            if (localStorage.getItem('milk_farm_v22_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v22_dailyDay'));
+            if (localStorage.getItem('milk_farm_v22_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v22_lastDaily'));
+            if (localStorage.getItem('milk_farm_v22_tasks')) userTasks = JSON.parse(localStorage.getItem('milk_farm_v22_tasks'));
+            if (localStorage.getItem('milk_farm_v22_starterSub')) starterSubClaimed = JSON.parse(localStorage.getItem('milk_farm_v22_starterSub'));
             
             checkDailyStreakReset();
             updateUI();
 
-            if (!localStorage.getItem('milk_farm_v21_visited')) {
+            if (!localStorage.getItem('milk_farm_v22_visited')) {
                 document.getElementById('welcome-modal').style.display = 'flex';
             }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v21_milk', milk);
-            localStorage.setItem('milk_farm_v21_last_time', lastClaimTime);
-            localStorage.setItem('milk_farm_v21_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v21_clan', clanName);
-            localStorage.setItem('milk_farm_v21_ref', refCount);
-            localStorage.setItem('milk_farm_v21_wallet', walletAddress);
-            localStorage.setItem('milk_farm_v21_dailyDay', dailyDay);
-            localStorage.setItem('milk_farm_v21_lastDaily', lastDailyClaimDate);
-            localStorage.setItem('milk_farm_v21_tasks', JSON.stringify(userTasks));
-            localStorage.setItem('milk_farm_v21_starterSub', starterSubClaimed);
+            localStorage.setItem('milk_farm_v22_milk', milk);
+            localStorage.setItem('milk_farm_v22_last_time', lastClaimTime);
+            localStorage.setItem('milk_farm_v22_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v22_clan', clanName);
+            localStorage.setItem('milk_farm_v22_ref', refCount);
+            localStorage.setItem('milk_farm_v22_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v22_dailyDay', dailyDay);
+            localStorage.setItem('milk_farm_v22_lastDaily', lastDailyClaimDate);
+            localStorage.setItem('milk_farm_v22_tasks', JSON.stringify(userTasks));
+            localStorage.setItem('milk_farm_v22_starterSub', starterSubClaimed);
         }
 
         function closeWelcomeModal() {
-            localStorage.setItem('milk_farm_v21_visited', 'true');
+            localStorage.setItem('milk_farm_v22_visited', 'true');
             document.getElementById('welcome-modal').style.display = 'none';
         }
 
@@ -792,7 +788,7 @@
             btn.disabled = true;
 
             setTimeout(() => {
-                let isSubscribed = true; // Автопроверка
+                let isSubscribed = true; 
                 if (isSubscribed) {
                     starterSubClaimed = true;
                     milk += 100;
@@ -807,7 +803,6 @@
             }, 2000);
         }
 
-        // Выполнение задания с автоматической проверкой подписки через бота
         function executeTask(taskId) {
             let task = userTasks.find(t => t.id === taskId);
             if (!task) return;
@@ -847,7 +842,7 @@
                 } else {
                     alert("❌ Бот не обнаружил подписку на канал. Подпишитесь и попробуйте снова.");
                     if (btn) {
-                        btn.innerText = "Проверить подписку";
+                        btn.innerText = "Подписаться и забрать";
                         btn.disabled = false;
                     }
                 }
