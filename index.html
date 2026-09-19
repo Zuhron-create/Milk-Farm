@@ -3,7 +3,7 @@
 <head>
     <script src="https://sad.adsgram.ai/js/adsgram.min.js"></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Milk Farm - Уютная ферма</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
@@ -325,7 +325,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="font-size: 19px; margin: 0;">🏡 Уютная Ферма</h1>
+            <h1 style="font-size: 19px; margin: 0;" data-i18n="title_app">🏡 Уютная Ферма</h1>
             <div class="user-badge" id="username-display">Фермер</div>
         </div>
 
@@ -333,7 +333,7 @@
         <div id="tab-game" class="tab-content active">
             <div class="stats-card">
                 <div class="milk-counter"><span id="milk-count">0</span> 🥛</div>
-                <div style="color: var(--text-secondary); font-size: 13px; margin-bottom: 6px;">Накоплено: <span id="unclaimed-count">0</span> 🥛</div>
+                <div style="color: var(--text-secondary); font-size: 13px; margin-bottom: 6px;"><span data-i18n="accumulated">Накоплено:</span> <span id="unclaimed-count">0</span> 🥛</div>
                 
                 <div style="font-size: 12px; color: var(--text-secondary); display:flex; justify-content: space-between;">
                     <span id="timer-status">До сбора: 04:00:00</span>
@@ -343,14 +343,14 @@
                     <div class="progress-bar" id="claim-progress-bar"></div>
                 </div>
 
-                <button class="btn btn-green" style="width: 100%; padding: 12px; font-size: 15px; margin-top: 4px;" onclick="collectMilk()">📥 Собрать прибыль</button>
+                <button class="btn btn-green" style="width: 100%; padding: 12px; font-size: 15px; margin-top: 4px;" onclick="collectMilk()" data-i18n="claim_btn">📥 Собрать прибыль</button>
             </div>
 
             <div class="farm-card">
                 <div class="cow-avatar" id="main-cow-icon">🐄</div>
-                <div style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">Ваше стадо коров:</div>
+                <div style="font-size: 14px; font-weight: 600; margin-bottom: 6px;" data-i18n="herd_title">Ваше стадо коров:</div>
                 <div id="my-cows-list" style="width: 100%; text-align: left; max-height: 120px; overflow-y: auto; background: #faf8f5; padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
-                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Выполняйте задания в разделе «Бонусы»!</div>
+                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;" data-i18n="no_cows">У вас нет коров. Выполняйте задания в разделе «Бонусы»!</div>
                 </div>
             </div>
         </div>
@@ -358,13 +358,13 @@
         <!-- 2. РЫНОК -->
         <div id="tab-shop" class="tab-content">
             <div class="section-card">
-                <h3>🛍 Рынок бурёнок (5 уровней)</h3>
+                <h3 data-i18n="shop_title">🛍 Рынок бурёнок (5 уровней)</h3>
                 
                 <div class="shop-item">
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐄 1 ур. «Бурёнка»</div>
                         <div style="font-size: 11px; color: var(--green);">+10 🥛 / 4 часа</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-1">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);"><span data-i18n="you_have">У вас:</span> <span id="count-1">0</span> <span data-i18n="pcs">шт.</span></div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(1, 100)">100 🥛</button>
                 </div>
@@ -373,7 +373,7 @@
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐂 2 ур. «Пятнистая»</div>
                         <div style="font-size: 11px; color: var(--green);">+22 🥛 / 4 часа</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-2">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);"><span data-i18n="you_have">У вас:</span> <span id="count-2">0</span> <span data-i18n="pcs">шт.</span></div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(2, 450)">450 🥛</button>
                 </div>
@@ -382,7 +382,7 @@
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🐐 3 ур. «Горная буйволица»</div>
                         <div style="font-size: 11px; color: var(--green);">+50 🥛 / 4 часа</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-3">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);"><span data-i18n="you_have">У вас:</span> <span id="count-3">0</span> <span data-i18n="pcs">шт.</span></div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(3, 2000)">2,000 🥛</button>
                 </div>
@@ -391,7 +391,7 @@
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">🌟 4 ур. «Королевская бурёнка»</div>
                         <div style="font-size: 11px; color: var(--green);">+110 🥛 / 4 часа</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-4">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);"><span data-i18n="you_have">У вас:</span> <span id="count-4">0</span> <span data-i18n="pcs">шт.</span></div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(4, 9000)">9,000 🥛</button>
                 </div>
@@ -400,7 +400,7 @@
                     <div>
                         <div style="font-weight: 600; font-size: 14px;">👑 5 ур. «Божественная корова»</div>
                         <div style="font-size: 11px; color: var(--green);">+480 🥛 / 4 часа</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">У вас: <span id="count-5">0</span> шт.</div>
+                        <div style="font-size: 11px; color: var(--text-secondary);"><span data-i18n="you_have">У вас:</span> <span id="count-5">0</span> <span data-i18n="pcs">шт.</span></div>
                     </div>
                     <button class="btn" style="padding: 8px 12px; font-size: 13px;" onclick="buyCow(5, 40000)">40,000 🥛</button>
                 </div>
@@ -410,23 +410,23 @@
         <!-- 3. БОНУСЫ И ЗАДАНИЯ -->
         <div id="tab-daily" class="tab-content">
             <div class="sub-tabs">
-                <div class="sub-tab-btn active" id="subtab-btn-rewards" onclick="switchSubTab('rewards')">🎁 Награды</div>
-                <div class="sub-tab-btn" id="subtab-btn-tasks" onclick="switchSubTab('tasks')">📋 Задания</div>
+                <div class="sub-tab-btn active" id="subtab-btn-rewards" onclick="switchSubTab('rewards')" data-i18n="sub_rewards">🎁 Награды</div>
+                <div class="sub-tab-btn" id="subtab-btn-tasks" onclick="switchSubTab('tasks')" data-i18n="sub_tasks">📋 Задания</div>
             </div>
 
             <!-- Подраздел: Награды -->
             <div id="subtab-rewards" class="sub-content active">
                 <div class="section-card">
-                    <h3>🗓 Бонус 7 дней (Серия)</h3>
-                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">⚠️ Пропустите 1 день — серия сбросится заново!</p>
+                    <h3 data-i18n="daily_bonus_title">🗓 Бонус 7 дней (Серия)</h3>
+                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;" data-i18n="daily_warning">⚠️ Пропустите 1 день — серия сбросится заново!</p>
                     <div class="daily-grid" id="daily-grid-container"></div>
-                    <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()">Забрать бонус дня</button>
+                    <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()" data-i18n="claim_daily_btn">Забрать бонус дня</button>
 
-                    <h3>📺 Заработок (Реклама)</h3>
+                    <h3 data-i18n="ads_title">📺 Заработок (Реклама)</h3>
                     <div class="shop-item" style="display: block; margin-bottom: 14px;">
-                        <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">Смотреть рекламу</div>
-                        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +5 🥛 за просмотр</div>
-                        <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px;" onclick="watchAd()">🎬 Смотреть ролик</button>
+                        <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;" data-i18n="watch_ad">Смотреть рекламу</div>
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;" data-i18n="ad_reward">Награда: +5 🥛 за просмотр</div>
+                        <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px;" onclick="watchAd()" data-i18n="watch_btn">🎬 Смотреть ролик</button>
                     </div>
                 </div>
             </div>
@@ -435,10 +435,10 @@
             <div id="subtab-tasks" class="sub-content">
                 <div class="section-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="margin: 0;">📢 Задания</h3>
-                        <button class="btn" style="padding: 6px 10px; font-size: 11px;" onclick="openCreateTaskModal()">➕ Создать</button>
+                        <h3 style="margin: 0;" data-i18n="tasks_heading">📢 Задания</h3>
+                        <button class="btn" style="padding: 6px 10px; font-size: 11px;" onclick="openCreateTaskModal()" data-i18n="create_btn">➕ Создать</button>
                     </div>
-                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">Подписывайтесь на каналы и чаты, выполняйте задания и получайте награду 10 молока за каждое!</p>
+                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;" data-i18n="tasks_desc">Подписывайтесь на каналы и чаты, выполняйте задания и получайте награду 10 молока за каждое!</p>
                     
                     <div id="user-tasks-list">
                         <!-- Динамически заполняется заданиями -->
@@ -450,48 +450,48 @@
         <!-- 4. ТАБЛИЦА ЛИДЕРОВ -->
         <div id="tab-top" class="tab-content">
             <div class="section-card">
-                <h3>🏆 Топ Фермеров</h3>
-                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">Лучшие производители молока:</p>
+                <h3 data-i18n="top_title">🏆 Топ Фермеров</h3>
+                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;" data-i18n="top_subtitle">Лучшие производители молока:</p>
                 <div id="leaderboard-list">
-                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;">Пока нет других фермеров в топе. Приглашай друзей!</div>
+                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;" data-i18n="no_top">Пока нет других фермеров в топе. Приглашай друзей!</div>
                 </div>
-                <div class="leaderboard-item" style="margin-top: 15px; border-color: var(--accent); background: rgba(224,122,95,0.05);"><span>Вы (<span id="top-my-name">Фермер</span>)</span><b id="top-my-score">0 🥛</b></div>
+                <div class="leaderboard-item" style="margin-top: 15px; border-color: var(--accent); background: rgba(224,122,95,0.05);"><span><span data-i18n="you_label">Вы</span> (<span id="top-my-name">Фермер</span>)</span><b id="top-my-score">0 🥛</b></div>
             </div>
         </div>
 
         <!-- 5. КЛАНЫ -->
         <div id="tab-clan" class="tab-content">
             <div class="section-card">
-                <h3>🛡 Кооперативы (Кланы)</h3>
+                <h3 data-i18n="clans_title">🛡 Кооперативы (Кланы)</h3>
                 <div class="shop-item" style="display: block; margin-bottom: 12px;">
-                    <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">Ваш клан: <span id="clan-name-disp" style="color: var(--accent);">Не состоите</span></div>
-                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Участников: <span id="clan-members-count">0</span> / 1000 | Бонус: <span id="clan-bonus">0%</span> к доходу</div>
+                    <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;"><span data-i18n="your_clan">Ваш клан:</span> <span id="clan-name-disp" style="color: var(--accent);" data-i18n="no_clan_status">Не состоите</span></div>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;"><span data-i18n="members_label">Участников:</span> <span id="clan-members-count">0</span> / 1000 | <span data-i18n="bonus_label">Бонус:</span> <span id="clan-bonus">0%</span></div>
                     <div id="my-clan-actions">
                         <!-- Динамическая кнопка выхода из клана -->
                     </div>
                 </div>
 
-                <h3 style="font-size: 15px; margin-top: 16px; margin-bottom: 8px;">🔍 Поиск кланов</h3>
-                <input type="text" id="clan-search-input" placeholder="Введите название для поиска..." oninput="renderClansList()" style="margin-bottom: 10px;">
+                <h3 style="font-size: 15px; margin-top: 16px; margin-bottom: 8px;" data-i18n="search_clans">🔍 Поиск кланов</h3>
+                <input type="text" id="clan-search-input" placeholder="Введите название для поиска..." data-i18n-placeholder="search_placeholder" oninput="renderClansList()" style="margin-bottom: 10px;">
                 
                 <div id="clans-directory" style="max-height: 200px; overflow-y: auto; margin-bottom: 12px;">
                     <!-- Список кланов -->
                 </div>
 
-                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px;" onclick="openCreateClanModal()">➕ Создать свой клан (400 🥛)</button>
+                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px;" onclick="openCreateClanModal()" data-i18n="create_clan_btn">➕ Создать свой клан (400 🥛)</button>
             </div>
         </div>
 
         <!-- 6. ДРУЗЬЯ -->
         <div id="tab-ref" class="tab-content">
             <div class="section-card">
-                <h3>👥 Партнерская программа</h3>
-                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">Получайте бонус 10% от пополнений приглашенных друзей!</p>
+                <h3 data-i18n="ref_title">👥 Партнерская программа</h3>
+                <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;" data-i18n="ref_desc">Получайте бонус 10% от пополнений приглашенных друзей!</p>
                 <input type="text" id="ref-link" readonly onclick="this.select()">
-                <button class="btn" style="width: 100%; margin-top: 10px;" onclick="copyRefLink()">Скопировать ссылку</button>
+                <button class="btn" style="width: 100%; margin-top: 10px;" onclick="copyRefLink()" data-i18n="copy_btn">Скопировать ссылку</button>
                 <div style="margin-top: 12px; font-size: 12px; color: var(--text-secondary);">
-                    Приглашено друзей: <span id="ref-count" style="font-weight: 600; color: var(--text-main);">0</span><br>
-                    Заработано с рефералов: <span id="ref-earnings" style="font-weight: 600; color: var(--green);">0 🥛</span>
+                    <span data-i18n="invited_friends">Приглашено друзей:</span> <span id="ref-count" style="font-weight: 600; color: var(--text-main);">0</span><br>
+                    <span data-i18n="earned_refs">Заработано с рефералов:</span> <span id="ref-earnings" style="font-weight: 600; color: var(--green);">0 🥛</span>
                 </div>
             </div>
         </div>
@@ -499,29 +499,28 @@
         <!-- 7. ПРОФИЛЬ И ВЫВОД -->
         <div id="tab-profile" class="tab-content">
             <div class="section-card">
-                <h3>👤 Профиль фермера</h3>
+                <h3 data-i18n="profile_title">👤 Профиль фермера</h3>
                 <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
-                    Имя: <span id="profile-name" style="color: var(--text-main); font-weight: 600;">Фермер</span><br>
+                    <span data-i18n="name_label">Имя:</span> <span id="profile-name" style="color: var(--text-main); font-weight: 600;">Фермер</span><br>
                     ID: <span id="profile-id" style="color: var(--text-main); font-weight: 600;">—</span><br>
-                    Кошелек: <span id="wallet-status" style="color: var(--accent);">Не подключен</span>
+                    <span data-i18n="wallet_label">Кошелек:</span> <span id="wallet-status" style="color: var(--accent);">Не подключен</span>
                 </div>
                 <div style="margin-bottom: 12px;">
-    <label for="language-select" style="font-size: 12px; color: var(--text-secondary);" data-i18n="profile_lang">Язык приложения:</label>
-    <select id="language-select" onchange="changeLanguage(this.value)">
-        <option value="ru">Русский 🇷🇺</option>
-        <option value="en">English 🇬🇧</option>
-        <option value="es">Español 🇪🇸</option>
-    </select>
-</div>
-
+                    <label for="language-select" style="font-size: 12px; color: var(--text-secondary);" data-i18n="profile_lang">Язык приложения:</label>
+                    <select id="language-select" onchange="changeLanguage(this.value)">
+                        <option value="ru">Русский 🇷🇺</option>
+                        <option value="en">English 🇬🇧</option>
+                        <option value="es">Español 🇪🇸</option>
+                    </select>
+                </div>
                 
-                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 8px;" onclick="requestWithdrawal()">📤 Вывести токены (доступно с 10 ноября)</button>
-                <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="connectWallet()">👛 Подключить кошелек (доступно с 10 ноября)</button>
+                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 8px;" onclick="requestWithdrawal()" data-i18n="withdraw_btn">📤 Вывести токены (доступно с 10 ноября)</button>
+                <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="connectWallet()" data-i18n="connect_wallet_btn">👛 Подключить кошелек (доступно с 10 ноября)</button>
                 
                 <hr style="margin: 14px 0; border:0; border-top:1px solid var(--card-border);">
                 
-                <h3>💱 Курс пополнения</h3>
-                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.4;">
+                <h3 data-i18n="topup_rate_title">💱 Курс пополнения</h3>
+                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.4;" data-i18n="topup_rates_text">
                     <b>Stars ⭐:</b><br>
                     100м = 50 ⭐ | 200м = 100 ⭐ | 500м = 200 ⭐<br>
                     1000м = 400 ⭐ | 2000м = 750 ⭐ | 5000м = 1500 ⭐<br><br>
@@ -530,89 +529,89 @@
                     1000м = 5 TON | 2000м = 9.5 TON | 5000м = 19 TON
                 </div>
                 
-                <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openTopUpModal()">⭐ Пополнить баланс</button>
-                <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openFaqModal()">❓ FAQ и Контакты</button>
-                <button class="btn" style="width: 100%; font-size: 12px; padding: 9px; background: var(--text-secondary);" onclick="openWelcomeModal()">📖 Инструкция к игре</button>
+                <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openTopUpModal()" data-i18n="topup_btn">⭐ Пополнить баланс</button>
+                <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px; margin-bottom: 8px;" onclick="openFaqModal()" data-i18n="faq_btn">❓ FAQ и Контакты</button>
+                <button class="btn" style="width: 100%; font-size: 12px; padding: 9px; background: var(--text-secondary);" onclick="openWelcomeModal()" data-i18n="instruction_btn">📖 Инструкция к игре</button>
             </div>
         </div>
 
         <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
         <div class="nav">
-            <div class="nav-item active" id="nav-game" onclick="switchTab('game')"><span class="icon">🏡</span><span>Ферма</span></div>
-            <div class="nav-item" id="nav-shop" onclick="switchTab('shop')"><span class="icon">🛍</span><span>Рынок</span></div>
-            <div class="nav-item" id="nav-daily" onclick="switchTab('daily')"><span class="icon">🗓</span><span>Бонусы</span></div>
-            <div class="nav-item" id="nav-top" onclick="switchTab('top')"><span class="icon">🏆</span><span>Топ</span></div>
-            <div class="nav-item" id="nav-clan" onclick="switchTab('clan')"><span class="icon">🛡</span><span>Клан</span></div>
-            <div class="nav-item" id="nav-ref" onclick="switchTab('ref')"><span class="icon">👥</span><span>Друзья</span></div>
-            <div class="nav-item" id="nav-profile" onclick="switchTab('profile')"><span class="icon">👤</span><span>Профиль</span></div>
+            <div class="nav-item active" id="nav-game" onclick="switchTab('game')"><span class="icon">🏡</span><span data-i18n="nav_farm">Ферма</span></div>
+            <div class="nav-item" id="nav-shop" onclick="switchTab('shop')"><span class="icon">🛍</span><span data-i18n="nav_shop">Рынок</span></div>
+            <div class="nav-item" id="nav-daily" onclick="switchTab('daily')"><span class="icon">🗓</span><span data-i18n="nav_bonuses">Бонусы</span></div>
+            <div class="nav-item" id="nav-top" onclick="switchTab('top')"><span class="icon">🏆</span><span data-i18n="nav_top">Топ</span></div>
+            <div class="nav-item" id="nav-clan" onclick="switchTab('clan')"><span class="icon">🛡</span><span data-i18n="nav_clan">Клан</span></div>
+            <div class="nav-item" id="nav-ref" onclick="switchTab('ref')"><span class="icon">👥</span><span data-i18n="nav_friends">Друзья</span></div>
+            <div class="nav-item" id="nav-profile" onclick="switchTab('profile')"><span class="icon">👤</span><span data-i18n="nav_profile">Профиль</span></div>
         </div>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО СОЗДАНИЯ КЛАНА -->
     <div class="modal-overlay" id="create-clan-modal">
         <div class="modal-card">
-            <h3 style="margin-top: 0; color: var(--accent);">Создание клана</h3>
-            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; text-align: left;">
+            <h3 style="margin-top: 0; color: var(--accent);" data-i18n="modal_clan_title">Создание клана</h3>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; text-align: left;" data-i18n="modal_clan_desc">
                 Придумайте название для кооператива. Стоимость создания: <b>400 молока</b> 🥛. Лимит участников — до 1000 человек.
             </div>
-            <input type="text" id="new-clan-name-input" placeholder="Название (например, Молочный Союз)">
-            <button class="btn btn-green" style="width: 100%; margin-top: 10px; margin-bottom: 8px;" onclick="confirmCreateClan()">Создать клан (400 🥛)</button>
-            <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeCreateClanModal()">Отмена</button>
+            <input type="text" id="new-clan-name-input" placeholder="Название (например, Молочный Союз)" data-i18n-placeholder="clan_name_placeholder">
+            <button class="btn btn-green" style="width: 100%; margin-top: 10px; margin-bottom: 8px;" onclick="confirmCreateClan()" data-i18n="modal_create_clan_btn">Создать клан (400 🥛)</button>
+            <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeCreateClanModal()" data-i18n="cancel_btn">Отмена</button>
         </div>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО СОЗДАНИЯ И ОПЛАТЫ ЗАДАНИЯ -->
     <div class="modal-overlay" id="create-task-modal">
         <div class="modal-card">
-            <h3 style="margin-top: 0; color: var(--accent);">Создать задание</h3>
-            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; text-align: left;">
+            <h3 style="margin-top: 0; color: var(--accent);" data-i18n="modal_task_title">Создать задание</h3>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; text-align: left;" data-i18n="modal_task_desc">
                 Укажите ссылку и выберите бюджет. Награда за выполнение такого задания для игроков составит <b>10 молока</b> 🥛. Для публикации оплатите TON:
             </div>
             
-            <input type="text" id="task-title-input" placeholder="Название (например: Подписка на канал)">
-            <input type="text" id="task-url-input" placeholder="Ссылка (https://t.me/channel)">
+            <input type="text" id="task-title-input" placeholder="Название (например: Подписка на канал)" data-i18n-placeholder="task_title_placeholder">
+            <input type="text" id="task-url-input" placeholder="Ссылка (https://t.me/channel)" data-i18n-placeholder="task_url_placeholder">
             <select id="task-budget-select" onchange="calcTaskCost()">
-                <option value="1">1 TON — 1,000 выполнений</option>
-                <option value="2">2 TON — 2,000 выполнений</option>
-                <option value="3">3 TON — 3,000 выполнений</option>
+                <option value="1" data-i18n="budget_1">1 TON — 1,000 выполнений</option>
+                <option value="2" data-i18n="budget_2">2 TON — 2,000 выполнений</option>
+                <option value="3" data-i18n="budget_3">3 TON — 3,000 выполнений</option>
             </select>
             
             <div style="background: #faf8f5; border: 1px solid var(--card-border); padding: 8px; border-radius: 8px; margin: 10px 0; text-align: left; font-size: 11px; word-break: break-all;">
-                <b>Кошелек для оплаты:</b><br>
+                <b data-i18n="sys_wallet_label">Кошелек для оплаты:</b><br>
                 <code style="user-select: all; color: var(--accent);">UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa</code><br>
-                <span style="color: var(--text-secondary);">Мемо/комментарий: ваш ID <b id="modal-user-id">---</b></span>
+                <span style="color: var(--text-secondary);"><span data-i18n="memo_label">Мемо/комментарий: ваш ID</span> <b id="modal-user-id">---</b></span>
             </div>
 
-            <input type="text" id="task-tx-input" placeholder="Введите хэш или ID транзакции перевода">
+            <input type="text" id="task-tx-input" placeholder="Введите хэш или ID транзакции перевода" data-i18n-placeholder="tx_placeholder">
 
             <div style="font-size: 12px; font-weight: 600; color: var(--text-main); margin: 8px 0; text-align: left;" id="task-cost-display">
                 К оплате: 1 TON (1,000 выполнений)
             </div>
 
-            <button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="verifyAndPublishTask()">✅ Проверить оплату и опубликовать</button>
-            <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeCreateTaskModal()">Отмена</button>
+            <button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="verifyAndPublishTask()" data-i18n="verify_publish_btn">✅ Проверить оплату и опубликовать</button>
+            <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeCreateTaskModal()" data-i18n="cancel_btn">Отмена</button>
         </div>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div class="modal-overlay" id="topup-modal">
         <div class="modal-card">
-            <h3 style="margin-top: 0; color: var(--accent);">Пополнение баланса</h3>
-            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; text-align: left; line-height: 1.5;">
+            <h3 style="margin-top: 0; color: var(--accent);" data-i18n="topup_modal_title">Пополнение баланса</h3>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; text-align: left; line-height: 1.5;" data-i18n="topup_modal_desc">
                 Для пополнения отправьте TON на наш системный кошелек:<br><br>
                 <code style="background: #faf8f5; padding: 4px; border-radius: 4px; word-break: break-all; user-select: all;" id="sys-wallet">UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa</code><br><br>
                 ⚠️ <b>Обязательно</b> укажите ваш Telegram ID в комментарии к переводу (комментарий/мемо), чтобы бот автоматически зачислил молоко после проверки!
             </div>
-            <button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="checkPaymentAuto()">🔄 Проверить оплату</button>
-            <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeTopUpModal()">Закрыть</button>
+            <button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="checkPaymentAuto()" data-i18n="check_payment_btn">🔄 Проверить оплату</button>
+            <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeTopUpModal()" data-i18n="close_btn">Закрыть</button>
         </div>
     </div>
 
     <!-- МОДАЛЬНОЕ ОКНО FAQ И КОНТАКТОВ -->
     <div class="modal-overlay" id="faq-modal">
         <div class="modal-card">
-            <h3 style="margin-top: 0; color: var(--accent);">FAQ и Поддержка</h3>
-            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; text-align: left; line-height: 1.6;">
+            <h3 style="margin-top: 0; color: var(--accent);" data-i18n="faq_title">FAQ и Поддержка</h3>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; text-align: left; line-height: 1.6;" data-i18n="faq_text">
                 <b>❓ Как начать играть?</b><br>
                 Заберите стартовый бонус в разделе «Задания» и купите свою первую корову на рынке.<br><br>
                 <b>❓ Как часто собирать молоко?</b><br>
@@ -622,7 +621,7 @@
                 💬 Telegram: <a href="https://t.me/Zuhroniddin" target="_blank" style="color: var(--accent); font-weight: 600;">@Zuhroniddin</a><br>
                 📸 Instagram: <a href="https://www.instagram.com/zuhronid1n?stkn=MWU5aHM4OWJrazYzcA%3D%3D&utm_source=qr" target="_blank" style="color: var(--accent); font-weight: 600;">Instagram профиль</a>
             </div>
-            <button class="btn" style="width: 100%; margin-top: 8px;" onclick="closeFaqModal()">Понятно</button>
+            <button class="btn" style="width: 100%; margin-top: 8px;" onclick="closeFaqModal()" data-i18n="understood_btn">Понятно</button>
         </div>
     </div>
 
@@ -630,19 +629,316 @@
     <div class="modal-overlay" id="welcome-modal">
         <div class="modal-card">
             <div style="font-size: 45px; margin-bottom: 8px;">🐄🏡</div>
-            <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--accent);">Уютная Ферма</h3>
-            <div style="font-size: 13px; color: var(--text-secondary); text-align: left; line-height: 1.5; margin-bottom: 16px;">
+            <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--accent);" data-i18n="title_app">Уютная Ферма</h3>
+            <div style="font-size: 13px; color: var(--text-secondary); text-align: left; line-height: 1.5; margin-bottom: 16px;" data-i18n="welcome_text">
                 <b>Правила игры:</b><br>
                 1. 📋 Выполните задания в разделе <b>«Задания»</b>, чтобы получить стартовое молоко.<br>
                 2. 🛍 Купите коров на рынке (до 5 уровней).<br>
                 3. ⏰ Коровы приносят молоко каждые <b>4 часа</b>.<br>
                 4. ⚠️ Через 4 часа фарм останавливается — вовремя забирайте прибыль!
             </div>
-            <button class="btn" style="width: 100%; font-size: 14px;" onclick="closeWelcomeModal()">Начать игру! 🚀</button>
+            <button class="btn" style="width: 100%; font-size: 14px;" onclick="closeWelcomeModal()" data-i18n="start_game_btn">Начать игру! 🚀</button>
         </div>
     </div>
 
     <script>
+        // --- СЛОВАРЬ ПЕРЕВОДОВ ---
+        const translations = {
+            ru: {
+                title_app: "🏡 Уютная Ферма",
+                farmer: "Фермер",
+                accumulated: "Накоплено:",
+                claim_btn: "📥 Собрать прибыль",
+                herd_title: "Ваше стадо коров:",
+                no_cows: "У вас нет коров. Выполняйте задания в разделе «Бонусы»!",
+                nav_farm: "Ферма",
+                nav_shop: "Рынок",
+                nav_bonuses: "Бонусы",
+                nav_top: "Топ",
+                nav_clan: "Клан",
+                nav_friends: "Друзья",
+                nav_profile: "Профиль",
+                profile_lang: "Язык приложения:",
+                limit_reached: "Лимит 4 часа достигнут!",
+                time_to_limit: "До лимита:",
+                stop_farm: "Стоп фарма",
+                wallet_not_connected: "Не подключен",
+                shop_title: "🛍 Рынок бурёнок (5 уровней)",
+                you_have: "У вас:",
+                pcs: "шт.",
+                sub_rewards: "🎁 Награды",
+                sub_tasks: "📋 Задания",
+                daily_bonus_title: "🗓 Бонус 7 дней (Серия)",
+                daily_warning: "⚠️ Пропустите 1 день — серия сбросится заново!",
+                claim_daily_btn: "Забрать бонус дня",
+                ads_title: "📺 Заработок (Реклама)",
+                watch_ad: "Смотреть рекламу",
+                ad_reward: "Награда: +5 🥛 за просмотр",
+                watch_btn: "🎬 Смотреть ролик",
+                tasks_heading: "📢 Задания",
+                create_btn: "➕ Создать",
+                tasks_desc: "Подписывайтесь на каналы и чаты, выполняйте задания и получайте награду 10 молока за каждое!",
+                top_title: "🏆 Топ Фермеров",
+                top_subtitle: "Лучшие производители молока:",
+                no_top: "Пока нет других фермеров в топе. Приглашай друзей!",
+                you_label: "Вы",
+                clans_title: "🛡 Кооперативы (Кланы)",
+                your_clan: "Ваш клан:",
+                no_clan_status: "Не состоите",
+                members_label: "Участников:",
+                bonus_label: "Бонус:",
+                search_clans: "🔍 Поиск кланов",
+                create_clan_btn: "➕ Создать свой клан (400 🥛)",
+                ref_title: "👥 Партнерская программа",
+                ref_desc: "Получайте бонус 10% от пополнений приглашенных друзей!",
+                copy_btn: "Скопировать ссылку",
+                invited_friends: "Приглашено друзей:",
+                earned_refs: "Заработано с рефералов:",
+                profile_title: "👤 Профиль фермера",
+                name_label: "Имя:",
+                wallet_label: "Кошелек:",
+                withdraw_btn: "📤 Вывести токены (доступно с 10 ноября)",
+                connect_wallet_btn: "👛 Подключить кошелек (доступно с 10 ноября)",
+                topup_rate_title: "💱 Курс пополнения",
+                topup_rates_text: "<b>Stars ⭐:</b><br>100м = 50 ⭐ | 200м = 100 ⭐ | 500м = 200 ⭐<br>1000м = 400 ⭐ | 2000м = 750 ⭐ | 5000м = 1500 ⭐<br><br><b>TON 💎:</b><br>100м = 0.7 TON | 200м = 1.2 TON | 500м = 2.5 TON<br>1000м = 5 TON | 2000м = 9.5 TON | 5000м = 19 TON",
+                topup_btn: "⭐ Пополнить баланс",
+                faq_btn: "❓ FAQ и Контакты",
+                instruction_btn: "📖 Инструкция к игре",
+                modal_clan_title: "Создание клана",
+                modal_clan_desc: "Придумайте название для кооператива. Стоимость создания: <b>400 молока</b> 🥛. Лимит участников — до 1000 человек.",
+                modal_create_clan_btn: "Создать клан (400 🥛)",
+                cancel_btn: "Отмена",
+                modal_task_title: "Создать задание",
+                modal_task_desc: "Укажите ссылку и выберите бюджет. Награда за выполнение такого задания для игроков составит <b>10 молока</b> 🥛. Для публикации оплатите TON:",
+                budget_1: "1 TON — 1,000 выполнений",
+                budget_2: "2 TON — 2,000 выполнений",
+                budget_3: "3 TON — 3,000 выполнений",
+                sys_wallet_label: "Кошелек для оплаты:",
+                memo_label: "Мемо/комментарий: ваш ID",
+                verify_publish_btn: "✅ Проверить оплату и опубликовать",
+                topup_modal_title: "Пополнение баланса",
+                topup_modal_desc: "Для пополнения отправьте TON на наш системный кошелек:<br><br><code style='background: #faf8f5; padding: 4px; border-radius: 4px; word-break: break-all; user-select: all;' id='sys-wallet'>UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa</code><br><br>⚠️ <b>Обязательно</b> укажите ваш Telegram ID в комментарии к переводу (комментарий/мемо), чтобы бот автоматически зачислил молоко после проверки!",
+                check_payment_btn: "🔄 Проверить оплату",
+                close_btn: "Закрыть",
+                faq_title: "FAQ и Поддержка",
+                faq_text: "<b>❓ Как начать играть?</b><br>Заберите стартовый бонус в разделе «Задания» и купите свою первую корову на рынке.<br><br><b>❓ Как часто собирать молоко?</b><br>Фарм идет до 4 часов. Не забывайте забирать прибыль вовремя!<br><br><b>❓ Как связаться с разработчиком?</b><br>Обращайтесь напрямую:<br>💬 Telegram: <a href='https://t.me/Zuhroniddin' target='_blank' style='color: var(--accent); font-weight: 600;'>@Zuhroniddin</a><br>📸 Instagram: <a href='https://www.instagram.com/zuhronid1n?stkn=MWU5aHM4OWJrazYzcA%3D%3D&utm_source=qr' target='_blank' style='color: var(--accent); font-weight: 600;'>Instagram профиль</a>",
+                understood_btn: "Понятно",
+                welcome_text: "<b>Правила игры:</b><br>1. 📋 Выполните задания в разделе <b>«Задания»</b>, чтобы получить стартовое молоко.<br>2. 🛍 Купите коров на рынке (до 5 уровней).<br>3. ⏰ Коровы приносят молоко каждые <b>4 часа</b>.<br>4. ⚠️ Через 4 часа фарм останавливается — вовремя забирайте прибыль!",
+                start_game_btn: "Начать игру! 🚀",
+                search_placeholder: "Введите название для поиска...",
+                clan_name_placeholder: "Название (например, Молочный Союз)",
+                task_title_placeholder: "Название (например: Подписка на канал)",
+                task_url_placeholder: "Ссылка (https://t.me/channel)",
+                tx_placeholder: "Введите хэш или ID транзакции перевода"
+            },
+            en: {
+                title_app: "🏡 Cozy Farm",
+                farmer: "Farmer",
+                accumulated: "Accumulated:",
+                claim_btn: "📥 Collect Profit",
+                herd_title: "Your herd of cows:",
+                no_cows: "You have no cows. Complete tasks in the 'Bonuses' section!",
+                nav_farm: "Farm",
+                nav_shop: "Market",
+                nav_bonuses: "Bonuses",
+                nav_top: "Top",
+                nav_clan: "Clan",
+                nav_friends: "Friends",
+                nav_profile: "Profile",
+                profile_lang: "App Language:",
+                limit_reached: "4-hour limit reached!",
+                time_to_limit: "Until limit:",
+                stop_farm: "Farming stopped",
+                wallet_not_connected: "Not connected",
+                shop_title: "🛍 Cow Market (5 levels)",
+                you_have: "You have:",
+                pcs: "pcs.",
+                sub_rewards: "🎁 Rewards",
+                sub_tasks: "📋 Tasks",
+                daily_bonus_title: "🗓 7-Day Bonus (Streak)",
+                daily_warning: "⚠️ Skip 1 day — the streak will reset!",
+                claim_daily_btn: "Claim Daily Bonus",
+                ads_title: "📺 Earnings (Ads)",
+                watch_ad: "Watch Ad",
+                ad_reward: "Reward: +5 🥛 per view",
+                watch_btn: "🎬 Watch Video",
+                tasks_heading: "📢 Tasks",
+                create_btn: "➕ Create",
+                tasks_desc: "Subscribe to channels and chats, complete tasks and get a reward of 10 milk for each!",
+                top_title: "🏆 Farmer Top",
+                top_subtitle: "Top milk producers:",
+                no_top: "No other farmers in the top yet. Invite friends!",
+                you_label: "You",
+                clans_title: "🛡 Cooperatives (Clans)",
+                your_clan: "Your clan:",
+                no_clan_status: "None",
+                members_label: "Members:",
+                bonus_label: "Bonus:",
+                search_clans: "🔍 Search Clans",
+                create_clan_btn: "➕ Create Clan (400 🥛)",
+                ref_title: "👥 Affiliate Program",
+                ref_desc: "Get a 10% bonus from invited friends' top-ups!",
+                copy_btn: "Copy Link",
+                invited_friends: "Invited friends:",
+                earned_refs: "Earned from referrals:",
+                profile_title: "👤 Farmer Profile",
+                name_label: "Name:",
+                wallet_label: "Wallet:",
+                withdraw_btn: "📤 Withdraw Tokens (available Nov 10)",
+                connect_wallet_btn: "👛 Connect Wallet (available Nov 10)",
+                topup_rate_title: "💱 Top-up Rate",
+                topup_rates_text: "<b>Stars ⭐:</b><br>100m = 50 ⭐ | 200m = 100 ⭐ | 500m = 200 ⭐<br>1000m = 400 ⭐ | 2000m = 750 ⭐ | 5000m = 1500 ⭐<br><br><b>TON 💎:</b><br>100m = 0.7 TON | 200m = 1.2 TON | 500m = 2.5 TON<br>1000m = 5 TON | 2000m = 9.5 TON | 5000m = 19 TON",
+                topup_btn: "⭐ Top up Balance",
+                faq_btn: "❓ FAQ & Contacts",
+                instruction_btn: "📖 Game Guide",
+                modal_clan_title: "Create Clan",
+                modal_clan_desc: "Come up with a name for the cooperative. Creation cost: <b>400 milk</b> 🥛. Member limit — up to 1000 people.",
+                modal_create_clan_btn: "Create Clan (400 🥛)",
+                cancel_btn: "Cancel",
+                modal_task_title: "Create Task",
+                modal_task_desc: "Provide a link and choose a budget. The reward for completing such a task for players will be <b>10 milk</b> 🥛. Pay TON to publish:",
+                budget_1: "1 TON — 1,000 completions",
+                budget_2: "2 TON — 2,000 completions",
+                budget_3: "3 TON — 3,000 completions",
+                sys_wallet_label: "Payment Wallet:",
+                memo_label: "Memo/comment: your ID",
+                verify_publish_btn: "✅ Verify Payment & Publish",
+                topup_modal_title: "Top-up Balance",
+                topup_modal_desc: "To top up, send TON to our system wallet:<br><br><code style='background: #faf8f5; padding: 4px; border-radius: 4px; word-break: break-all; user-select: all;' id='sys-wallet'>UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa</code><br><br>⚠️ <b>Be sure</b> to indicate your Telegram ID in the transfer comment (comment/memo) so that the bot automatically credits milk after verification!",
+                check_payment_btn: "🔄 Check Payment",
+                close_btn: "Close",
+                faq_title: "FAQ & Support",
+                faq_text: "<b>❓ How to start playing?</b><br>Claim your starting bonus in the 'Tasks' section and buy your first cow at the market.<br><br><b>❓ How often to collect milk?</b><br>Farming takes up to 4 hours. Don't forget to collect profits on time!<br><br><b>❓ How to contact the developer?</b><br>Reach out directly:<br>💬 Telegram: <a href='https://t.me/Zuhroniddin' target='_blank' style='color: var(--accent); font-weight: 600;'>@Zuhroniddin</a><br>📸 Instagram: <a href='https://www.instagram.com/zuhronid1n?stkn=MWU5aHM4OWJrazYzcA%3D%3D&utm_source=qr' target='_blank' style='color: var(--accent); font-weight: 600;'>Instagram profile</a>",
+                understood_btn: "Understood",
+                welcome_text: "<b>Game Rules:</b><br>1. 📋 Complete tasks in the <b>'Tasks'</b> section to get starting milk.<br>2. 🛍 Buy cows at the market (up to 5 levels).<br>3. ⏰ Cows bring milk every <b>4 hours</b>.<br>4. ⚠️ After 4 hours, farming stops — collect your profits on time!",
+                start_game_btn: "Start Game! 🚀",
+                search_placeholder: "Enter name to search...",
+                clan_name_placeholder: "Name (e.g., Milk Union)",
+                task_title_placeholder: "Title (e.g., Channel Subscription)",
+                task_url_placeholder: "Link (https://t.me/channel)",
+                tx_placeholder: "Enter transaction hash or ID"
+            },
+            es: {
+                title_app: "🏡 Granja Acogedora",
+                farmer: "Granjero",
+                accumulated: "Acumulado:",
+                claim_btn: "📥 Recolectar",
+                herd_title: "Tu rebaño de vacas:",
+                no_cows: "¡No tienes vacas! Completa tareas en 'Bonos'.",
+                nav_farm: "Granja",
+                nav_shop: "Mercado",
+                nav_bonuses: "Bonos",
+                nav_top: "Top",
+                nav_clan: "Clan",
+                nav_friends: "Amigos",
+                nav_profile: "Perfil",
+                profile_lang: "Idioma de la aplicación:",
+                limit_reached: "¡Límite de 4 horas alcanzado!",
+                time_to_limit: "Hasta el límite:",
+                stop_farm: "Granja detenida",
+                wallet_not_connected: "No conectado",
+                shop_title: "🛍 Mercado de vacas (5 niveles)",
+                you_have: "Tienes:",
+                pcs: "un.",
+                sub_rewards: "🎁 Recompensas",
+                sub_tasks: "📋 Tareas",
+                daily_bonus_title: "🗓 Bono de 7 días (Racha)",
+                daily_warning: "⚠️ ¡Si saltas 1 día, la racha se reiniciará!",
+                claim_daily_btn: "Reclamar bono diario",
+                ads_title: "📺 Ganancias (Anuncios)",
+                watch_ad: "Ver anuncio",
+                ad_reward: "Recompensa: +5 🥛 por vista",
+                watch_btn: "🎬 Ver video",
+                tasks_heading: "📢 Tareas",
+                create_btn: "➕ Crear",
+                tasks_desc: "¡Suscríbete a canales y chats, completa tareas y obtén una recompensa de 10 de leche por cada una!",
+                top_title: "🏆 Top Granjeros",
+                top_subtitle: "Mejores productores de leche:",
+                no_top: "Aún no hay otros granjeros en el top. ¡Invita amigos!",
+                you_label: "Tú",
+                clans_title: "🛡 Cooperativas (Clanes)",
+                your_clan: "Tu clan:",
+                no_clan_status: "Ninguno",
+                members_label: "Miembros:",
+                bonus_label: "Bono:",
+                search_clans: "🔍 Buscar clanes",
+                create_clan_btn: "➕ Crear clan (400 🥛)",
+                ref_title: "👥 Programa de afiliados",
+                ref_desc: "¡Obtén un bono del 10% de las recargas de tus amigos invitados!",
+                copy_btn: "Copiar enlace",
+                invited_friends: "Amigos invitados:",
+                earned_refs: "Ganado por referidos:",
+                profile_title: "👤 Perfil de granjero",
+                name_label: "Nombre:",
+                wallet_label: "Billetera:",
+                withdraw_btn: "📤 Retirar tokens (disponible 10 nov)",
+                connect_wallet_btn: "👛 Conectar billetera (disponible 10 nov)",
+                topup_rate_title: "💱 Tasa de recarga",
+                topup_rates_text: "<b>Stars ⭐:</b><br>100m = 50 ⭐ | 200m = 100 ⭐ | 500m = 200 ⭐<br>1000m = 400 ⭐ | 2000m = 750 ⭐ | 5000m = 1500 ⭐<br><br><b>TON 💎:</b><br>100m = 0.7 TON | 200m = 1.2 TON | 500m = 2.5 TON<br>1000m = 5 TON | 2000m = 9.5 TON | 5000m = 19 TON",
+                topup_btn: "⭐ Recargar saldo",
+                faq_btn: "❓ FAQ y Contactos",
+                instruction_btn: "📖 Guía del juego",
+                modal_clan_title: "Crear clan",
+                modal_clan_desc: "Inventa un nombre para la cooperativa. Costo de creación: <b>400 leche</b> 🥛. Límite de miembros: hasta 1000 personas.",
+                modal_create_clan_btn: "Crear clan (400 🥛)",
+                cancel_btn: "Cancelar",
+                modal_task_title: "Crear tarea",
+                modal_task_desc: "Proporciona un enlace y elige un presupuesto. La recompensa por completar dicha tarea para los jugadores será de <b>10 leche</b> 🥛. Paga TON para publicar:",
+                budget_1: "1 TON — 1,000 completados",
+                budget_2: "2 TON — 2,000 completados",
+                budget_3: "3 TON — 3,000 completados",
+                sys_wallet_label: "Billetera de pago:",
+                memo_label: "Memo/comentario: tu ID",
+                verify_publish_btn: "✅ Verificar pago y publicar",
+                topup_modal_title: "Recargar saldo",
+                topup_modal_desc: "Para recargar, envía TON a nuestra billetera del sistema:<br><br><code style='background: #faf8f5; padding: 4px; border-radius: 4px; word-break: break-all; user-select: all;' id='sys-wallet'>UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa</code><br><br>⚠️ <b>Asegúrate</b> de indicar tu ID de Telegram en el comentario de la transferencia (comentario/memo) para que el bot acredite la leche automáticamente después de la verificación.",
+                check_payment_btn: "🔄 Verificar pago",
+                close_btn: "Cerrar",
+                faq_title: "FAQ y Soporte",
+                faq_text: "<b>❓ ¿Cómo empezar a jugar?</b><br>Reclama tu bono inicial en la sección 'Tareas' y compra tu primera vaca en el mercado.<br><br><b>❓ ¿Cada cuánto recolectar leche?</b><br>El cultivo dura hasta 4 horas. ¡No olvides recoger las ganancias a tiempo!<br><br><b>❓ ¿Cómo contactar al desarrollador?</b><br>Comunícate directamente:<br>💬 Telegram: <a href='https://t.me/Zuhroniddin' target='_blank' style='color: var(--accent); font-weight: 600;'>@Zuhroniddin</a><br>📸 Instagram: <a href='https://www.instagram.com/zuhronid1n?stkn=MWU5aHM4OWJrazYzcA%3D%3D&utm_source=qr' target='_blank' style='color: var(--accent); font-weight: 600;'>Perfil de Instagram</a>",
+                understood_btn: "Entendido",
+                welcome_text: "<b>Reglas del juego:</b><br>1. 📋 Completa tareas en la sección <b>'Tareas'</b> para obtener leche inicial.<br>2. 🛍 Compra vacas en el mercado (hasta 5 niveles).<br>3. ⏰ Las vacas traen leche cada <b>4 horas</b>.<br>4. ⚠️ Después de 4 horas, la agricultura se detiene: ¡recoge tus ganancias a tiempo!",
+                start_game_btn: "¡Empezar a jugar! 🚀",
+                search_placeholder: "Ingresa nombre para buscar...",
+                clan_name_placeholder: "Nombre (ej. Unión Lechera)",
+                task_title_placeholder: "Título (ej. Suscripción al canal)",
+                task_url_placeholder: "Enlace (https://t.me/channel)",
+                tx_placeholder: "Ingresa el hash o ID de transacción"
+            }
+        };
+
+        let currentLang = localStorage.getItem('milk_farm_v28_lang') || 'ru';
+
+        function t(key) {
+            return translations[currentLang]?.[key] || translations['ru']?.[key] || key;
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('milk_farm_v28_lang', lang);
+            applyTranslations();
+            updateUI();
+        }
+
+        function applyTranslations() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.placeholder = translations[currentLang][key];
+                }
+            });
+
+            const selectEl = document.getElementById('language-select');
+            if (selectEl) selectEl.value = currentLang;
+        }
+
         let milk = 0;
         let lastClaimTime = Date.now();
         let cows = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
@@ -697,7 +993,7 @@
                         saveGame();
                     } else {
                         walletAddress = "";
-                        document.getElementById('wallet-status').innerText = "Не подключен";
+                        document.getElementById('wallet-status').innerText = t('wallet_not_connected');
                         saveGame();
                     }
                 });
@@ -744,6 +1040,7 @@
             }
             
             checkDailyStreakReset();
+            applyTranslations();
             updateUI();
 
             if (!localStorage.getItem('milk_farm_v28_visited')) {
@@ -806,7 +1103,10 @@
         function calcTaskCost() {
             let tons = document.getElementById('task-budget-select').value;
             let slots = parseInt(tons) * 1000;
-            document.getElementById('task-cost-display').innerText = `К оплате: ${tons} TON (${slots.toLocaleString()} выполнений)`;
+            let textTemplate = currentLang === 'en' ? `To pay: ${tons} TON (${slots.toLocaleString()} completions)` :
+                               currentLang === 'es' ? `A pagar: ${tons} TON (${slots.toLocaleString()} completados)` :
+                               `К оплате: ${tons} TON (${slots.toLocaleString()} выполнений)`;
+            document.getElementById('task-cost-display').innerText = textTemplate;
         }
 
         async function verifyAndPublishTask() {
@@ -816,25 +1116,25 @@
             let txHash = document.getElementById('task-tx-input').value.trim();
 
             if (!title || !url) {
-                alert("Пожалуйста, заполните название и ссылку!");
+                alert(currentLang === 'en' ? "Please fill in the title and link!" : currentLang === 'es' ? "¡Por favor completa el título y el enlace!" : "Пожалуйста, заполните название и ссылку!");
                 return;
             }
 
             if (!txHash) {
-                alert("Пожалуйста, введите хэш или ID транзакции перевода TON для создания задания!");
+                alert(currentLang === 'en' ? "Please enter the TON transaction hash or ID!" : currentLang === 'es' ? "¡Por favor ingresa el hash o ID de la transacción!" : "Пожалуйста, введите хэш или ID транзакции перевода TON для создания задания!");
                 return;
             }
 
             let storageKey = `published_tx_${txHash}`;
             if (localStorage.getItem(storageKey)) {
-                alert("⚠️ Эта транзакция уже использовалась для создания задания!");
+                alert(currentLang === 'en' ? "⚠️ This transaction has already been used!" : currentLang === 'es' ? "⚠️ ¡Esta transacción ya fue utilizada!" : "⚠️ Эта транзакция уже использовалась для создания задания!");
                 return;
             }
 
             const systemWallet = "UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa";
             const btn = document.querySelector('#create-task-modal .btn-green');
             const oldText = btn.innerText;
-            btn.innerText = "⏳ Проверяем оплату в блокчейне...";
+            btn.innerText = currentLang === 'en' ? "⏳ Checking payment..." : currentLang === 'es' ? "⏳ Verificando pago..." : "⏳ Проверяем оплату в блокчейне...";
             btn.disabled = true;
 
             try {
@@ -877,17 +1177,17 @@
                     saveGame();
                     updateUI();
                     closeCreateTaskModal();
-                    alert("✅ Оплата успешно подтверждена! Ваше задание опубликовано.");
+                    alert(currentLang === 'en' ? "✅ Payment verified! Your task is published." : currentLang === 'es' ? "✅ ¡Pago verificado! Tu tarea ha sido publicada." : "✅ Оплата успешно подтверждена! Ваше задание опубликовано.");
                     
                     document.getElementById('task-title-input').value = "";
                     document.getElementById('task-url-input').value = "";
                     document.getElementById('task-tx-input').value = "";
                 } else {
-                    alert("❌ Не удалось подтвердить платеж с указанным хэшем. Задание не опубликовано.");
+                    alert(currentLang === 'en' ? "❌ Could not verify payment." : currentLang === 'es' ? "❌ No se pudo verificar el pago." : "❌ Не удалось подтвердить платеж с указанным хэшем. Задание не опубликовано.");
                 }
             } catch (err) {
                 console.error("Task payment verify error:", err);
-                alert("Ошибка соединения с блокчейном. Повторите попытку позже.");
+                alert("Blockchain error. Try again later.");
             } finally {
                 btn.innerText = oldText;
                 btn.disabled = false;
@@ -900,7 +1200,7 @@
 
             let completedKey = `task_done_${userTelegramId}_${taskId}`;
             if (localStorage.getItem(completedKey)) {
-                alert("⚠️ Вы уже выполняли это задание!");
+                alert(currentLang === 'en' ? "⚠️ You have already completed this task!" : currentLang === 'es' ? "⚠️ ¡Ya has completado esta tarea!" : "⚠️ Вы уже выполняли это задание!");
                 return;
             }
 
@@ -908,7 +1208,7 @@
 
             let btn = document.getElementById(`task-btn-${taskId}`);
             if (btn) {
-                btn.innerText = "⏳ Ожидание подписки (10 сек)...";
+                btn.innerText = currentLang === 'en' ? "⏳ Waiting (10s)..." : currentLang === 'es' ? "⏳ Esperando (10s)..." : "⏳ Ожидание подписки (10 сек)...";
                 btn.disabled = true;
             }
 
@@ -916,7 +1216,7 @@
             let timerInterval = setInterval(() => {
                 timeLeft--;
                 if (timeLeft > 0) {
-                    if (btn) btn.innerText = `⏳ Проверяем (${timeLeft}с)...`;
+                    if (btn) btn.innerText = `⏳ (${timeLeft}с)...`;
                 } else {
                     clearInterval(timerInterval);
                     
@@ -930,24 +1230,24 @@
 
                     saveGame();
                     updateUI();
-                    alert(`🎉 Задание успешно выполнено! Начислено +${task.reward} 🥛`);
+                    alert(`🎉 ${currentLang === 'en' ? 'Task completed!' : currentLang === 'es' ? '¡Tarea completada!' : 'Задание успешно выполнено!'} +${task.reward} 🥛`);
                 }
             }, 1000);
         }
 
         function requestWithdrawal() {
-             alert('Функция вывода токенов станет доступна с 10 ноября.');
+             alert(currentLang === 'en' ? 'Token withdrawal will be available from November 10.' : currentLang === 'es' ? 'El retiro de tokens estará disponible a partir del 10 de noviembre.' : 'Функция вывода токенов станет доступна с 10 ноября.');
         }
 
         async function connectWallet() {
-             alert('Подключение кошелька станет доступно с 10 ноября.');
+             alert(currentLang === 'en' ? 'Wallet connection will be available from November 10.' : currentLang === 'es' ? 'La conexión de billetera estará disponible a partir del 10 de noviembre.' : 'Подключение кошелька станет доступно с 10 ноября.');
         }
 
         async function checkPaymentAuto() {
             const systemWallet = "UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa";
             const btn = document.querySelector('#topup-modal .btn-green');
             const oldText = btn.innerText;
-            btn.innerText = "⏳ Проверяем транзакции...";
+            btn.innerText = "⏳ Checking...";
             btn.disabled = true;
             
             try {
@@ -999,35 +1299,30 @@
                         milk += addedMilkTotal;
                         saveGame();
                         updateUI();
-                        alert(`✅ Оплата успешно найдена! Начислено: +${addedMilkTotal} 🥛`);
+                        alert(`✅ Payment found! Credited: +${addedMilkTotal} 🥛`);
                         closeTopUpModal();
                     } else {
-                        alert("❌ Новых переводов с вашим Telegram ID (" + userTelegramId + ") не найдено.");
+                        alert("No new transfers found.");
                     }
                 } else {
-                    alert("Не удалось связаться с сетью TON.");
+                    alert("Could not reach TON network.");
                 }
             } catch (err) {
                 console.error("Payment check error:", err);
-                alert("Ошибка при проверке транзакций.");
+                alert("Error checking transactions.");
             } finally {
                 btn.innerText = oldText;
                 btn.disabled = false;
             }
         }
 
-        // --- ТАБЛИЦА ЛИДЕРОВ И СИНХРОНИЗАЦИЯ ---
         async function loadLeaderboard() {
             try {
-                // Пытаемся запросить данные с вашего бэкенда
                 let response = await fetch('https://ваш-домен.com/api/leaderboard');
-                if (!response.ok) throw new Error('Сервер не отвечает');
-                
+                if (!response.ok) throw new Error('Server error');
                 let data = await response.json();
                 renderLeaderboardUI(data);
-                
             } catch (e) {
-                // Если бэкенда нет, показываем демонстрационный топ с вашим счетом для проверки
                 let myName = document.getElementById('username-display').innerText;
                 let mockData = [
                     { name: "Алексей", milk: 1540 },
@@ -1036,7 +1331,6 @@
                     { name: "Максим", milk: 430 },
                     { name: "Елена", milk: 150 }
                 ];
-                
                 mockData.sort((a, b) => b.milk - a.milk);
                 renderLeaderboardUI(mockData);
             }
@@ -1045,7 +1339,7 @@
         function renderLeaderboardUI(data) {
             let container = document.getElementById('leaderboard-list');
             if (!data || data.length === 0) {
-                container.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">Пока нет других фермеров в топе.</div>`;
+                container.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">No data.</div>`;
                 return;
             }
 
@@ -1074,11 +1368,10 @@
                     })
                 });
             } catch (e) {
-                console.log("Синхронизация с сервером отложена (нет бэкенда).");
+                console.log("Server sync delayed.");
             }
         }
 
-        // --- УПРАВЛЕНИЕ КЛАНАМИ ---
         function getClanBonusPercent(membersCount) {
             let percent = Math.floor(membersCount / 100);
             return Math.min(10, Math.max(0, percent));
@@ -1101,7 +1394,7 @@
 
         function openCreateClanModal() {
             if (userClan) {
-                alert("Вы уже состоите в клане. Сначала покиньте текущий клан.");
+                alert("Already in a clan.");
                 return;
             }
             document.getElementById('create-clan-modal').style.display = 'flex';
@@ -1115,21 +1408,20 @@
             let nameInput = document.getElementById('new-clan-name-input');
             let name = nameInput.value.trim();
             if (!name) {
-                alert("Введите название клана!");
+                alert("Enter clan name!");
                 return;
             }
             if (clansList.some(c => c.name.toLowerCase() === name.toLowerCase())) {
-                alert("Клан с таким названием уже существует!");
+                alert("Clan already exists!");
                 return;
             }
 
             if (milk < 400) {
-                alert("Недостаточно молока! Создание клана стоит 400 молока 🥛.");
+                alert("Not enough milk! Costs 400 milk 🥛.");
                 return;
             }
 
             milk -= 400;
-
             leaveCurrentClanInternal();
 
             let newClan = { name: name, membersCount: 1, members: [userTelegramId] };
@@ -1139,16 +1431,16 @@
             updateUI();
             closeCreateClanModal();
             nameInput.value = "";
-            alert(`Клан «${name}» успешно создан! Списано 400 🥛.`);
+            alert(`Clan "${name}" created!`);
         }
 
         function leaveClan() {
             if (!userClan) return;
-            if (confirm("Вы действительно хотите покинуть клан?")) {
+            if (confirm("Leave clan?")) {
                 leaveCurrentClanInternal();
                 saveGame();
                 updateUI();
-                alert("Вы покинули клан.");
+                alert("You left the clan.");
             }
         }
 
@@ -1164,16 +1456,16 @@
 
         function joinClan(clanNameArg) {
             if (userClan) {
-                alert("Вы уже состоите в клане! Сначала покиньте текущий клан.");
+                alert("Already in a clan!");
                 return;
             }
             let clanObj = clansList.find(c => c.name === clanNameArg);
             if (!clanObj) {
-                alert("Клан не найден.");
+                alert("Clan not found.");
                 return;
             }
             if (clanObj.membersCount >= 1000) {
-                alert("В этом клане уже максимальное количество участников (1000 человек).");
+                alert("Clan is full (1000).");
                 return;
             }
 
@@ -1182,7 +1474,7 @@
             userClan = clanNameArg;
             saveGame();
             updateUI();
-            alert(`Вы успешно вступили в клан «${clanNameArg}»!`);
+            alert(`Joined clan "${clanNameArg}"!`);
         }
 
         function renderClansList() {
@@ -1192,7 +1484,7 @@
             let filtered = clansList.filter(c => c.name.toLowerCase().includes(query));
             
             if (filtered.length === 0) {
-                container.innerHTML = `<div style="color: var(--text-secondary); font-size: 12px; text-align: center; padding: 10px;">Кланов пока нет. Создайте первый клан!</div>`;
+                container.innerHTML = `<div style="color: var(--text-secondary); font-size: 12px; text-align: center; padding: 10px;">No clans.</div>`;
                 return;
             }
 
@@ -1204,20 +1496,20 @@
                 
                 let actionBtn = "";
                 if (isMyClan) {
-                    actionBtn = `<span style="font-size: 11px; color: var(--green); font-weight: 600;">Ваш клан</span>`;
+                    actionBtn = `<span style="font-size: 11px; color: var(--green); font-weight: 600;">Your clan</span>`;
                 } else if (isFull) {
-                    actionBtn = `<span style="font-size: 11px; color: var(--text-secondary);">Заполнен (1000)</span>`;
+                    actionBtn = `<span style="font-size: 11px; color: var(--text-secondary);">Full (1000)</span>`;
                 } else if (userClan) {
-                    actionBtn = `<span style="font-size: 11px; color: var(--text-secondary);">Сначала выйдите из текущего</span>`;
+                    actionBtn = `<span style="font-size: 11px; color: var(--text-secondary);">Leave current first</span>`;
                 } else {
-                    actionBtn = `<button class="btn" style="padding: 4px 8px; font-size: 11px;" onclick="joinClan('${clan.name.replace(/'/g, "\\'")}')">Вступить</button>`;
+                    actionBtn = `<button class="btn" style="padding: 4px 8px; font-size: 11px;" onclick="joinClan('${clan.name.replace(/'/g, "\\'")}')">Join</button>`;
                 }
 
                 html += `
                     <div class="shop-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; padding: 8px 10px;">
                         <div>
                             <div style="font-weight: 600; font-size: 13px;">🛡 ${clan.name}</div>
-                            <div style="font-size: 11px; color: var(--text-secondary);">Участники: ${clan.membersCount}/1000 | Бонус: +${bonus}%</div>
+                            <div style="font-size: 11px; color: var(--text-secondary);">Members: ${clan.membersCount}/1000 | Bonus: +${bonus}%</div>
                         </div>
                         <div>${actionBtn}</div>
                     </div>
@@ -1232,7 +1524,7 @@
             let batchIncome = getBatchIncome();
             
             if (batchIncome <= 0) {
-                alert("У вас нет коров! Выполняйте задания в разделе «Бонусы».");
+                alert("No cows!");
                 return;
             }
 
@@ -1240,7 +1532,7 @@
             let earned = Math.floor(batchIncome * (effectiveElapsed / MAX_TIME_MS));
 
             if (earned <= 0) {
-                alert("Еще нечего собирать!");
+                alert("Nothing to collect yet!");
                 return;
             }
 
@@ -1249,7 +1541,7 @@
             saveGame();
             syncScoreToServer();
             updateUI();
-            alert(`Успешно собрано: +${earned} 🥛!`);
+            alert(`Collected: +${earned} 🥛!`);
         }
 
         function buyCow(level, price) {
@@ -1258,9 +1550,9 @@
                 cows[level]++;
                 saveGame();
                 updateUI();
-                alert(`Куплена корова: «${cowDetails[level].name}»!`);
+                alert(`Purchased cow: "${cowDetails[level].name}"!`);
             } else {
-                alert("Недостаточно молока на балансе!");
+                alert("Not enough milk!");
             }
         }
 
@@ -1281,11 +1573,11 @@
 
             if (lastDailyClaimDate > 0 && (now - lastDailyClaimDate > twoDaysMs)) {
                 dailyDay = 1;
-                alert("Вы пропустили день! Серия бонусов сброшена.");
+                alert("Streak reset!");
             }
 
             if (lastDailyClaimDate > 0 && (now - lastDailyClaimDate < oneDayMs)) {
-                alert("Вы уже забирали бонус сегодня!");
+                alert("Already claimed today!");
                 return;
             }
 
@@ -1293,7 +1585,7 @@
             milk += reward;
             lastDailyClaimDate = now;
 
-            alert(`Бонус дня ${dailyDay} получен: +${reward} 🥛!`);
+            alert(`Bonus day ${dailyDay} claimed: +${reward} 🥛!`);
 
             dailyDay++;
             if (dailyDay > 7) dailyDay = 1;
@@ -1313,7 +1605,7 @@
 
         function watchAd() {
             if (!adController) {
-                alert("Рекламный модуль не загрузился.");
+                alert("Ad module not loaded.");
                 return;
             }
 
@@ -1321,10 +1613,10 @@
                 milk += 5;
                 saveGame();
                 updateUI();
-                alert("Реклама успешно просмотрена: +5 🥛");
+                alert("Ad watched: +5 🥛");
             }).catch((result) => {
                 console.log("Ad error", result);
-                alert("Не удалось показать рекламу.");
+                alert("Failed to show ad.");
             });
         }
 
@@ -1359,14 +1651,14 @@
             if (walletAddress) {
                 document.getElementById('wallet-status').innerText = walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4);
             } else {
-                document.getElementById('wallet-status').innerText = "Не подключен";
+                document.getElementById('wallet-status').innerText = t('wallet_not_connected');
             }
 
             if (elapsed >= MAX_TIME_MS) {
-                document.getElementById('timer-status').innerText = "Лимит 4 часа достигнут!";
-                document.getElementById('progress-percent').innerText = "100% (Стоп фарма)";
+                document.getElementById('timer-status').innerText = t('limit_reached');
+                document.getElementById('progress-percent').innerText = `100% (${t('stop_farm')})`;
             } else {
-                document.getElementById('timer-status').innerText = `До лимита: ${timeStr}`;
+                document.getElementById('timer-status').innerText = `${t('time_to_limit')} ${timeStr}`;
                 document.getElementById('progress-percent').innerText = `${progressPercent.toFixed(1)}%`;
             }
 
@@ -1380,9 +1672,10 @@
                 document.getElementById('clan-name-disp').innerText = userClan;
                 document.getElementById('clan-members-count').innerText = currentMembers;
                 document.getElementById('clan-bonus').innerText = currentBonus + "%";
-                document.getElementById('my-clan-actions').innerHTML = `<button class="btn" style="width: 100%; font-size: 11px; padding: 6px; background: #e74c3c;" onclick="leaveClan()">Покинуть клан</button>`;
+                let leaveBtnText = currentLang === 'en' ? 'Leave clan' : currentLang === 'es' ? 'Dejar clan' : 'Покинуть клан';
+                document.getElementById('my-clan-actions').innerHTML = `<button class="btn" style="width: 100%; font-size: 11px; padding: 6px; background: #e74c3c;" onclick="leaveClan()">${leaveBtnText}</button>`;
             } else {
-                document.getElementById('clan-name-disp').innerText = "Не состоите";
+                document.getElementById('clan-name-disp').innerText = t('no_clan_status');
                 document.getElementById('clan-members-count').innerText = "0";
                 document.getElementById('clan-bonus').innerText = "0%";
                 document.getElementById('my-clan-actions').innerHTML = "";
@@ -1395,19 +1688,20 @@
 
             let tasksContainer = document.getElementById('user-tasks-list');
             if (userTasks.length === 0) {
-                tasksContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center; padding: 10px;">Нет активных заданий.</div>`;
+                let noTasksText = currentLang === 'en' ? 'No active tasks.' : currentLang === 'es' ? 'No hay tareas activas.' : 'Нет активных заданий.';
+                tasksContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center; padding: 10px;">${noTasksText}</div>`;
             } else {
                 let tasksHtml = "";
                 userTasks.forEach(task => {
                     let isCompleted = localStorage.getItem(`task_done_${userTelegramId}_${task.id}`);
-                    let btnText = isCompleted ? "Выполнено" : "Перейти и забрать";
+                    let btnText = isCompleted ? (currentLang === 'en' ? 'Completed' : currentLang === 'es' ? 'Completado' : 'Выполнено') : (currentLang === 'en' ? 'Go & Claim' : currentLang === 'es' ? 'Ir y reclamar' : 'Перейти и забрать');
                     let btnDisabled = isCompleted ? "disabled" : "";
                     let btnBg = isCompleted ? "background: var(--text-secondary);" : "";
 
                     tasksHtml += `
                         <div class="shop-item" style="display: block; margin-bottom: 8px;">
                             <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${task.title}</div>
-                            <div style="font-size: 11px; color: var(--green); margin-bottom: 4px;">Награда: +${task.reward} 🥛</div>
+                            <div style="font-size: 11px; color: var(--green); margin-bottom: 4px;">${currentLang === 'en' ? 'Reward:' : currentLang === 'es' ? 'Recompensa:' : 'Награда:'} +${task.reward} 🥛</div>
                             <button class="btn btn-blue" id="task-btn-${task.id}" style="width: 100%; font-size: 12px; padding: 8px; ${btnBg}" ${btnDisabled} onclick="executeTask(${task.id})">${btnText}</button>
                         </div>
                     `;
@@ -1419,7 +1713,7 @@
             for (let d = 1; d <= 7; d++) {
                 let isPassed = d < dailyDay;
                 let cls = isPassed ? "daily-box claimed" : "daily-box";
-                let statusText = isPassed ? "✅ Забрано" : `День ${d}<br><b>+${dailyRewards[d-1]}🥛</b>`;
+                let statusText = isPassed ? (currentLang === 'en' ? '✅ Claimed' : currentLang === 'es' ? '✅ Reclamado' : '✅ Забрано') : (currentLang === 'en' ? `Day ${d}` : currentLang === 'es' ? `D día ${d}` : `День ${d}`) + `<br><b>+${dailyRewards[d-1]}🥛</b>`;
                 dailyGridHtml += `<div class="${cls}">${statusText}</div>`;
             }
             document.getElementById('daily-grid-container').innerHTML = dailyGridHtml;
@@ -1427,7 +1721,7 @@
             let listContainer = document.getElementById('my-cows-list');
             let totalCows = Object.values(cows).reduce((a, b) => a + b, 0);
             if (totalCows === 0) {
-                listContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров.</div>`;
+                listContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;" data-i18n="no_cows">${t('no_cows')}</div>`;
             } else {
                 let html = "";
                 for (let i = 1; i <= 5; i++) {
@@ -1465,6 +1759,14 @@
             document.getElementById('profile-id').innerText = user.id;
             document.getElementById('ref-link').value = `https://t.me/milkfarmcash_bot?start=ref_${user.id}`;
             
+            if (!localStorage.getItem('milk_farm_v28_lang') && user.language_code) {
+                if (['ru', 'en', 'es'].includes(user.language_code)) {
+                    currentLang = user.language_code;
+                } else {
+                    currentLang = 'en';
+                }
+            }
+
             if (tg.initDataUnsafe.start_param && tg.initDataUnsafe.start_param.startsWith('ref_')) {
                 let refParamId = tg.initDataUnsafe.start_param.replace('ref_', '');
                 if (refParamId && refParamId !== userTelegramId) {
@@ -1483,13 +1785,15 @@
 
         refCount = parseInt(localStorage.getItem(`ref_count_${userTelegramId}`) || "0");
         refEarnings = parseFloat(localStorage.getItem(`ref_earn_${userTelegramId}`) || "0");
+        
+        applyTranslations();
         updateUI();
 
         function copyRefLink() {
             const txt = document.getElementById('ref-link');
             txt.select();
             navigator.clipboard.writeText(txt.value);
-            alert("Ссылка скопирована!");
+            alert(currentLang === 'en' ? 'Link copied!' : currentLang === 'es' ? '¡Enlace copiado!' : 'Ссылка скопирована!');
         }
     </script>
 </body>
