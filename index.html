@@ -478,7 +478,7 @@
                     <!-- Список кланов -->
                 </div>
 
-                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px;" onclick="openCreateClanModal()">➕ Создать свой клан</button>
+                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px;" onclick="openCreateClanModal()">➕ Создать свой клан (400 🥛)</button>
             </div>
         </div>
 
@@ -544,10 +544,10 @@
         <div class="modal-card">
             <h3 style="margin-top: 0; color: var(--accent);">Создание клана</h3>
             <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; text-align: left;">
-                Придумайте название для кооператива. Лимит участников — до 1000 человек.
+                Придумайте название для кооператива. Стоимость создания: <b>400 молока</b> 🥛. Лимит участников — до 1000 человек.
             </div>
             <input type="text" id="new-clan-name-input" placeholder="Название (например, Молочный Союз)">
-            <button class="btn btn-green" style="width: 100%; margin-top: 10px; margin-bottom: 8px;" onclick="confirmCreateClan()">Создать клан</button>
+            <button class="btn btn-green" style="width: 100%; margin-top: 10px; margin-bottom: 8px;" onclick="confirmCreateClan()">Создать клан (400 🥛)</button>
             <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeCreateClanModal()">Отмена</button>
         </div>
     </div>
@@ -638,11 +638,7 @@
         let lastClaimTime = Date.now();
         let cows = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
         
-        let clansList = [
-            { name: "Молочный Союз", membersCount: 150, members: [] },
-            { name: "Фермеры Удачи", membersCount: 300, members: [] },
-            { name: "Коровье Царство", membersCount: 950, members: [] }
-        ];
+        let clansList = [];
         let userClan = null;
 
         let refCount = 0;
@@ -713,22 +709,22 @@
         const MAX_TIME_MS = 4 * 3600 * 1000;
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v26_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v26_milk'));
-            if (localStorage.getItem('milk_farm_v26_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v26_last_time'));
-            if (localStorage.getItem('milk_farm_v26_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v26_cows'));
-            if (localStorage.getItem('milk_farm_v26_user_clan')) userClan = localStorage.getItem('milk_farm_v26_user_clan');
-            if (localStorage.getItem('milk_farm_v26_clans_registry')) clansList = JSON.parse(localStorage.getItem('milk_farm_v26_clans_registry'));
-            if (localStorage.getItem('milk_farm_v26_wallet')) walletAddress = localStorage.getItem('milk_farm_v26_wallet');
-            if (localStorage.getItem('milk_farm_v26_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v26_dailyDay'));
-            if (localStorage.getItem('milk_farm_v26_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v26_lastDaily'));
+            if (localStorage.getItem('milk_farm_v28_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v28_milk'));
+            if (localStorage.getItem('milk_farm_v28_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v28_last_time'));
+            if (localStorage.getItem('milk_farm_v28_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v28_cows'));
+            if (localStorage.getItem('milk_farm_v28_user_clan')) userClan = localStorage.getItem('milk_farm_v28_user_clan');
+            if (localStorage.getItem('milk_farm_v28_clans_registry')) clansList = JSON.parse(localStorage.getItem('milk_farm_v28_clans_registry'));
+            if (localStorage.getItem('milk_farm_v28_wallet')) walletAddress = localStorage.getItem('milk_farm_v28_wallet');
+            if (localStorage.getItem('milk_farm_v28_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v28_dailyDay'));
+            if (localStorage.getItem('milk_farm_v28_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v28_lastDaily'));
             
             if (userTelegramId) {
                 refCount = parseInt(localStorage.getItem(`ref_count_${userTelegramId}`) || "0");
                 refEarnings = parseFloat(localStorage.getItem(`ref_earn_${userTelegramId}`) || "0");
             }
 
-            if (localStorage.getItem('milk_farm_v26_tasks')) {
-                let savedTasks = JSON.parse(localStorage.getItem('milk_farm_v26_tasks'));
+            if (localStorage.getItem('milk_farm_v28_tasks')) {
+                let savedTasks = JSON.parse(localStorage.getItem('milk_farm_v28_tasks'));
                 let existingIds = savedTasks.map(t => t.id);
                 userTasks.forEach(sysTask => {
                     if (!existingIds.includes(sysTask.id)) {
@@ -741,21 +737,21 @@
             checkDailyStreakReset();
             updateUI();
 
-            if (!localStorage.getItem('milk_farm_v26_visited')) {
+            if (!localStorage.getItem('milk_farm_v28_visited')) {
                 document.getElementById('welcome-modal').style.display = 'flex';
             }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v26_milk', milk);
-            localStorage.setItem('milk_farm_v26_last_time', lastClaimTime);
-            localStorage.setItem('milk_farm_v26_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v26_user_clan', userClan || "");
-            localStorage.setItem('milk_farm_v26_clans_registry', JSON.stringify(clansList));
-            localStorage.setItem('milk_farm_v26_wallet', walletAddress);
-            localStorage.setItem('milk_farm_v26_dailyDay', dailyDay);
-            localStorage.setItem('milk_farm_v26_lastDaily', lastDailyClaimDate);
-            localStorage.setItem('milk_farm_v26_tasks', JSON.stringify(userTasks));
+            localStorage.setItem('milk_farm_v28_milk', milk);
+            localStorage.setItem('milk_farm_v28_last_time', lastClaimTime);
+            localStorage.setItem('milk_farm_v28_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v28_user_clan', userClan || "");
+            localStorage.setItem('milk_farm_v28_clans_registry', JSON.stringify(clansList));
+            localStorage.setItem('milk_farm_v28_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v28_dailyDay', dailyDay);
+            localStorage.setItem('milk_farm_v28_lastDaily', lastDailyClaimDate);
+            localStorage.setItem('milk_farm_v28_tasks', JSON.stringify(userTasks));
             
             if (userTelegramId) {
                 localStorage.setItem(`ref_count_${userTelegramId}`, refCount);
@@ -764,7 +760,7 @@
         }
 
         function closeWelcomeModal() {
-            localStorage.setItem('milk_farm_v26_visited', 'true');
+            localStorage.setItem('milk_farm_v28_visited', 'true');
             document.getElementById('welcome-modal').style.display = 'none';
         }
 
@@ -1056,6 +1052,13 @@
                 return;
             }
 
+            if (milk < 400) {
+                alert("Недостаточно молока! Создание клана стоит 400 молока 🥛.");
+                return;
+            }
+
+            milk -= 400; // Списываем 400 молока за создание
+
             leaveCurrentClanInternal();
 
             let newClan = { name: name, membersCount: 1, members: [userTelegramId] };
@@ -1065,7 +1068,7 @@
             updateUI();
             closeCreateClanModal();
             nameInput.value = "";
-            alert(`Клан «${name}» успешно создан!`);
+            alert(`Клан «${name}» успешно создан! Списано 400 🥛.`);
         }
 
         function leaveClan() {
@@ -1118,7 +1121,7 @@
             let filtered = clansList.filter(c => c.name.toLowerCase().includes(query));
             
             if (filtered.length === 0) {
-                container.innerHTML = `<div style="color: var(--text-secondary); font-size: 12px; text-align: center; padding: 10px;">Кланов не найдено</div>`;
+                container.innerHTML = `<div style="color: var(--text-secondary); font-size: 12px; text-align: center; padding: 10px;">Кланов пока нет. Создайте первый клан!</div>`;
                 return;
             }
 
@@ -1297,7 +1300,6 @@
 
             document.getElementById('claim-progress-bar').style.width = `${progressPercent}%`;
 
-            // Обновление отображения клана в профиле кланов
             if (userClan) {
                 let clanObj = clansList.find(c => c.name === userClan);
                 let currentBonus = clanObj ? getClanBonusPercent(clanObj.membersCount) : 0;
