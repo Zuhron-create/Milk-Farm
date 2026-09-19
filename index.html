@@ -1007,6 +1007,50 @@
             }
         }
 
+        // --- НОВЫЕ ФУНКЦИИ ДЛЯ СИНХРОНИЗАЦИИ И ЗАГРУЗКИ ТОПА С СЕРВЕРА ---
+        async function loadLeaderboard() {
+            try {
+                let response = await fetch('https://ваш-домен.com/api/leaderboard');
+                let data = await response.json();
+                
+                let container = document.getElementById('leaderboard-list');
+                if (!data || data.length === 0) {
+                    container.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">Пока нет других фермеров в топе.</div>`;
+                    return;
+                }
+
+                let html = '';
+                data.forEach((user, index) => {
+                    let placeIcon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+                    html += `
+                        <div class="leaderboard-item">
+                            <span>${placeIcon} ${user.name}</span>
+                            <b>${user.milk} 🥛</b>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (e) {
+                console.error("Не удалось загрузить таблицу лидеров:", e);
+            }
+        }
+
+        async function syncScoreToServer() {
+            try {
+                await fetch('https://ваш-домен.com/api/update_score', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        telegram_id: userTelegramId,
+                        name: document.getElementById('username-display').innerText,
+                        milk: milk
+                    })
+                });
+            } catch (e) {
+                console.error("Ошибка синхронизации счета:", e);
+            }
+        }
+
         // --- УПРАВЛЕНИЕ КЛАНАМИ ---
         function getClanBonusPercent(membersCount) {
             let percent = Math.floor(membersCount / 100);
@@ -1176,6 +1220,7 @@
             milk += earned;
             lastClaimTime = now;
             saveGame();
+            syncScoreToServer(); // Синхронизация счета на бэкенд при сборе молока
             updateUI();
             alert(`Успешно собрано: +${earned} 🥛!`);
         }
@@ -1376,6 +1421,11 @@
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById('tab-' + name).classList.add('active');
             document.getElementById('nav-' + name).classList.add('active');
+
+            // Подгружаем топ с бэкенда при переходе на вкладку лидеров
+            if (name === 'top') {
+                loadLeaderboard();
+            }
         }
 
         let tg = window.Telegram.WebApp;
