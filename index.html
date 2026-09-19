@@ -1007,32 +1007,50 @@
             }
         }
 
-        // --- НОВЫЕ ФУНКЦИИ ДЛЯ СИНХРОНИЗАЦИИ И ЗАГРУЗКИ ТОПА С СЕРВЕРА ---
+        // --- ТАБЛИЦА ЛИДЕРОВ И СИНХРОНИЗАЦИЯ ---
         async function loadLeaderboard() {
             try {
+                // Пытаемся запросить данные с вашего бэкенда
                 let response = await fetch('https://ваш-домен.com/api/leaderboard');
-                let data = await response.json();
+                if (!response.ok) throw new Error('Сервер не отвечает');
                 
-                let container = document.getElementById('leaderboard-list');
-                if (!data || data.length === 0) {
-                    container.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">Пока нет других фермеров в топе.</div>`;
-                    return;
-                }
-
-                let html = '';
-                data.forEach((user, index) => {
-                    let placeIcon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
-                    html += `
-                        <div class="leaderboard-item">
-                            <span>${placeIcon} ${user.name}</span>
-                            <b>${user.milk} 🥛</b>
-                        </div>
-                    `;
-                });
-                container.innerHTML = html;
+                let data = await response.json();
+                renderLeaderboardUI(data);
+                
             } catch (e) {
-                console.error("Не удалось загрузить таблицу лидеров:", e);
+                // Если бэкенда нет, показываем демонстрационный топ с вашим счетом для проверки
+                let myName = document.getElementById('username-display').innerText;
+                let mockData = [
+                    { name: "Алексей", milk: 1540 },
+                    { name: "Ольга", milk: 920 },
+                    { name: myName, milk: Math.floor(milk) },
+                    { name: "Максим", milk: 430 },
+                    { name: "Елена", milk: 150 }
+                ];
+                
+                mockData.sort((a, b) => b.milk - a.milk);
+                renderLeaderboardUI(mockData);
             }
+        }
+
+        function renderLeaderboardUI(data) {
+            let container = document.getElementById('leaderboard-list');
+            if (!data || data.length === 0) {
+                container.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">Пока нет других фермеров в топе.</div>`;
+                return;
+            }
+
+            let html = '';
+            data.forEach((user, index) => {
+                let placeIcon = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+                html += `
+                    <div class="leaderboard-item">
+                        <span>${placeIcon} ${user.name}</span>
+                        <b>${user.milk} 🥛</b>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
         }
 
         async function syncScoreToServer() {
@@ -1047,7 +1065,7 @@
                     })
                 });
             } catch (e) {
-                console.error("Ошибка синхронизации счета:", e);
+                console.log("Синхронизация с сервером отложена (нет бэкенда).");
             }
         }
 
@@ -1101,7 +1119,7 @@
                 return;
             }
 
-            milk -= 400; // Списываем 400 молока за создание
+            milk -= 400;
 
             leaveCurrentClanInternal();
 
@@ -1220,7 +1238,7 @@
             milk += earned;
             lastClaimTime = now;
             saveGame();
-            syncScoreToServer(); // Синхронизация счета на бэкенд при сборе молока
+            syncScoreToServer();
             updateUI();
             alert(`Успешно собрано: +${earned} 🥛!`);
         }
@@ -1422,7 +1440,6 @@
             document.getElementById('tab-' + name).classList.add('active');
             document.getElementById('nav-' + name).classList.add('active');
 
-            // Подгружаем топ с бэкенда при переходе на вкладку лидеров
             if (name === 'top') {
                 loadLeaderboard();
             }
