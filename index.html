@@ -7,7 +7,158 @@
     <title>Milk Farm - Уютная ферма</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    // Текущий язык (по умолчанию русский)
+let currentLang = localStorage.getItem('milk_farm_lang') || 'ru';
+
+// Словарь переводов
+const translations = {
+    ru: {
+        title: "🏡 Уютная Ферма",
+        farmer: "Фермер",
+        navGame: "Ферма",
+        navShop: "Рынок",
+        navDaily: "Бонусы",
+        navTop: "Топ",
+        navClan: "Клан",
+        navRef: "Друзья",
+        navProfile: "Профиль",
+        accumulated: "Накоплено:",
+        timerToClaim: "До сбора:",
+        collectBtn: "📥 Собрать прибыль",
+        cowsTitle: "Ваше стадо коров:",
+        noCows: "У вас нет коров. Выполняйте задания в разделе «Бонусы»!",
+        shopTitle: "🛍 Рынок бурёнок (5 уровней)",
+        youHave: "У вас:",
+        rewardsTitle: "🎁 Награды",
+        tasksTitle: "📋 Задания",
+        dailyStreak: "🗓 Бонус 7 дней (Серия)",
+        dailyWarning: "⚠️ Пропустите 1 день — серия сбросится заново!",
+        claimDailyBtn: "Забрать бонус дня",
+        watchAdTitle: "📺 Заработок (Реклама)",
+        watchAdBtn: "🎬 Смотреть ролик",
+        topTitle: "🏆 Топ Фермеров",
+        topSub: "Лучшие производители молока:",
+        clanTitle: "🛡 Кооперативы (Кланы)",
+        yourClan: "Ваш клан:",
+        notInClan: "Не состоите",
+        searchClan: "🔍 Поиск кланов",
+        clanSearchPlaceholder: "Введите название для поиска...",
+        createClanBtn: "➕ Создать свой клан (400 🥛)",
+        refTitle: "👥 Партнерская программа",
+        refDesc: "Получайте бонус 10% от пополнений приглашенных друзей!",
+        copyRefBtn: "Скопировать ссылку",
+        profileTitle: "👤 Профиль фермера",
+        walletLabel: "Кошелек:",
+        walletOff: "Не подключен",
+        withdrawBtn: "📤 Вывести токены (доступно с 10 ноября)",
+        connectWalletBtn: "👛 Подключить кошелек (доступно с 10 ноября)",
+        topUpBtn: "⭐ Пополнить баланс",
+        faqBtn: "❓ FAQ и Контакты",
+        guideBtn: "📖 Инструкция к игре"
+    },
+    en: {
+        title: "🏡 Cozy Farm",
+        farmer: "Farmer",
+        navGame: "Farm",
+        navShop: "Shop",
+        navDaily: "Bonuses",
+        navTop: "Top",
+        navClan: "Clan",
+        navRef: "Friends",
+        navProfile: "Profile",
+        accumulated: "Accumulated:",
+        timerToClaim: "To claim:",
+        collectBtn: "📥 Collect Profit",
+        cowsTitle: "Your cow herd:",
+        noCows: "You don't have cows. Complete tasks in the 'Bonuses' section!",
+        shopTitle: "🛍 Cow Market (5 levels)",
+        youHave: "You have:",
+        rewardsTitle: "🎁 Rewards",
+        tasksTitle: "📋 Tasks",
+        dailyStreak: "🗓 7-Day Streak",
+        dailyWarning: "⚠️ Skip 1 day — streak resets!",
+        claimDailyBtn: "Claim Daily Bonus",
+        watchAdTitle: "📺 Earnings (Ads)",
+        watchAdBtn: "🎬 Watch Ad",
+        topTitle: "🏆 Farmers Leaderboard",
+        topSub: "Best milk producers:",
+        clanTitle: "🛡 Cooperatives (Clans)",
+        yourClan: "Your clan:",
+        notInClan: "Not in a clan",
+        searchClan: "🔍 Search Clans",
+        clanSearchPlaceholder: "Enter name to search...",
+        createClanBtn: "➕ Create Clan (400 🥛)",
+        refTitle: "👥 Referral Program",
+        refDesc: "Get a 10% bonus from your friends' top-ups!",
+        copyRefBtn: "Copy Link",
+        profileTitle: "👤 Farmer Profile",
+        walletLabel: "Wallet:",
+        walletOff: "Not connected",
+        withdrawBtn: "📤 Withdraw tokens (available Nov 10)",
+        connectWalletBtn: "👛 Connect wallet (available Nov 10)",
+        topUpBtn: "⭐ Top Up Balance",
+        faqBtn: "❓ FAQ & Contacts",
+        guideBtn: "📖 Game Guide"
+    },
+    es: {
+        title: "🏡 Granja Acogedora",
+        farmer: "Granjero",
+        navGame: "Granja",
+        navShop: "Tienda",
+        navDaily: "Bonos",
+        navTop: "Top",
+        navClan: "Clan",
+        navRef: "Amigos",
+        navProfile: "Perfil",
+        accumulated: "Acumulado:",
+        timerToClaim: "Para recolectar:",
+        collectBtn: "📥 Recolectar Ganancia",
+        cowsTitle: "Tu rebaño de vacas:",
+        noCows: "No tienes vacas. ¡Completa tareas en la sección 'Bonos'!",
+        shopTitle: "🛍 Mercado de Vacas (5 niveles)",
+        youHave: "Tienes:",
+        rewardsTitle: "🎁 Recompensas",
+        tasksTitle: "📋 Tareas",
+        dailyStreak: "🗓 Racha de 7 Días",
+        dailyWarning: "⚠️ ¡Si te saltas 1 día, la racha se reinicia!",
+        claimDailyBtn: "Reclamar Bono Diario",
+        watchAdTitle: "📺 Ganancias (Anuncios)",
+        watchAdBtn: "🎬 Ver Anuncio",
+        topTitle: "🏆 Tabla de Granjeros",
+        topSub: "Mejores productores de leche:",
+        clanTitle: "🛡 Cooperativas (Clanes)",
+        yourClan: "Tu clan:",
+        notInClan: "Sin clan",
+        searchClan: "🔍 Buscar Clanes",
+        clanSearchPlaceholder: "Ingrese nombre para buscar...",
+        createClanBtn: "➕ Crear Clan (400 🥛)",
+        refTitle: "👥 Programa de Referidos",
+        refDesc: "¡Obtén un bono del 10% de las recargas de tus amigos!",
+        copyRefBtn: "Copiar Enlace",
+        profileTitle: "👤 Perfil de Granjero",
+        walletLabel: "Billetera:",
+        walletOff: "No conectada",
+        withdrawBtn: "📤 Retirar tokens (disponible 10 Nov)",
+        connectWalletBtn: "👛 Conectar billetera (disponible 10 Nov)",
+        topUpBtn: "⭐ Recargar Saldo",
+        faqBtn: "❓ FAQ y Contactos",
+        guideBtn: "📖 Guía del Juego"
+    }
+};
+
+function t(key) {
+    return translations[currentLang][key] || translations['ru'][key] || key;
+}
+
+function changeLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('milk_farm_lang', lang);
+    updateStaticTexts();
+    updateUI();
+}
+
     <style>
+    
         :root {
             --bg-color: #f7f4ef;
             --card-bg: #ffffff;
