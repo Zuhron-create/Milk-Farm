@@ -1,0 +1,76 @@
+from aiogram import Bot, Dispatcher, F, types
+from aiogram.filters import Command
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+from aiogram.types import FSInputFile
+
+# Создание инлайн-клавиатуры с выбором языка
+def get_language_keyboard():
+    builder = InlineKeyboardBuilder()
+    builder.button(text="🇷🇺 Русский", callback_data="lang_ru")
+    builder.button(text="🇬🇧 English", callback_data="lang_en")
+    builder.button(text="🇪🇸 Español", callback_data="lang_es")
+    builder.adjust(1) # Кнопки друг под другом
+    return builder.as_markup()
+
+# Создание кнопки для открытия мини-аппа на нужном языке
+def get_webapp_keyboard(lang: str):
+    builder = InlineKeyboardBuilder()
+    texts = {
+        "ru": "🏡 Открыть ферму",
+        "en": "🏡 Open Farm",
+        "es": "🏡 Abrir Granja"
+    }
+    # Ссылка на твой сайт в Vercel
+    webapp_url = "https://milk-farm-blond.vercel.app"
+    
+    builder.button(
+        text=texts.get(lang, texts["ru"]), 
+        web_app=types.WebAppInfo(url=webapp_url)
+    )
+    return builder.as_markup()
+
+# Обработчик команды /start
+@dp.message(Command("start"))
+async def cmd_start(message: types.Message):
+    # Путь к картинке, которую ты загрузил в репозиторий
+    photo = FSInputFile("start_img.jpg")
+    
+    caption = "Выберите язык / Choose your language / Elija su idioma:"
+    
+    await message.answer_photo(
+        photo=photo,
+        caption=caption,
+        reply_markup=get_language_keyboard()
+    )
+
+# Обработчик нажатия на язык
+@dp.callback_query(F.data.startswith("lang_"))
+async def language_chosen(callback: types.CallbackQuery):
+    lang = callback.data.split("_")[1] # ru, en или es
+    
+    texts = {
+        "ru": (
+            "Добро пожаловать на «Уютную Ферму»! 🏡🐄\n"
+            "Здесь ты можешь стать настоящим фермером, развивать своё хозяйство и зарабатывать. "
+            "Начни с выполнения заданий, покупай коров и собирай вкусное молоко."
+        ),
+        "en": (
+            "Welcome to \"Cozy Farm\"! 🏡🐄\n"
+            "Here you can become a real farmer, develop your homestead, and earn rewards. "
+            "Start by completing tasks, buy cows, and collect delicious milk."
+        ),
+        "es": (
+            "¡Bienvenido a la \"Granja Acogedora\"! 🏡🐄\n"
+            "Aquí puedes convertirte en un verdadero granjero, desarrollar tu granja y ganar recompensas. "
+            "Comienza completando tareas, compra vacas y recolecta leche deliciosa."
+        )
+    }
+    
+    text = texts.get(lang, texts["ru"])
+    
+    # Редактируем сообщение: убираем языки, выводим приветствие и кнопку запуска игры
+    await callback.message.edit_caption(
+        caption=text,
+        reply_markup=get_webapp_keyboard(lang)
+    )
+    await callback.answer()
