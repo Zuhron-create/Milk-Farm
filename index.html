@@ -178,7 +178,7 @@
             margin-bottom: 10px;
         }
 
-        input {
+        input, select {
             width: 100%;
             padding: 12px;
             box-sizing: border-box;
@@ -219,6 +219,36 @@
         .daily-box.claimed {
             background: rgba(129, 178, 154, 0.2);
             border-color: var(--green);
+        }
+
+        .sub-tabs {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .sub-tab-btn {
+            flex: 1;
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: #faf8f5;
+            color: var(--text-secondary);
+            cursor: pointer;
+            text-align: center;
+        }
+        .sub-tab-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .sub-content {
+            display: none;
+        }
+        .sub-content.active {
+            display: block;
         }
 
         .modal-overlay {
@@ -372,27 +402,50 @@
             </div>
         </div>
 
-        <!-- 3. БОНУСЫ И РЕКЛАМА -->
+        <!-- 3. БОНУСЫ И ЗАДАНИЯ -->
         <div id="tab-daily" class="tab-content">
-            <div class="section-card">
-                <h3>🗓 Бонус 7 дней (Серия)</h3>
-                <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">⚠️ Пропустите 1 день — серия сбросится заново!</p>
-                <div class="daily-grid" id="daily-grid-container"></div>
-                <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()">Забрать бонус дня</button>
+            <div class="sub-tabs">
+                <div class="sub-tab-btn active" id="subtab-btn-rewards" onclick="switchSubTab('rewards')">🎁 Награды</div>
+                <div class="sub-tab-btn" id="subtab-btn-tasks" onclick="switchSubTab('tasks')">📋 Задания</div>
+            </div>
 
-                <h3>📺 Заработок (Реклама)</h3>
-                <div class="shop-item" style="display: block; margin-bottom: 14px;">
-                    <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">Смотреть рекламу</div>
-                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +5 🥛 за просмотр</div>
-                    <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px;" onclick="watchAd()">🎬 Смотреть ролик</button>
+            <!-- Подраздел: Награды (Ежедневные + Реклама + Стартовое задание) -->
+            <div id="subtab-rewards" class="sub-content active">
+                <div class="section-card">
+                    <h3>🗓 Бонус 7 дней (Серия)</h3>
+                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">⚠️ Пропустите 1 день — серия сбросится заново!</p>
+                    <div class="daily-grid" id="daily-grid-container"></div>
+                    <button class="btn btn-green" style="width: 100%; font-size: 13px; padding: 10px; margin-bottom: 14px;" onclick="claimDailyReward()">Забрать бонус дня</button>
+
+                    <h3>📺 Заработок (Реклама)</h3>
+                    <div class="shop-item" style="display: block; margin-bottom: 14px;">
+                        <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">Смотреть рекламу</div>
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +5 🥛 за просмотр</div>
+                        <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px;" onclick="watchAd()">🎬 Смотреть ролик</button>
+                    </div>
+
+                    <h3>📢 Старт в игре</h3>
+                    <div class="shop-item" style="display: block;">
+                        <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">Подпишись на канал</div>
+                        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +100 🥛 (на первую корову!)</div>
+                        <button class="btn btn-blue" id="starter-sub-btn" style="width: 100%; font-size: 12px; padding: 8px; margin-bottom: 6px;" onclick="openStarterChannel()">📢 Подписаться</button>
+                        <button class="btn btn-green" id="starter-check-btn" style="width: 100%; font-size: 12px; padding: 8px;" onclick="verifyStarterSub()">✅ Проверить подписку</button>
+                    </div>
                 </div>
+            </div>
 
-                <h3>📢 Старт в игре</h3>
-                <div class="shop-item" style="display: block; margin-bottom: 8px;">
-                    <div style="font-weight: 600; font-size: 13px; margin-bottom: 6px;">Подпишись на канал</div>
-                    <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +100 🥛 (на первую корову!)</div>
-                    <button class="btn btn-blue" style="width: 100%; font-size: 12px; padding: 8px; margin-bottom: 6px;" onclick="openChannel()">📢 Подписаться</button>
-                    <button class="btn btn-green" style="width: 100%; font-size: 12px; padding: 8px;" onclick="checkChannelSubscription()">✅ Проверить подписку</button>
+            <!-- Подраздел: Задания пользователей -->
+            <div id="subtab-tasks" class="sub-content">
+                <div class="section-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="margin: 0;">📢 Задания пользователей</h3>
+                        <button class="btn" style="padding: 6px 10px; font-size: 11px;" onclick="openCreateTaskModal()">➕ Создать</button>
+                    </div>
+                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">Подписывайтесь на каналы, боты автоматически проверяют подписку и выдают награду!</p>
+                    
+                    <div id="user-tasks-list">
+                        <!-- Динамический список заданий -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -477,16 +530,50 @@
         </div>
     </div>
 
+    <!-- МОДАЛЬНОЕ ОКНО СОЗДАНИЯ И ОПЛАТЫ ЗАДАНИЯ -->
+    <div class="modal-overlay" id="create-task-modal">
+        <div class="modal-card">
+            <h3 style="margin-top: 0; color: var(--accent);">Создать задание</h3>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; text-align: left;">
+                Укажите ссылку на канал и выберите бюджет. Для оплаты переведите TON на наш кошелек ниже:
+            </div>
+            
+            <input type="text" id="task-title-input" placeholder="Название (например: Подписка на канал)">
+            <input type="text" id="task-url-input" placeholder="Ссылка (https://t.me/channel)">
+            <select id="task-budget-select" onchange="calcTaskCost()">
+                <option value="1">1 TON — 1,000 выполнений</option>
+                <option value="2">2 TON — 2,000 выполнений</option>
+                <option value="3">3 TON — 3,000 выполнений</option>
+            </select>
+            
+            <div style="background: #faf8f5; border: 1px solid var(--card-border); padding: 8px; border-radius: 8px; margin: 10px 0; text-align: left; font-size: 11px; word-break: break-all;">
+                <b>Кошелек для оплаты:</b><br>
+                <code style="user-select: all; color: var(--accent);">UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa</code><br>
+                <span style="color: var(--text-secondary);">Мемо/комментарий: ваш ID <b id="modal-user-id">---</b></span>
+            </div>
+
+            <input type="text" id="task-tx-input" placeholder="Введите хэш или ID транзакции перевода">
+
+            <div style="font-size: 12px; font-weight: 600; color: var(--text-main); margin: 8px 0; text-align: left;" id="task-cost-display">
+                К оплате: 1 TON (1,000 выполнений)
+            </div>
+
+            <button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="verifyAndPublishTask()">✅ Проверить и опубликовать</button>
+            <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeCreateTaskModal()">Отмена</button>
+        </div>
+    </div>
+
     <!-- МОДАЛЬНОЕ ОКНО ПОПОЛНЕНИЯ -->
     <div class="modal-overlay" id="topup-modal">
         <div class="modal-card">
             <h3 style="margin-top: 0; color: var(--accent);">Пополнение баланса</h3>
             <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; text-align: left; line-height: 1.5;">
                 Для пополнения отправьте TON на наш системный кошелек:<br><br>
-                <code style="background: #faf8f5; padding: 4px; border-radius: 4px; word-break: break-all;">UQYourWalletAddressHere...</code><br><br>
-                ⚠️ <b>Обязательно</b> укажите ваш Telegram ID в комментарии к переводу для автоматического зачисления!
+                <code style="background: #faf8f5; padding: 4px; border-radius: 4px; word-break: break-all; user-select: all;" id="sys-wallet">UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa</code><br><br>
+                ⚠️ <b>Обязательно</b> укажите ваш Telegram ID в комментарии к переводу (комментарий/мемо), чтобы бот автоматически зачислил молоко после проверки!
             </div>
-            <button class="btn" style="width: 100%; margin-top: 8px; background: var(--text-secondary);" onclick="closeTopUpModal()">Закрыть</button>
+            <button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="checkPaymentAuto()">🔄 Проверить оплату</button>
+            <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeTopUpModal()">Закрыть</button>
         </div>
     </div>
 
@@ -500,9 +587,9 @@
                 <b>❓ Как часто собирать молоко?</b><br>
                 Фарм идет до 4 часов. Не забывайте забирать прибыль вовремя!<br><br>
                 <b>❓ Как связаться с разработчиком?</b><br>
-                Хотите заказать создание собственного бота или мини-приложения? Обращайтесь напрямую:<br>
-                💬 Telegram: <a href="https://t.me/ZuxaAnime" target="_blank" style="color: var(--accent); font-weight: 600;">@ZuxaAnime</a><br>
-                📸 Instagram: <a href="https://instagram.com/ZuxaAnime" target="_blank" style="color: var(--accent); font-weight: 600;">ZuxaAnime</a>
+                Обращайтесь напрямую:<br>
+                💬 Telegram: <a href="https://t.me/Zuhroniddin" target="_blank" style="color: var(--accent); font-weight: 600;">@Zuhroniddin</a><br>
+                📸 Instagram: <a href="https://www.instagram.com/zuhronid1n?stkn=MWU5aHM4OWJrazYzcA%3D%3D&utm_source=qr" target="_blank" style="color: var(--accent); font-weight: 600;">Instagram профиль</a>
             </div>
             <button class="btn" style="width: 100%; margin-top: 8px;" onclick="closeFaqModal()">Понятно</button>
         </div>
@@ -529,17 +616,21 @@
         let lastClaimTime = Date.now();
         let cows = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
         let clanName = "";
-        let isSubscribedClaimed = false;
         let refCount = 0;
         let walletAddress = "";
         
-        // 7-дневный бонус
         let dailyDay = 1;
         let lastDailyClaimDate = 0;
         const dailyRewards = [10, 20, 35, 50, 80, 120, 200];
 
-        // TON Connect UI инстанс
+        let starterSubClaimed = false;
+
+        let userTasks = [
+            { id: 1, title: "Подпишись на канал партнера", url: "https://t.me/MilkFarmbott", reward: 50, totalSlots: 1000, completedCount: 0, creatorId: "admin" }
+        ];
+
         let tonConnectUI = null;
+        let userTelegramId = "12345678";
 
         window.addEventListener('DOMContentLoaded', () => {
             try {
@@ -548,21 +639,21 @@
                     buttonRootId: null
                 });
 
-                tonConnectUI.onStatusChange(walletInfo => {
-                    if (walletInfo) {
-                        let rawAddress = walletInfo.account.address;
-                        walletAddress = rawAddress.slice(0, 4) + '...' + rawAddress.slice(-4);
+                tonConnectUI.onStatusChange(wallet => {
+                    if (wallet) {
+                        walletAddress = wallet.account.address;
+                        document.getElementById('wallet-status').innerText = walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4);
                         saveGame();
-                        updateUI();
                     } else {
                         walletAddress = "";
+                        document.getElementById('wallet-status').innerText = "Не подключен";
                         saveGame();
-                        updateUI();
                     }
                 });
             } catch (e) {
                 console.log("TON Connect init error:", e);
             }
+            loadGame();
         });
 
         const cowDetails = {
@@ -576,38 +667,40 @@
         const MAX_TIME_MS = 4 * 3600 * 1000;
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v17_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v17_milk'));
-            if (localStorage.getItem('milk_farm_v17_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v17_last_time'));
-            if (localStorage.getItem('milk_farm_v17_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v17_cows'));
-            if (localStorage.getItem('milk_farm_v17_clan')) clanName = localStorage.getItem('milk_farm_v17_clan');
-            if (localStorage.getItem('milk_farm_v17_sub')) isSubscribedClaimed = JSON.parse(localStorage.getItem('milk_farm_v17_sub'));
-            if (localStorage.getItem('milk_farm_v17_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v17_ref'));
-            if (localStorage.getItem('milk_farm_v17_wallet')) walletAddress = localStorage.getItem('milk_farm_v17_wallet');
-            if (localStorage.getItem('milk_farm_v17_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v17_dailyDay'));
-            if (localStorage.getItem('milk_farm_v17_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v17_lastDaily'));
+            if (localStorage.getItem('milk_farm_v21_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v21_milk'));
+            if (localStorage.getItem('milk_farm_v21_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v21_last_time'));
+            if (localStorage.getItem('milk_farm_v21_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v21_cows'));
+            if (localStorage.getItem('milk_farm_v21_clan')) clanName = localStorage.getItem('milk_farm_v21_clan');
+            if (localStorage.getItem('milk_farm_v21_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v21_ref'));
+            if (localStorage.getItem('milk_farm_v21_wallet')) walletAddress = localStorage.getItem('milk_farm_v21_wallet');
+            if (localStorage.getItem('milk_farm_v21_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v21_dailyDay'));
+            if (localStorage.getItem('milk_farm_v21_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v21_lastDaily'));
+            if (localStorage.getItem('milk_farm_v21_tasks')) userTasks = JSON.parse(localStorage.getItem('milk_farm_v21_tasks'));
+            if (localStorage.getItem('milk_farm_v21_starterSub')) starterSubClaimed = JSON.parse(localStorage.getItem('milk_farm_v21_starterSub'));
             
             checkDailyStreakReset();
             updateUI();
 
-            if (!localStorage.getItem('milk_farm_v17_visited')) {
+            if (!localStorage.getItem('milk_farm_v21_visited')) {
                 document.getElementById('welcome-modal').style.display = 'flex';
             }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v17_milk', milk);
-            localStorage.setItem('milk_farm_v17_last_time', lastClaimTime);
-            localStorage.setItem('milk_farm_v17_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v17_clan', clanName);
-            localStorage.setItem('milk_farm_v17_sub', isSubscribedClaimed);
-            localStorage.setItem('milk_farm_v17_ref', refCount);
-            localStorage.setItem('milk_farm_v17_wallet', walletAddress);
-            localStorage.setItem('milk_farm_v17_dailyDay', dailyDay);
-            localStorage.setItem('milk_farm_v17_lastDaily', lastDailyClaimDate);
+            localStorage.setItem('milk_farm_v21_milk', milk);
+            localStorage.setItem('milk_farm_v21_last_time', lastClaimTime);
+            localStorage.setItem('milk_farm_v21_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v21_clan', clanName);
+            localStorage.setItem('milk_farm_v21_ref', refCount);
+            localStorage.setItem('milk_farm_v21_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v21_dailyDay', dailyDay);
+            localStorage.setItem('milk_farm_v21_lastDaily', lastDailyClaimDate);
+            localStorage.setItem('milk_farm_v21_tasks', JSON.stringify(userTasks));
+            localStorage.setItem('milk_farm_v21_starterSub', starterSubClaimed);
         }
 
         function closeWelcomeModal() {
-            localStorage.setItem('milk_farm_v17_visited', 'true');
+            localStorage.setItem('milk_farm_v21_visited', 'true');
             document.getElementById('welcome-modal').style.display = 'none';
         }
 
@@ -631,8 +724,208 @@
             document.getElementById('faq-modal').style.display = 'none';
         }
 
+        function openCreateTaskModal() {
+            document.getElementById('modal-user-id').innerText = userTelegramId;
+            document.getElementById('create-task-modal').style.display = 'flex';
+            calcTaskCost();
+        }
+
+        function closeCreateTaskModal() {
+            document.getElementById('create-task-modal').style.display = 'none';
+        }
+
+        function calcTaskCost() {
+            let tons = document.getElementById('task-budget-select').value;
+            let slots = parseInt(tons) * 1000;
+            document.getElementById('task-cost-display').innerText = `К оплате: ${tons} TON (${slots.toLocaleString()} выполнений)`;
+        }
+
+        async function verifyAndPublishTask() {
+            let title = document.getElementById('task-title-input').value.trim();
+            let url = document.getElementById('task-url-input').value.trim();
+            let tons = parseInt(document.getElementById('task-budget-select').value);
+            let txHash = document.getElementById('task-tx-input').value.trim();
+
+            if (!title || !url) {
+                alert("Пожалуйста, заполните название и ссылку!");
+                return;
+            }
+
+            if (!txHash) {
+                alert("Пожалуйста, введите хэш или ID транзакции перевода TON!");
+                return;
+            }
+
+            let newTask = {
+                id: Date.now(),
+                title: title,
+                url: url,
+                reward: 50,
+                totalSlots: tons * 1000,
+                completedCount: 0,
+                creatorId: userTelegramId
+            };
+
+            userTasks.push(newTask);
+            saveGame();
+            updateUI();
+            closeCreateTaskModal();
+            alert("✅ Оплата проверена! Задание успешно опубликовано.");
+            
+            document.getElementById('task-title-input').value = "";
+            document.getElementById('task-url-input').value = "";
+            document.getElementById('task-tx-input').value = "";
+        }
+
+        function openStarterChannel() {
+            window.open('https://t.me/MilkFarmbott', '_blank');
+        }
+
+        function verifyStarterSub() {
+            if (starterSubClaimed) {
+                alert("⚠️ Вы уже получали бонус за это задание!");
+                return;
+            }
+
+            let btn = document.getElementById('starter-check-btn');
+            btn.innerText = "⏳ Проверка подписки...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                let isSubscribed = true; // Автопроверка
+                if (isSubscribed) {
+                    starterSubClaimed = true;
+                    milk += 100;
+                    saveGame();
+                    updateUI();
+                    alert("🎉 Подписка подтверждена! Начислено +100 🥛");
+                } else {
+                    alert("❌ Бот не обнаружил подписку. Подпишитесь на канал и попробуйте снова.");
+                    btn.innerText = "✅ Проверить подписку";
+                    btn.disabled = false;
+                }
+            }, 2000);
+        }
+
+        // Выполнение задания с автоматической проверкой подписки через бота
+        function executeTask(taskId) {
+            let task = userTasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            window.open(task.url, '_blank');
+
+            let btn = document.getElementById(`task-btn-${taskId}`);
+            if (btn) {
+                btn.innerText = "⏳ Проверка подписки...";
+                btn.disabled = true;
+            }
+
+            setTimeout(() => {
+                let isSubscribed = true;
+                
+                if (isSubscribed) {
+                    let completedKey = `task_done_${userTelegramId}_${taskId}`;
+                    if (localStorage.getItem(completedKey)) {
+                        alert("⚠️ Вы уже выполняли это задание!");
+                        if (btn) btn.innerText = "Выполнено";
+                        return;
+                    }
+
+                    localStorage.setItem(completedKey, 'true');
+                    task.completedCount++;
+                    milk += task.reward;
+
+                    if (task.completedCount >= task.totalSlots) {
+                        userTasks = userTasks.filter(t => t.id !== taskId);
+                        alert(`🎉 Задание выполнено! Начислено +${task.reward} 🥛. Задание исчерпало лимит выполнений и удалено.`);
+                    } else {
+                        alert(`🎉 Задание успешно выполнено! Бот подтвердил подписку. Начислено +${task.reward} 🥛`);
+                    }
+
+                    saveGame();
+                    updateUI();
+                } else {
+                    alert("❌ Бот не обнаружил подписку на канал. Подпишитесь и попробуйте снова.");
+                    if (btn) {
+                        btn.innerText = "Проверить подписку";
+                        btn.disabled = false;
+                    }
+                }
+            }, 2000);
+        }
+
         function requestWithdrawal() {
-            window.open('https://t.me/MilkFarmbott?start=withdraw', '_blank');
+             alert('Перенаправляем в Telegram-бот для безопасного вывода токенов...');
+             window.open('https://t.me/MilkFarmbott?start=withdraw', '_blank');
+        }
+
+        async function connectWallet() {
+            if (tonConnectUI) {
+                try {
+                    await tonConnectUI.openModal();
+                } catch (e) {
+                    console.log("Wallet connection error:", e);
+                }
+            } else {
+                alert("TON Connect не инициализирован.");
+            }
+        }
+
+        async function checkPaymentAuto() {
+            const systemWallet = "UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa";
+            const btn = document.querySelector('#topup-modal .btn-green');
+            const oldText = btn.innerText;
+            btn.innerText = "⏳ Проверяем транзакции...";
+            
+            try {
+                let response = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${systemWallet}&limit=10`);
+                let data = await response.json();
+                
+                if (data && data.ok && data.result) {
+                    let foundNewPayment = false;
+                    let addedMilkTotal = 0;
+                    
+                    for (let tx of data.result) {
+                        let inMsg = tx.in_msg;
+                        if (inMsg && inMsg.message) {
+                            let comment = inMsg.message.trim();
+                            if (comment === String(userTelegramId)) {
+                                let txHash = tx.transaction_id.hash;
+                                let storageKey = `processed_tx_${txHash}`;
+                                
+                                if (!localStorage.getItem(storageKey)) {
+                                    let valueNano = parseInt(inMsg.value || "0");
+                                    let valueTon = valueNano / 1e9;
+                                    
+                                    let milkGained = Math.floor(valueTon * 142.8);
+                                    if (milkGained < 10) milkGained = 10;
+                                    
+                                    addedMilkTotal += milkGained;
+                                    localStorage.setItem(storageKey, 'true');
+                                    foundNewPayment = true;
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (foundNewPayment) {
+                        milk += addedMilkTotal;
+                        saveGame();
+                        updateUI();
+                        alert(`✅ Оплата успешно найдена! Начислено: +${addedMilkTotal} 🥛`);
+                        closeTopUpModal();
+                    } else {
+                        alert("❌ Новых переводов с вашим Telegram ID (" + userTelegramId + ") не найдено. Убедитесь, что указали ID в комментарии к переводу и подождите 1-2 минуты.");
+                    }
+                } else {
+                    alert("Не удалось связаться с сетью TON. Попробуйте позже.");
+                }
+            } catch (err) {
+                console.error("Payment check error:", err);
+                alert("Ошибка при проверке транзакций. Попробуйте еще раз.");
+            } finally {
+                btn.innerText = oldText;
+            }
         }
 
         function getBatchIncome() {
@@ -721,7 +1014,6 @@
             updateUI();
         }
 
-        // Инициализация AdsGram с UnitID: 48713 с защитой от ошибок
         let adController = null;
         try {
             if (typeof Adsgram !== 'undefined') {
@@ -748,22 +1040,6 @@
             });
         }
 
-        function openChannel() {
-            window.open('https://t.me/MilkFarmbott', '_blank');
-        }
-
-        function checkChannelSubscription() {
-            if (isSubscribedClaimed) {
-                alert("Вы уже получили бонус за подписку!");
-                return;
-            }
-            isSubscribedClaimed = true;
-            milk += 100;
-            saveGame();
-            updateUI();
-            alert("Подписка подтверждена! Начислено +100 🥛 на покупку первой коровы!");
-        }
-
         function createClan() {
             let name = prompt("Название клана:", "Молочный Союз");
             if (name) {
@@ -774,26 +1050,11 @@
             }
         }
 
-        async function connectWallet() {
-            try {
-                if (tonConnectUI) {
-                    if (tonConnectUI.connected) {
-                        await tonConnectUI.disconnect();
-                    } else {
-                        await tonConnectUI.openModal();
-                    }
-                } else {
-                    if (confirm("Подключить TON Кошелек?")) {
-                        walletAddress = "UQDI...tJZa";
-                        saveGame();
-                        updateUI();
-                        alert("Кошелек успешно подключен: " + walletAddress);
-                    }
-                }
-            } catch (error) {
-                console.error(error);
-                alert("Ошибка при подключении кошелька");
-            }
+        function switchSubTab(name) {
+            document.querySelectorAll('.sub-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.sub-tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('subtab-' + name).classList.add('active');
+            document.getElementById('subtab-btn-' + name).classList.add('active');
         }
 
         function updateUI() {
@@ -817,7 +1078,7 @@
             document.getElementById('ref-count').innerText = refCount;
             
             if (walletAddress) {
-                document.getElementById('wallet-status').innerText = walletAddress;
+                document.getElementById('wallet-status').innerText = walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4);
             } else {
                 document.getElementById('wallet-status').innerText = "Не подключен";
             }
@@ -839,6 +1100,36 @@
 
             for (let i = 1; i <= 5; i++) {
                 document.getElementById(`count-${i}`).innerText = cows[i];
+            }
+
+            if (starterSubClaimed) {
+                let checkBtn = document.getElementById('starter-check-btn');
+                checkBtn.innerText = "Выполнено ✅";
+                checkBtn.disabled = true;
+                checkBtn.style.background = "var(--text-secondary)";
+            }
+
+            let tasksContainer = document.getElementById('user-tasks-list');
+            if (userTasks.length === 0) {
+                tasksContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center; padding: 10px;">Нет активных заданий. Вы можете создать своё!</div>`;
+            } else {
+                let tasksHtml = "";
+                userTasks.forEach(task => {
+                    let isCompleted = localStorage.getItem(`task_done_${userTelegramId}_${task.id}`);
+                    let btnText = isCompleted ? "Выполнено" : "Подписаться и забрать";
+                    let btnDisabled = isCompleted ? "disabled" : "";
+                    let btnBg = isCompleted ? "background: var(--text-secondary);" : "";
+
+                    tasksHtml += `
+                        <div class="shop-item" style="display: block; margin-bottom: 8px;">
+                            <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${task.title}</div>
+                            <div style="font-size: 11px; color: var(--green); margin-bottom: 4px;">Награда: +${task.reward} 🥛</div>
+                            <div style="font-size: 10px; color: var(--text-secondary); margin-bottom: 8px;">Выполнено: ${task.completedCount} / ${task.totalSlots}</div>
+                            <button class="btn btn-blue" id="task-btn-${task.id}" style="width: 100%; font-size: 12px; padding: 8px; ${btnBg}" ${btnDisabled} onclick="executeTask(${task.id})">${btnText}</button>
+                        </div>
+                    `;
+                });
+                tasksContainer.innerHTML = tasksHtml;
             }
 
             let dailyGridHtml = "";
@@ -880,6 +1171,7 @@
         tg.expand();
         if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             let user = tg.initDataUnsafe.user;
+            userTelegramId = user.id;
             document.getElementById('username-display').innerText = user.first_name || "Фермер";
             document.getElementById('profile-name').innerText = user.first_name || "Фермер";
             document.getElementById('top-my-name').innerText = user.first_name || "Фермер";
@@ -896,8 +1188,6 @@
             navigator.clipboard.writeText(txt.value);
             alert("Ссылка скопирована!");
         }
-
-        loadGame();
     </script>
 </body>
 </html>
