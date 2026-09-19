@@ -547,19 +547,6 @@
                     manifestUrl: 'https://zuxa.github.io/Milk-Farm/tonconnect-manifest.json',
                     buttonRootId: null
                 });
-
-                tonConnectUI.onStatusChange(walletInfo => {
-                    if (walletInfo) {
-                        let rawAddress = walletInfo.account.address;
-                        walletAddress = rawAddress.slice(0, 4) + '...' + rawAddress.slice(-4);
-                        saveGame();
-                        updateUI();
-                    } else {
-                        walletAddress = "";
-                        saveGame();
-                        updateUI();
-                    }
-                });
             } catch (e) {
                 console.log("TON Connect init error:", e);
             }
@@ -632,7 +619,11 @@
         }
 
         function requestWithdrawal() {
-            window.open('https://t.me/MilkFarmbott?start=withdraw', '_blank');
+             alert('Мы добавим эту кнопку 10 ноября.');
+        }
+
+        function connectWallet() {
+            alert('Мы добавим эту кнопку 10 ноября.');
         }
 
         function getBatchIncome() {
@@ -771,28 +762,6 @@
                 saveGame();
                 updateUI();
                 alert("Клан успешно создан (+10% к доходу)!");
-            }
-        }
-
-        async function connectWallet() {
-            try {
-                if (tonConnectUI) {
-                    if (tonConnectUI.connected) {
-                        await tonConnectUI.disconnect();
-                    } else {
-                        await tonConnectUI.openModal();
-                    }
-                } else {
-                    if (confirm("Подключить TON Кошелек?")) {
-                        walletAddress = "UQDI...tJZa";
-                        saveGame();
-                        updateUI();
-                        alert("Кошелек успешно подключен: " + walletAddress);
-                    }
-                }
-            } catch (error) {
-                console.error(error);
-                alert("Ошибка при подключении кошелька");
             }
         }
 
