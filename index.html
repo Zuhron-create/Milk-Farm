@@ -344,7 +344,7 @@
                 <div class="cow-avatar" id="main-cow-icon">🐄</div>
                 <div style="font-size: 14px; font-weight: 600; margin-bottom: 6px;">Ваше стадо коров:</div>
                 <div id="my-cows-list" style="width: 100%; text-align: left; max-height: 120px; overflow-y: auto; background: #faf8f5; padding: 10px; border-radius: 12px; border: 1px solid var(--card-border);">
-                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Получите стартовый бонус во вкладке «Бонусы»!</div>
+                    <div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Выполняйте задания в разделе «Бонусы»!</div>
                 </div>
             </div>
         </div>
@@ -422,14 +422,6 @@
                         <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +5 🥛 за просмотр</div>
                         <button class="btn btn-purple" style="width: 100%; font-size: 12px; padding: 9px;" onclick="watchAd()">🎬 Смотреть ролик</button>
                     </div>
-
-                    <h3>📢 Старт в игре</h3>
-                    <div class="shop-item" style="display: block;">
-                        <div style="font-weight: 600; font-size: 13px; margin-bottom: 4px;">Подпишись на канал</div>
-                        <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">Награда: +100 🥛 (на первую корову!)</div>
-                        <button class="btn btn-blue" id="starter-sub-btn" style="width: 100%; font-size: 12px; padding: 8px; margin-bottom: 6px;" onclick="openStarterChannel()">📢 Подписаться</button>
-                        <button class="btn btn-green" id="starter-check-btn" style="width: 100%; font-size: 12px; padding: 8px;" onclick="verifyStarterSub()">✅ Проверить подписку</button>
-                    </div>
                 </div>
             </div>
 
@@ -437,13 +429,13 @@
             <div id="subtab-tasks" class="sub-content">
                 <div class="section-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <h3 style="margin: 0;">📢 Задания пользователей</h3>
+                        <h3 style="margin: 0;">📢 Задания</h3>
                         <button class="btn" style="padding: 6px 10px; font-size: 11px;" onclick="openCreateTaskModal()">➕ Создать</button>
                     </div>
-                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">Подписывайтесь на каналы, боты автоматически проверяют подписку и выдают награду!</p>
+                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">Подписывайтесь на каналы и чаты, выполняйте задания и получайте награды!</p>
                     
                     <div id="user-tasks-list">
-                        <!-- Список пустой при старте, заполняется реальными созданными заданиями -->
+                        <!-- Динамически заполняется заданиями (Канал + Чат + пользовательские задания) -->
                     </div>
                 </div>
             </div>
@@ -582,7 +574,7 @@
             <h3 style="margin-top: 0; color: var(--accent);">FAQ и Поддержка</h3>
             <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; text-align: left; line-height: 1.6;">
                 <b>❓ Как начать играть?</b><br>
-                Заберите стартовый бонус в разделе «Бонусы» и купите свою первую корову на рынке.<br><br>
+                Заберите стартовый бонус в разделе «Задания» и купите свою первую корову на рынке.<br><br>
                 <b>❓ Как часто собирать молоко?</b><br>
                 Фарм идет до 4 часов. Не забывайте забирать прибыль вовремя!<br><br>
                 <b>❓ Как связаться с разработчиком?</b><br>
@@ -601,7 +593,7 @@
             <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--accent);">Уютная Ферма</h3>
             <div style="font-size: 13px; color: var(--text-secondary); text-align: left; line-height: 1.5; margin-bottom: 16px;">
                 <b>Правила игры:</b><br>
-                1. 📢 Получите бонус в разделе <b>«Бонусы»</b> (серия 7 дней, пропуск сбрасывает прогресс).<br>
+                1. 📋 Выполните задания в разделе <b>«Задания»</b> (подписка на канал и чат), чтобы получить стартовое молоко.<br>
                 2. 🛍 Купите коров на рынке (до 5 уровней).<br>
                 3. ⏰ Коровы приносят молоко каждые <b>4 часа</b>.<br>
                 4. ⚠️ Через 4 часа фарм останавливается — вовремя забирайте прибыль!
@@ -622,8 +614,27 @@
         let lastDailyClaimDate = 0;
         const dailyRewards = [10, 20, 35, 50, 80, 120, 200];
 
-        let starterSubClaimed = false;
-        let userTasks = []; // Боевой режим: список заданий пуст по умолчанию
+        // Изначальный список обязательных заданий (Канал + Чат пиара с наградой по 50 молока)
+        let userTasks = [
+            {
+                id: 101,
+                title: "Подписка на официальный канал",
+                url: "https://t.me/MilkFarmbott",
+                reward: 50,
+                totalSlots: 100000,
+                completedCount: 0,
+                creatorId: "system"
+            },
+            {
+                id: 102,
+                title: "Вступить в чат пиара",
+                url: "https://t.me/piarchatcash",
+                reward: 50,
+                totalSlots: 100000,
+                completedCount: 0,
+                creatorId: "system"
+            }
+        ];
 
         let tonConnectUI = null;
         let userTelegramId = "12345678";
@@ -663,40 +674,48 @@
         const MAX_TIME_MS = 4 * 3600 * 1000;
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v22_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v22_milk'));
-            if (localStorage.getItem('milk_farm_v22_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v22_last_time'));
-            if (localStorage.getItem('milk_farm_v22_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v22_cows'));
-            if (localStorage.getItem('milk_farm_v22_clan')) clanName = localStorage.getItem('milk_farm_v22_clan');
-            if (localStorage.getItem('milk_farm_v22_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v22_ref'));
-            if (localStorage.getItem('milk_farm_v22_wallet')) walletAddress = localStorage.getItem('milk_farm_v22_wallet');
-            if (localStorage.getItem('milk_farm_v22_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v22_dailyDay'));
-            if (localStorage.getItem('milk_farm_v22_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v22_lastDaily'));
-            if (localStorage.getItem('milk_farm_v22_tasks')) userTasks = JSON.parse(localStorage.getItem('milk_farm_v22_tasks'));
-            if (localStorage.getItem('milk_farm_v22_starterSub')) starterSubClaimed = JSON.parse(localStorage.getItem('milk_farm_v22_starterSub'));
+            if (localStorage.getItem('milk_farm_v23_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v23_milk'));
+            if (localStorage.getItem('milk_farm_v23_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v23_last_time'));
+            if (localStorage.getItem('milk_farm_v23_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v23_cows'));
+            if (localStorage.getItem('milk_farm_v23_clan')) clanName = localStorage.getItem('milk_farm_v23_clan');
+            if (localStorage.getItem('milk_farm_v23_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v23_ref'));
+            if (localStorage.getItem('milk_farm_v23_wallet')) walletAddress = localStorage.getItem('milk_farm_v23_wallet');
+            if (localStorage.getItem('milk_farm_v23_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v23_dailyDay'));
+            if (localStorage.getItem('milk_farm_v23_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v23_lastDaily'));
+            if (localStorage.getItem('milk_farm_v23_tasks')) {
+                let savedTasks = JSON.parse(localStorage.getItem('milk_farm_v23_tasks'));
+                // Объединяем системные задания с пользовательскими, чтобы новые задания всегда подтягивались
+                let existingIds = savedTasks.map(t => t.id);
+                userTasks.forEach(sysTask => {
+                    if (!existingIds.includes(sysTask.id)) {
+                        savedTasks.unshift(sysTask);
+                    }
+                });
+                userTasks = savedTasks;
+            }
             
             checkDailyStreakReset();
             updateUI();
 
-            if (!localStorage.getItem('milk_farm_v22_visited')) {
+            if (!localStorage.getItem('milk_farm_v23_visited')) {
                 document.getElementById('welcome-modal').style.display = 'flex';
             }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v22_milk', milk);
-            localStorage.setItem('milk_farm_v22_last_time', lastClaimTime);
-            localStorage.setItem('milk_farm_v22_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v22_clan', clanName);
-            localStorage.setItem('milk_farm_v22_ref', refCount);
-            localStorage.setItem('milk_farm_v22_wallet', walletAddress);
-            localStorage.setItem('milk_farm_v22_dailyDay', dailyDay);
-            localStorage.setItem('milk_farm_v22_lastDaily', lastDailyClaimDate);
-            localStorage.setItem('milk_farm_v22_tasks', JSON.stringify(userTasks));
-            localStorage.setItem('milk_farm_v22_starterSub', starterSubClaimed);
+            localStorage.setItem('milk_farm_v23_milk', milk);
+            localStorage.setItem('milk_farm_v23_last_time', lastClaimTime);
+            localStorage.setItem('milk_farm_v23_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v23_clan', clanName);
+            localStorage.setItem('milk_farm_v23_ref', refCount);
+            localStorage.setItem('milk_farm_v23_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v23_dailyDay', dailyDay);
+            localStorage.setItem('milk_farm_v23_lastDaily', lastDailyClaimDate);
+            localStorage.setItem('milk_farm_v23_tasks', JSON.stringify(userTasks));
         }
 
         function closeWelcomeModal() {
-            localStorage.setItem('milk_farm_v22_visited', 'true');
+            localStorage.setItem('milk_farm_v23_visited', 'true');
             document.getElementById('welcome-modal').style.display = 'none';
         }
 
@@ -773,36 +792,6 @@
             document.getElementById('task-tx-input').value = "";
         }
 
-        function openStarterChannel() {
-            window.open('https://t.me/MilkFarmbott', '_blank');
-        }
-
-        function verifyStarterSub() {
-            if (starterSubClaimed) {
-                alert("⚠️ Вы уже получали бонус за это задание!");
-                return;
-            }
-
-            let btn = document.getElementById('starter-check-btn');
-            btn.innerText = "⏳ Проверка подписки...";
-            btn.disabled = true;
-
-            setTimeout(() => {
-                let isSubscribed = true; 
-                if (isSubscribed) {
-                    starterSubClaimed = true;
-                    milk += 100;
-                    saveGame();
-                    updateUI();
-                    alert("🎉 Подписка подтверждена! Начислено +100 🥛");
-                } else {
-                    alert("❌ Бот не обнаружил подписку. Подпишитесь на канал и попробуйте снова.");
-                    btn.innerText = "✅ Проверить подписку";
-                    btn.disabled = false;
-                }
-            }, 2000);
-        }
-
         function executeTask(taskId) {
             let task = userTasks.find(t => t.id === taskId);
             if (!task) return;
@@ -811,7 +800,7 @@
 
             let btn = document.getElementById(`task-btn-${taskId}`);
             if (btn) {
-                btn.innerText = "⏳ Проверка подписки...";
+                btn.innerText = "⏳ Проверка...";
                 btn.disabled = true;
             }
 
@@ -822,7 +811,10 @@
                     let completedKey = `task_done_${userTelegramId}_${taskId}`;
                     if (localStorage.getItem(completedKey)) {
                         alert("⚠️ Вы уже выполняли это задание!");
-                        if (btn) btn.innerText = "Выполнено";
+                        if (btn) {
+                            btn.innerText = "Выполнено";
+                            btn.style.background = "var(--text-secondary)";
+                        }
                         return;
                     }
 
@@ -832,17 +824,17 @@
 
                     if (task.completedCount >= task.totalSlots) {
                         userTasks = userTasks.filter(t => t.id !== taskId);
-                        alert(`🎉 Задание выполнено! Начислено +${task.reward} 🥛. Задание исчерпало лимит выполнений и удалено.`);
+                        alert(`🎉 Задание выполнено! Начислено +${task.reward} 🥛.`);
                     } else {
-                        alert(`🎉 Задание успешно выполнено! Бот подтвердил подписку. Начислено +${task.reward} 🥛`);
+                        alert(`🎉 Задание успешно выполнено! Начислено +${task.reward} 🥛`);
                     }
 
                     saveGame();
                     updateUI();
                 } else {
-                    alert("❌ Бот не обнаружил подписку на канал. Подпишитесь и попробуйте снова.");
+                    alert("❌ Вы не подписались или не вступили в чат. Проверьте подписку и попробуйте снова.");
                     if (btn) {
-                        btn.innerText = "Подписаться и забрать";
+                        btn.innerText = "Перейти и забрать";
                         btn.disabled = false;
                     }
                 }
@@ -938,7 +930,7 @@
             let batchIncome = getBatchIncome();
             
             if (batchIncome <= 0) {
-                alert("У вас нет коров! Купите хотя бы одну корову на рынке или получите бонус.");
+                alert("У вас нет коров! Выполняйте задания в разделе «Бонусы», чтобы получить стартовое молоко и купить корову.");
                 return;
             }
 
@@ -965,7 +957,7 @@
                 updateUI();
                 alert(`Куплена корова: «${cowDetails[level].name}»!`);
             } else {
-                alert("Недостаточно молока на балансе!");
+                alert("Недостаточно молока на балансе! Выполняйте задания или приглашайте друзей.");
             }
         }
 
@@ -1097,13 +1089,6 @@
                 document.getElementById(`count-${i}`).innerText = cows[i];
             }
 
-            if (starterSubClaimed) {
-                let checkBtn = document.getElementById('starter-check-btn');
-                checkBtn.innerText = "Выполнено ✅";
-                checkBtn.disabled = true;
-                checkBtn.style.background = "var(--text-secondary)";
-            }
-
             let tasksContainer = document.getElementById('user-tasks-list');
             if (userTasks.length === 0) {
                 tasksContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center; padding: 10px;">Нет активных заданий. Вы можете создать своё!</div>`;
@@ -1111,7 +1096,7 @@
                 let tasksHtml = "";
                 userTasks.forEach(task => {
                     let isCompleted = localStorage.getItem(`task_done_${userTelegramId}_${task.id}`);
-                    let btnText = isCompleted ? "Выполнено" : "Подписаться и забрать";
+                    let btnText = isCompleted ? "Выполнено" : "Перейти и забрать";
                     let btnDisabled = isCompleted ? "disabled" : "";
                     let btnBg = isCompleted ? "background: var(--text-secondary);" : "";
 
@@ -1119,7 +1104,6 @@
                         <div class="shop-item" style="display: block; margin-bottom: 8px;">
                             <div style="font-weight: 600; font-size: 13px; margin-bottom: 2px;">${task.title}</div>
                             <div style="font-size: 11px; color: var(--green); margin-bottom: 4px;">Награда: +${task.reward} 🥛</div>
-                            <div style="font-size: 10px; color: var(--text-secondary); margin-bottom: 8px;">Выполнено: ${task.completedCount} / ${task.totalSlots}</div>
                             <button class="btn btn-blue" id="task-btn-${task.id}" style="width: 100%; font-size: 12px; padding: 8px; ${btnBg}" ${btnDisabled} onclick="executeTask(${task.id})">${btnText}</button>
                         </div>
                     `;
@@ -1139,7 +1123,7 @@
             let listContainer = document.getElementById('my-cows-list');
             let totalCows = Object.values(cows).reduce((a, b) => a + b, 0);
             if (totalCows === 0) {
-                listContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Получите бонус в разделе «Бонусы»!</div>`;
+                listContainer.innerHTML = `<div style="color: var(--text-secondary); font-size: 13px; text-align: center;">У вас нет коров. Выполняйте задания в разделе «Бонусы»!</div>`;
             } else {
                 let html = "";
                 for (let i = 1; i <= 5; i++) {
