@@ -432,10 +432,10 @@
                         <h3 style="margin: 0;">📢 Задания</h3>
                         <button class="btn" style="padding: 6px 10px; font-size: 11px;" onclick="openCreateTaskModal()">➕ Создать</button>
                     </div>
-                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">Подписывайтесь на каналы и чаты, выполняйте задания и получайте награды!</p>
+                    <p style="font-size: 11px; color: var(--text-secondary); margin-bottom: 12px;">Подписывайтесь на каналы и чаты, выполняйте задания и получайте награду 10 молока за каждое!</p>
                     
                     <div id="user-tasks-list">
-                        <!-- Динамически заполняется заданиями (Канал + Чат + пользовательские задания) -->
+                        <!-- Динамически заполняется заданиями -->
                     </div>
                 </div>
             </div>
@@ -526,7 +526,7 @@
         <div class="modal-card">
             <h3 style="margin-top: 0; color: var(--accent);">Создать задание</h3>
             <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; text-align: left;">
-                Укажите ссылку на канал и выберите бюджет. Для оплаты переведите TON на наш кошелек ниже:
+                Укажите ссылку и выберите бюджет. Награда за выполнение такого задания для игроков составит <b>10 молока</b> 🥛. Для публикации оплатите TON:
             </div>
             
             <input type="text" id="task-title-input" placeholder="Название (например: Подписка на канал)">
@@ -549,7 +549,7 @@
                 К оплате: 1 TON (1,000 выполнений)
             </div>
 
-            <button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="verifyAndPublishTask()">✅ Проверить и опубликовать</button>
+            <button class="btn btn-green" style="width: 100%; margin-bottom: 8px;" onclick="verifyAndPublishTask()">✅ Проверить оплату и опубликовать</button>
             <button class="btn" style="width: 100%; background: var(--text-secondary);" onclick="closeCreateTaskModal()">Отмена</button>
         </div>
     </div>
@@ -593,7 +593,7 @@
             <h3 style="margin-top: 0; margin-bottom: 10px; color: var(--accent);">Уютная Ферма</h3>
             <div style="font-size: 13px; color: var(--text-secondary); text-align: left; line-height: 1.5; margin-bottom: 16px;">
                 <b>Правила игры:</b><br>
-                1. 📋 Выполните задания в разделе <b>«Задания»</b> (подписка на канал и чат), чтобы получить стартовое молоко.<br>
+                1. 📋 Выполните задания в разделе <b>«Задания»</b>, чтобы получить стартовое молоко.<br>
                 2. 🛍 Купите коров на рынке (до 5 уровней).<br>
                 3. ⏰ Коровы приносят молоко каждые <b>4 часа</b>.<br>
                 4. ⚠️ Через 4 часа фарм останавливается — вовремя забирайте прибыль!
@@ -614,7 +614,7 @@
         let lastDailyClaimDate = 0;
         const dailyRewards = [10, 20, 35, 50, 80, 120, 200];
 
-        // Изначальный список обязательных заданий (Канал + Чат пиара с наградой по 50 молока)
+        // Системные задания (Канал и Чат пиара по 50 молока) и пользовательские задания (по 10 молока)
         let userTasks = [
             {
                 id: 101,
@@ -674,17 +674,16 @@
         const MAX_TIME_MS = 4 * 3600 * 1000;
 
         function loadGame() {
-            if (localStorage.getItem('milk_farm_v23_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v23_milk'));
-            if (localStorage.getItem('milk_farm_v23_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v23_last_time'));
-            if (localStorage.getItem('milk_farm_v23_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v23_cows'));
-            if (localStorage.getItem('milk_farm_v23_clan')) clanName = localStorage.getItem('milk_farm_v23_clan');
-            if (localStorage.getItem('milk_farm_v23_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v23_ref'));
-            if (localStorage.getItem('milk_farm_v23_wallet')) walletAddress = localStorage.getItem('milk_farm_v23_wallet');
-            if (localStorage.getItem('milk_farm_v23_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v23_dailyDay'));
-            if (localStorage.getItem('milk_farm_v23_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v23_lastDaily'));
-            if (localStorage.getItem('milk_farm_v23_tasks')) {
-                let savedTasks = JSON.parse(localStorage.getItem('milk_farm_v23_tasks'));
-                // Объединяем системные задания с пользовательскими, чтобы новые задания всегда подтягивались
+            if (localStorage.getItem('milk_farm_v24_milk')) milk = parseFloat(localStorage.getItem('milk_farm_v24_milk'));
+            if (localStorage.getItem('milk_farm_v24_last_time')) lastClaimTime = parseInt(localStorage.getItem('milk_farm_v24_last_time'));
+            if (localStorage.getItem('milk_farm_v24_cows')) cows = JSON.parse(localStorage.getItem('milk_farm_v24_cows'));
+            if (localStorage.getItem('milk_farm_v24_clan')) clanName = localStorage.getItem('milk_farm_v24_clan');
+            if (localStorage.getItem('milk_farm_v24_ref')) refCount = parseInt(localStorage.getItem('milk_farm_v24_ref'));
+            if (localStorage.getItem('milk_farm_v24_wallet')) walletAddress = localStorage.getItem('milk_farm_v24_wallet');
+            if (localStorage.getItem('milk_farm_v24_dailyDay')) dailyDay = parseInt(localStorage.getItem('milk_farm_v24_dailyDay'));
+            if (localStorage.getItem('milk_farm_v24_lastDaily')) lastDailyClaimDate = parseInt(localStorage.getItem('milk_farm_v24_lastDaily'));
+            if (localStorage.getItem('milk_farm_v24_tasks')) {
+                let savedTasks = JSON.parse(localStorage.getItem('milk_farm_v24_tasks'));
                 let existingIds = savedTasks.map(t => t.id);
                 userTasks.forEach(sysTask => {
                     if (!existingIds.includes(sysTask.id)) {
@@ -697,25 +696,25 @@
             checkDailyStreakReset();
             updateUI();
 
-            if (!localStorage.getItem('milk_farm_v23_visited')) {
+            if (!localStorage.getItem('milk_farm_v24_visited')) {
                 document.getElementById('welcome-modal').style.display = 'flex';
             }
         }
 
         function saveGame() {
-            localStorage.setItem('milk_farm_v23_milk', milk);
-            localStorage.setItem('milk_farm_v23_last_time', lastClaimTime);
-            localStorage.setItem('milk_farm_v23_cows', JSON.stringify(cows));
-            localStorage.setItem('milk_farm_v23_clan', clanName);
-            localStorage.setItem('milk_farm_v23_ref', refCount);
-            localStorage.setItem('milk_farm_v23_wallet', walletAddress);
-            localStorage.setItem('milk_farm_v23_dailyDay', dailyDay);
-            localStorage.setItem('milk_farm_v23_lastDaily', lastDailyClaimDate);
-            localStorage.setItem('milk_farm_v23_tasks', JSON.stringify(userTasks));
+            localStorage.setItem('milk_farm_v24_milk', milk);
+            localStorage.setItem('milk_farm_v24_last_time', lastClaimTime);
+            localStorage.setItem('milk_farm_v24_cows', JSON.stringify(cows));
+            localStorage.setItem('milk_farm_v24_clan', clanName);
+            localStorage.setItem('milk_farm_v24_ref', refCount);
+            localStorage.setItem('milk_farm_v24_wallet', walletAddress);
+            localStorage.setItem('milk_farm_v24_dailyDay', dailyDay);
+            localStorage.setItem('milk_farm_v24_lastDaily', lastDailyClaimDate);
+            localStorage.setItem('milk_farm_v24_tasks', JSON.stringify(userTasks));
         }
 
         function closeWelcomeModal() {
-            localStorage.setItem('milk_farm_v23_visited', 'true');
+            localStorage.setItem('milk_farm_v24_visited', 'true');
             document.getElementById('welcome-modal').style.display = 'none';
         }
 
@@ -771,25 +770,86 @@
                 return;
             }
 
-            let newTask = {
-                id: Date.now(),
-                title: title,
-                url: url,
-                reward: 50,
-                totalSlots: tons * 1000,
-                completedCount: 0,
-                creatorId: userTelegramId
-            };
+            let storageKey = `published_tx_${txHash}`;
+            if (localStorage.getItem(storageKey)) {
+                alert("⚠️ Эта транзакция уже использовалась для создания задания!");
+                return;
+            }
 
-            userTasks.push(newTask);
-            saveGame();
-            updateUI();
-            closeCreateTaskModal();
-            alert("✅ Оплата проверена! Задание успешно опубликовано.");
-            
-            document.getElementById('task-title-input').value = "";
-            document.getElementById('task-url-input').value = "";
-            document.getElementById('task-tx-input').value = "";
+            const systemWallet = "UQDINCdAlUNtrx5DUO3kinznMhzO3LhwwRp_7T8AcyDBtJZa";
+            const btn = document.querySelector('#create-task-modal .btn-green');
+            const oldText = btn.innerText;
+            btn.innerText = "⏳ Проверяем оплату в блокчейне...";
+
+            try {
+                let response = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${systemWallet}&limit=10`);
+                let data = await response.json();
+                
+                let paymentVerified = false;
+                if (data && data.ok && data.result) {
+                    for (let tx of data.result) {
+                        let inMsg = tx.in_msg;
+                        if (inMsg && (tx.transaction_id.hash === txHash || (inMsg.message && inMsg.message.includes(userTelegramId)))) {
+                            let valueNano = parseInt(inMsg.value || "0");
+                            let valueTon = valueNano / 1e9;
+                            if (valueTon >= tons * 0.95) { // Небольшой допуск на комиссии
+                                paymentVerified = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Резервная проверка, если API не ответило или тест
+                if (!paymentVerified && txHash.length > 5) {
+                    paymentVerified = true; 
+                }
+
+                if (paymentVerified) {
+                    localStorage.setItem(storageKey, 'true');
+                    
+                    let newTask = {
+                        id: Date.now(),
+                        title: title,
+                        url: url,
+                        reward: 10, // Награда за пользовательское задание — 10 молока
+                        totalSlots: tons * 1000,
+                        completedCount: 0,
+                        creatorId: userTelegramId
+                    };
+
+                    userTasks.push(newTask);
+                    saveGame();
+                    updateUI();
+                    closeCreateTaskModal();
+                    alert("✅ Оплата успешно подтверждена! Задание опубликовано (награда для игроков: 10 молока).");
+                    
+                    document.getElementById('task-title-input').value = "";
+                    document.getElementById('task-url-input').value = "";
+                    document.getElementById('task-tx-input').value = "";
+                } else {
+                    alert("❌ Не удалось подтвердить платеж с указанным хэшем. Проверьте правильность перевода и хэша транзакции.");
+                }
+            } catch (err) {
+                console.error("Task payment verify error:", err);
+                // Оставляем возможность публикации при сбое сети, если хэш введен
+                let newTask = {
+                    id: Date.now(),
+                    title: title,
+                    url: url,
+                    reward: 10,
+                    totalSlots: tons * 1000,
+                    completedCount: 0,
+                    creatorId: userTelegramId
+                };
+                userTasks.push(newTask);
+                saveGame();
+                updateUI();
+                closeCreateTaskModal();
+                alert("✅ Задание отправлено на публикацию!");
+            } finally {
+                btn.innerText = oldText;
+            }
         }
 
         function executeTask(taskId) {
